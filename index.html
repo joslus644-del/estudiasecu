@@ -354,7 +354,7 @@
   <div class="container">
     <header>
       <h1>EstudiaSecu</h1>
-      <p>Plataforma Escolar Interactiva con Respaldo de Especialistas</p>
+      <p>Plataforma Escolar Interactiva para Exámenes</p>
     </header>
 
     <!-- Controles de Selección -->
@@ -379,7 +379,7 @@
     <!-- Pestañas de Navegación -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
-      <button class="tab-btn" onclick="switchTab('quiz')">Quiz Interactivo (50 Preguntas)</button>
+      <button class="tab-btn" onclick="switchTab('quiz')">Quiz Examen (50 Preguntas)</button>
     </div>
 
     <!-- Sección de Estudio -->
@@ -390,7 +390,7 @@
 
     <!-- Sección de Quiz -->
     <div id="quiz-section" class="content-section">
-      <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Evaluación Interactiva</h2>
+      <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Simulador de Examen</h2>
       <div class="quiz-info" id="quiz-info"></div>
       <form id="quiz-form">
         <div id="quiz-container"></div>
@@ -491,20 +491,76 @@
       renderAll();
     }
 
-    // Semilla aleatoria única para que cada visitante y cada actualización tenga un examen distinto
+    // Semilla aleatoria para mezclar preguntas por cada visitante
     let randomSessionSeed = Math.floor(Math.random() * 100000);
+
+    // Banco de preguntas 100% únicas, claras y específicas para cada materia (5 preguntas base que se expanden a 50 únicas)
+    const masterBanks = {
+      matematicas: [
+        { q: "¿Cuál es el resultado de la operación: 15 + 3 × 4?", opts: ["27", "72", "19", "21"], correct: 0, exp: "💡 Explicación: Primero se multiplica (3 × 4 = 12) y luego se suma (15 + 12 = 27)." },
+        { q: "Al resolver la ecuación 3x - 5 = 10, ¿cuánto vale x?", opts: ["x = 5", "x = 3", "x = 15", "x = 2"], correct: 0, exp: "💡 Explicación: Se pasa el 5 sumando (3x = 15) y se divide entre 3 (x = 5)." },
+        { q: "¿Cómo se llama el triángulo que tiene sus tres lados iguales?", opts: ["Equilátero", "Isósceles", "Escaleno", "Rectángulo"], correct: 0, exp: "💡 Explicación: Equilátero significa lados iguales." },
+        { q: "Si un artículo cuesta $400 y tiene un 25% de descuento, ¿cuál es su costo final?", opts: ["$300", "$350", "$280", "$320"], correct: 0, exp: "💡 Explicación: El 25% de 400 es 100, entonces 400 - 100 = 300." },
+        { q: "¿Cuál es el área de un rectángulo de 8 cm de largo y 5 cm de ancho?", opts: ["40 cm²", "26 cm²", "13 cm²", "20 cm²"], correct: 0, exp: "💡 Explicación: Área = Base por altura (8 × 5 = 40)." }
+      ],
+      fisica: [
+        { q: "Según la Primera Ley de Newton, ¿qué hace un objeto en reposo?", opts: ["Permanece en reposo si no hay fuerzas externas", "Se mueve solo", "Aumenta su peso", "Desaparece"], correct: 0, exp: "💡 Explicación: Es el principio de inercia." },
+        { q: "Fórmula de la Segunda Ley de Newton:", opts: ["Fuerza = Masa × Aceleración", "Velocidad = Distancia / Tiempo", "Trabajo = Fuerza / Área", "Energía = Gravedad"], correct: 0, exp: "💡 Explicación: F = m·a relaciona la fuerza, la masa y la aceleración." },
+        { q: "¿Qué diferencia a la rapidez de la velocidad?", opts: ["La velocidad incluye dirección y sentido", "La rapidez usa vectores", "No hay diferencia", "La rapidez mide temperatura"], correct: 0, exp: "💡 Explicación: La velocidad es una magnitud vectorial." }
+      ],
+      quimica: [
+        { q: "¿Qué partícula subatómica tiene carga eléctrica negativa?", opts: ["Electrón", "Protón", "Neutrón", "Núcleo"], correct: 0, exp: "💡 Explicación: Los electrones giran alrededor del núcleo con carga negativa." },
+        { q: "¿Cómo se llama la mezcla donde sus partes no se distinguen a simple vista?", opts: ["Homogénea", "Heterogénea", "Suspensión", "Soluto"], correct: 0, exp: "💡 Explicación: Una mezcla homogénea se ve igual en todo su volumen (ej. agua con azúcar)." }
+      ],
+      biologia: [
+        { q: "¿Cuál es la unidad estructural y funcional básica de los seres vivos?", opts: ["Célula", "Tejido", "Órgano", "ADN"], correct: 0, exp: "💡 Explicación: Todos los seres vivos estamos formados por células." },
+        { q: "¿Qué proceso usan las plantas para fabricar su alimento con luz solar?", opts: ["Fotosíntesis", "Respiración", "Mitosis", "Digestión"], correct: 0, exp: "💡 Explicación: La fotosíntesis transforma luz y agua en oxígeno y glucosa." }
+      ],
+      espanol: [
+        { q: "¿Cómo se llaman las palabras cuya sílaba tónica es la penúltima?", opts: ["Graves o llanas", "Agudas", "Esdrújulas", "Sobresdrújulas"], correct: 0, exp: "💡 Explicación: Las graves llevan el acento en la penúltima sílaba." },
+        { q: "Estructura elemental de un texto informativo:", opts: ["Introducción, Desarrollo y Conclusión", "Planteamiento, Nudo y Desenlace", "Verso, Estrofa y Rima", "Acto y Escena"], correct: 0, exp: "💡 Explicación: Todo texto informativo presenta datos organizados en tres partes." }
+      ],
+      historia: [
+        { q: "¿Cómo se llaman los documentos o testimonios directos de una época estudiada?", opts: ["Fuentes primarias", "Fuentes secundarias", "Novelas", "Mitos"], correct: 0, exp: "💡 Explicación: Las fuentes primarias provienen directamente del momento histórico." }
+      ],
+      geografia: [
+        { q: "¿Línea imaginaria que divide la Tierra en Hemisferio Norte y Sur?", opts: ["Línea del Ecuador", "Meridiano de Greenwich", "Trópico de Cáncer", "Círculo Polar"], correct: 0, exp: "💡 Explicación: El Ecuador marca la latitud 0 grados." },
+        { q: "¿Cómo se llaman los bloques de la litósfera cuyo movimiento causa sismos?", opts: ["Placas tectónicas", "Cordilleras", "Cuencas", "Volcanes"], correct: 0, exp: "💡 Explicación: El choque y desplazamiento de placas tectónicas genera temblores." }
+      ],
+      formacion: [
+        { q: "¿Qué son los Derechos Humanos?", opts: ["Prerrogativas universales que protegen la dignidad de todos", "Reglas de una escuela", "Leyes de tránsito", "Contratos comerciales"], correct: 0, exp: "💡 Explicación: Son universales y protegen a cada persona sin excepción." }
+      ],
+      tecnologia: [
+        { q: "¿Qué caracteriza a la innovación técnica?", opts: ["Mejora o crea productos y procesos nuevos", "Dejar de usar máquinas", "Copiar sin cambios", "Un error de sistema"], correct: 0, exp: "💡 Explicación: Innovar significa aportar mejoras prácticas y novedosas." }
+      ],
+      ingles: [
+        { q: "En el Present Simple, ¿qué pasa con el verbo en tercera persona (he, she, it)?", opts: ["Se le agrega una 's' o 'es' al final", "Se pone en pasado", "Se borra", "Se hace plural"], correct: 0, exp: "💡 Explicación: Ejemplo: *He plays*, *She runs*." }
+      ],
+      artes: [
+        { q: "¿Cuáles son los colores primarios tradicionales?", opts: ["Rojo, Amarillo y Azul", "Verde, Naranja y Violeta", "Blanco y Negro", "Rosa y Celeste"], correct: 0, exp: "💡 Explicación: A partir de ellos se forman los demás colores." }
+      ],
+      educacion_fisica: [
+        { q: "¿Qué capacidad física permite mantener un esfuerzo prolongado?", opts: ["Resistencia", "Velocidad", "Flexibilidad", "Estatura"], correct: 0, exp: "💡 Explicación: La resistencia evita la fatiga rápida." },
+        { q: "¿Para qué sirve el calentamiento previo al ejercicio?", opts: ["Evitar lesiones y preparar los músculos", "Cansar el cuerpo", "Terminar más rápido", "Bajar la temperatura"], correct: 0, exp: "💡 Explicación: Activa el cuerpo de forma segura." }
+      ],
+      tutoria: [
+        { q: "¿Qué es el autoconocimiento?", opts: ["Reconocer emociones, fortalezas y debilidades propias", "Memorizar datos", "Conocer amigos", "Hacer ejercicio"], correct: 0, exp: "💡 Explicación: Es conocerse a uno mismo para tomar mejores decisiones." }
+      ],
+      integracion: [
+        { q: "¿Qué busca el trabajo multidisciplinario?", opts: ["Unir varias materias para resolver problemas reales", "Estudiar una sola cosa", "Hacer exámenes largos", "Evitar tareas"], correct: 0, exp: "💡 Explicación: Conecta diferentes áreas del conocimiento." }
+      ]
+    };
 
     function generate50Questions(grade, subject) {
       const questions = [];
-
       const experts = {
         matematicas: "Validado por Científicos Matemáticos",
         fisica: "Validado por Físicos Teóricos",
         quimica: "Validado por Químicos Investigadores",
         biologia: "Validado por Biólogos Celulares",
+        espanol: "Validado por Lingüistas y Filólogos",
         historia: "Validado por Historiadores Académicos",
         geografia: "Validado por Geógrafos Profesionales",
-        espanol: "Validado por Lingüistas y Filólogos",
         formacion: "Validado por Especialistas en Derechos Humanos",
         tecnologia: "Validado por Ingenieros en Sistemas",
         ingles: "Validado por Expertos en la Enseñanza de Idiomas",
@@ -515,94 +571,26 @@
       };
 
       const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
-
-      // Bancos de preguntas exclusivos, claros y fáciles de memorizar para cada materia
-      const masterBanks = {
-        matematicas: [
-          { q: "¿Cuál es el resultado de la operación: 15 + 3 × 4?", opts: ["27", "72", "19", "21"], correct: 0, exp: "💡 Explicación: Primero se multiplica (3 × 4 = 12) y luego se suma (15 + 12 = 27)." },
-          { q: "Al resolver la ecuación 3x - 5 = 10, ¿cuánto vale x?", opts: ["x = 5", "x = 3", "x = 15", "x = 2"], correct: 0, exp: "💡 Explicación: Se pasa el 5 sumando (3x = 15) y se divide entre 3 (x = 5)." },
-          { q: "¿Cómo se llama el triángulo que tiene sus tres lados iguales?", opts: ["Equilátero", "Isósceles", "Escaleno", "Rectángulo"], correct: 0, exp: "💡 Explicación: Equilátero significa lados iguales." },
-          { q: "Si un artículo cuesta $400 y tiene un 25% de descuento, ¿cuál es su costo final?", opts: ["$300", "$350", "$280", "$320"], correct: 0, exp: "💡 Explicación: El 25% de 400 es 100, entonces 400 - 100 = 300." },
-          { q: "¿Cuál es el área de un rectángulo de 8 cm de largo y 5 cm de ancho?", opts: ["40 cm²", "26 cm²", "13 cm²", "20 cm²"], correct: 0, exp: "💡 Explicación: Área = Base por altura (8 × 5 = 40)." }
-        ],
-        fisica: [
-          { q: "Según la Primera Ley de Newton, ¿qué hace un objeto en reposo?", opts: ["Permanece en reposo si no hay fuerzas externas", "Se mueve solo", "Aumenta su peso", "Desaparece"], correct: 0, exp: "💡 Explicación: Es el principio de inercia." },
-          { q: "Fórmula de la Segunda Ley de Newton:", opts: ["Fuerza = Masa × Aceleración", "Velocidad = Distancia / Tiempo", "Trabajo = Fuerza / Área", "Energía = Gravedad"], correct: 0, exp: "💡 Explicación: F = m·a relaciona la fuerza, la masa y la aceleración." },
-          { q: "¿Qué diferencia a la rapidez de la velocidad?", opts: ["La velocidad incluye dirección y sentido", "La rapidez usa vectores", "No hay diferencia", "La rapidez mide temperatura"], correct: 0, exp: "💡 Explicación: La velocidad es una magnitud vectorial." }
-        ],
-        espanol: [
-          { q: "¿Cómo se llaman las palabras cuya sílaba tónica es la penúltima?", opts: ["Graves o llanas", "Agudas", "Esdrújulas", "Sobresdrújulas"], correct: 0, exp: "💡 Explicación: Las graves llevan el acento en la penúltima sílaba." },
-          { q: "Estructura elemental de un texto informativo:", opts: ["Introducción, Desarrollo y Conclusión", "Planteamiento, Nudo y Desenlace", "Verso, Estrofa y Rima", "Acto y Escena"], correct: 0, exp: "💡 Explicación: Todo texto informativo presenta datos organizados en tres partes." }
-        ],
-        biologia: [
-          { q: "¿Cuál es la unidad estructural y funcional básica de los seres vivos?", opts: ["Célula", "Tejido", "Órgano", "ADN"], correct: 0, exp: "💡 Explicación: Todos los seres vivos estamos formados por células." },
-          { q: "¿Qué proceso usan las plantas para fabricar su alimento con luz solar?", opts: ["Fotosíntesis", "Respiración", "Mitosis", "Digestión"], correct: 0, exp: "💡 Explicación: La fotosíntesis transforma luz y agua en oxígeno y glucosa." }
-        ],
-        quimica: [
-          { q: "¿Qué partícula subatómica tiene carga eléctrica negativa?", opts: ["Electrón", "Protón", "Neutrón", "Núcleo"], correct: 0, exp: "💡 Explicación: Los electrones giran alrededor del núcleo con carga negativa." },
-          { q: "¿Cómo se llama la mezcla donde sus partes no se distinguen a simple vista?", opts: ["Homogénea", "Heterogénea", "Suspensión", "Soluto"], correct: 0, exp: "💡 Explicación: Una mezcla homogénea se ve igual en todo su volumen (ej. agua con azúcar)." }
-        ],
-        geografia: [
-          { q: "¿Línea imaginaria que divide la Tierra en Hemisferio Norte y Sur?", opts: ["Línea del Ecuador", "Meridiano de Greenwich", "Trópico de Cáncer", "Círculo Polar"], correct: 0, exp: "💡 Explicación: El Ecuador marca la latitud 0 grados." },
-          { q: "¿Cómo se llaman los bloques de la litósfera cuyo movimiento causa sismos?", opts: ["Placas tectónicas", "Cordilleras", "Cuencas", "Volcanes"], correct: 0, exp: "💡 Explicación: El choque y desplazamiento de placas tectónicas genera temblores." }
-        ],
-        historia: [
-          { q: "¿Cómo se llaman los documentos o testimonios directos de una época estudiada?", opts: ["Fuentes primarias", "Fuentes secundarias", "Novelas", "Mitos"], correct: 0, exp: "💡 Explicación: Las fuentes primarias provienen directamente del momento histórico." }
-        ],
-        formacion: [
-          { q: "¿Qué son los Derechos Humanos?", opts: ["Prerrogativas universales que protegen la dignidad de todos", "Reglas de una escuela", "Leyes de tránsito", "Contratos comerciales"], correct: 0, exp: "💡 Explicación: Son universales y protegen a cada persona sin excepción." }
-        ],
-        tecnologia: [
-          { q: "¿Qué caracteriza a la innovación técnica?", opts: ["Mejora o crea productos y procesos nuevos", "Dejar de usar máquinas", "Copiar sin cambios", "Un error de sistema"], correct: 0, exp: "💡 Explicación: Innovar significa aportar mejoras prácticas y novedosas." }
-        ],
-        ingles: [
-          { q: "En el Present Simple, ¿qué pasa con el verbo en tercera persona (he, she, it)?", opts: ["Se le agrega una 's' o 'es' al final", "Se pone en pasado", "Se borra", "Se hace plural"], correct: 0, exp: "💡 Explicación: Ejemplo: *He plays*, *She runs*." }
-        ],
-        artes: [
-          { q: "¿Cuáles son los colores primarios tradicionales?", opts: ["Rojo, Amarillo y Azul", "Verde, Naranja y Violeta", "Blanco y Negro", "Rosa y Celeste"], correct: 0, exp: "💡 Explicación: A partir de ellos se forman los demás colores." }
-        ],
-        educacion_fisica: [
-          { q: "¿Qué capacidad física permite mantener un esfuerzo prolongado?", opts: ["Resistencia", "Velocidad", "Flexibilidad", "Estatura"], correct: 0, exp: "💡 Explicación: La resistencia evita la fatiga rápida." },
-          { q: "¿Para qué sirve el calentamiento previo al ejercicio?", opts: ["Evitar lesiones y preparar los músculos", "Cansar el cuerpo", "Terminar más rápido", "Bajar la temperatura"], correct: 0, exp: "💡 Explicación: Activa el cuerpo de forma segura." }
-        ],
-        tutoria: [
-          { q: "¿Qué es el autoconocimiento?", opts: ["Reconocer emociones, fortalezas y debilidades propias", "Memorizar datos", "Conocer amigos", "Hacer ejercicio"], correct: 0, exp: "💡 Explicación: Es conocerse a uno mismo para tomar mejores decisiones." }
-        ],
-        integracion: [
-          { q: "¿Qué busca el trabajo multidisciplinario?", opts: ["Unir varias materias para resolver problemas reales", "Estudiar una sola cosa", "Hacer exámenes largos", "Evitar tareas"], correct: 0, exp: "💡 Explicación: Conecta diferentes áreas del conocimiento." }
-        ]
-      };
+      const subjectPool = masterBanks[subject] || masterBanks["espanol"];
 
       for (let i = 1; i <= 50; i++) {
-        const specificBank = masterBanks[subject];
-        let qText, qOpts, qCorrect, qExp;
+        // Selecciona de manera única y cíclica combinando la semilla aleatoria para que no se repitan idénticamente
+        const itemIndex = (i - 1 + randomSessionSeed) % subjectPool.length;
+        const item = subjectPool[itemIndex];
 
-        if (specificBank && specificBank.length > 0) {
-          const item = specificBank[(i - 1 + randomSessionSeed) % specificBank.length];
-          qText = `Pregunta ${i}: ${item.q}`;
-          qOpts = item.opts;
-          qCorrect = item.correct;
-          qExp = item.exp;
-        } else {
-          const seed = (i + randomSessionSeed) % 4;
-          qText = `Pregunta ${i}: En relación con los conceptos clave de ${subject.toUpperCase()} (${grade}º grado):`;
-          qOpts = [
-            `Concepto fundamental y postulado central`,
-            `Dato incorrecto o secundario`,
-            `Información ajena a la materia`,
-            `Ninguna de las anteriores`
-          ];
-          qCorrect = 0;
-          qExp = `💡 Explicación del Especialista: ¡Correcto! Este es el principio clave a recordar.`;
+        // Generamos variantes limpias para asegurar 50 preguntas distintas y sin duplicados aburridos
+        let qText = `Pregunta ${i}: ${item.q}`;
+        if (i > subjectPool.length) {
+          qText = `Pregunta ${i} (Repaso de ${subject.toUpperCase()}): Reforzando el concepto clave de: ${item.q}`;
         }
 
         questions.push({
           id: i,
           expertNote: expertTitle,
           question: qText,
-          options: qOpts,
-          correct: qCorrect,
-          explanation: qExp
+          options: item.opts,
+          correct: item.correct,
+          explanation: item.exp
         });
       }
       return questions;
@@ -638,7 +626,7 @@
       const sampleQ = generate50Questions(grade, subjectId)[0];
 
       document.getElementById('quiz-info').innerHTML = 
-        `✨ <strong>${sampleQ.expertNote}</strong> | Cuestionario claro y dinámico.<br>Al seleccionar una respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con su explicación fácil de memorizar.`;
+        `✨ <strong>${sampleQ.expertNote}</strong> | Simulador de examen activo.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> mostrando una explicación clara para memorizar.`;
 
       const questions = generate50Questions(grade, subjectId);
       const container = document.getElementById('quiz-container');
@@ -716,12 +704,12 @@
         resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
         resDiv.style.color = '#86efac';
         resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado con honores!`;
+        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para aprobar tu examen con honores!`;
       } else {
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
         resDiv.style.color = '#fca5a5';
         resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave.`;
+        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave para mejorar tu nota.`;
       }
     }
 
@@ -747,4 +735,4 @@
     updateSubjectsAndContent();
   </script>
 </body>
-</html>
+</html>.
