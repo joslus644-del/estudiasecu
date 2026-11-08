@@ -12,6 +12,8 @@
       --card-bg: #ffffff;
       --text-color: #0f172a;
       --text-muted: #64748b;
+      --success: #10b981;
+      --danger: #ef4444;
     }
 
     * {
@@ -152,8 +154,21 @@
 
     .question-block {
       margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #e2e8f0;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .question-block.correct-answer {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .question-block.wrong-answer {
+      border-color: var(--danger);
+      background: #fef2f2;
     }
 
     .question-title {
@@ -184,6 +199,26 @@
 
     .option-label:hover {
       background: #f1f5f9;
+    }
+
+    .explanation {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .question-block.correct-answer .explanation {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .question-block.wrong-answer .explanation {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
     }
 
     .submit-btn {
@@ -369,7 +404,6 @@
       const questions = [];
 
       for (let i = 1; i <= 50; i++) {
-        // Rotación de opciones según la semana del año actual
         const seed = (i + week) % 4;
         const options = [
           "Concepto fundamental o definición principal",
@@ -378,11 +412,20 @@
           "Ninguna de las opciones anteriores"
         ];
 
+        // Explicaciones detalladas para cada caso de la rotación
+        const explanations = [
+          "¡Correcto! Esta opción corresponde al concepto fundamental y postulado principal de la materia. Las demás opciones manejan distractores genéricos.",
+          "¡Correcto! Se refiere directamente a la aplicación práctica y uso dentro del trimestre. Las demás alternativas no corresponden al núcleo del tema.",
+          "¡Correcto! Describe la propiedad secundaria o característica general evaluada en este nivel. Las otras opciones carecen de sustento teórico.",
+          "¡Correcto! En este caso particular, ninguna de las primeras tres opciones cumple con los requisitos del enunciado, por lo que esta es la respuesta válida."
+        ];
+
         questions.push({
           id: i,
           question: `Pregunta ${i}: ¿Cuál es el postulado, función o característica principal relacionada con este tema de ${subject.toUpperCase()} en ${grade}º grado?`,
           options: options,
-          correct: seed
+          correct: seed,
+          explanation: explanations[seed]
         });
       }
       return questions;
@@ -438,9 +481,12 @@
         });
 
         container.innerHTML += `
-          <div class="question-block">
+          <div class="question-block" id="block-${index}">
             <p class="question-title">${q.question}</p>
             <ul class="options-list">${optsHtml}</ul>
+            <div class="explanation" id="exp-${index}">
+              <strong>Retroalimentación:</strong> ${q.explanation}
+            </div>
           </div>
         `;
       });
@@ -453,9 +499,16 @@
       let score = 0;
 
       questions.forEach((q, index) => {
+        const block = document.getElementById(`block-${index}`);
         const checked = document.querySelector(`input[name="q${index}"]:checked`);
+        
+        block.classList.remove('correct-answer', 'wrong-answer');
+
         if (checked && parseInt(checked.value) === q.correct) {
           score++;
+          block.classList.add('correct-answer');
+        } else {
+          block.classList.add('wrong-answer');
         }
       });
 
@@ -466,11 +519,11 @@
       if (pct >= 60) {
         resDiv.style.background = '#d1fae5';
         resDiv.style.color = '#065f46';
-        resDiv.innerText = `¡Excelente! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado!`;
+        resDiv.innerText = `¡Excelente! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado! Revisa arriba los detalles correctos e incorrectos de cada pregunta.`;
       } else {
         resDiv.style.background = '#fee2e2';
         resDiv.style.color = '#991b1b';
-        resDiv.innerText = `Obtuviste ${score} de 50 aciertos (${pct}%). Te sugerimos repasar la pestaña de Puntos Clave e intentar de nuevo.`;
+        resDiv.innerText = `Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones marcadas en rojo para entender por qué fallaste y repasa los Puntos Clave.`;
       }
     }
 
