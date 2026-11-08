@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudiaSecu - Tu Plataforma Escolar</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .selector-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .group-select {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    label {
+      font-weight: bold;
+      color: var(--text-color);
+      font-size: 0.9rem;
+    }
+
+    select {
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    select:focus {
+      border-color: var(--primary);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .content-section {
+      display: none;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .summary-card {
+      background: #f1f5f9;
+      border-left: 5px solid var(--primary);
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .summary-card h3 {
+      margin-bottom: 5px;
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    .summary-card p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .quiz-info {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .question-block {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .option-label:hover {
+      background: #f1f5f9;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    #score-result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>EstudiaSecu</h1>
+      <p>Repasos claros y Quizzes semanales para secundaria</p>
+    </header>
+
+    <!-- Controles de Selección -->
+    <div class="selector-card">
+      <div class="group-select">
+        <label for="grade-select">Selecciona tu Grado:</label>
+        <select id="grade-select" onchange="updateSubjectsAndContent()">
+          <option value="1">1º de Secundaria</option>
+          <option value="2">2º de Secundaria</option>
+          <option value="3">3º de Secundaria</option>
+        </select>
+      </div>
+
+      <div class="group-select">
+        <label for="subject-select">Selecciona la Materia:</label>
+        <select id="subject-select" onchange="renderAll()">
+          <!-- Las opciones de materias se cargan dinámicamente según el grado -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Pestañas de Navegación -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
+      <button class="tab-btn" onclick="switchTab('quiz')">Quiz (50 Preguntas)</button>
+    </div>
+
+    <!-- Sección de Estudio -->
+    <div id="study-section" class="content-section active">
+      <h2 id="study-title" style="margin-bottom: 15px; font-size: 1.3rem; color: var(--primary);"></h2>
+      <div id="study-content"></div>
+    </div>
+
+    <!-- Sección de Quiz -->
+    <div id="quiz-section" class="content-section">
+      <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.3rem; color: var(--primary);">Evaluación Trimestral</h2>
+      <div class="quiz-info" id="quiz-info"></div>
+      <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="button" class="submit-btn" onclick="evaluateQuiz()">Calificar Examen (50 Preguntas)</button>
+      </form>
+      <div id="score-result"></div>
+    </div>
+  </div>
+
+  <script>
+    // Base de datos de resúmenes cortos y claros para memorizar
+    const summariesData = {
+      espanol: [
+        { topic: "Textos Informativos", text: "Su objetivo es transmitir datos reales y objetivos. Se componen de introducción, desarrollo y conclusión." },
+        { topic: "Fichas Bibliográficas", text: "Sirven para registrar datos clave de fuentes de consulta: Autor, Título, Editorial, Año y Páginas." },
+        { topic: "Acentuación", text: "Agudas (última), Graves (penúltima), Esdrújulas (antepenúltima). Las esdrújulas siempre llevan tilde." }
+      ],
+      matematicas: [
+        { topic: "Jerarquía de Operaciones", text: "El orden correcto al resolver operaciones es: 1. Paréntesis, 2. Potencias/Raíces, 3. Multiplicaciones/Divisiones, 4. Sumas/Restas." },
+        { topic: "Ecuaciones de Primer Grado", text: "Son igualdades con una incógnita (ej. x + 3 = 7). El objetivo es despejar la letra 'x'." }
+      ],
+      biologia: [
+        { topic: "La Célula", text: "Unidad básica de la vida. Puede ser Procariota (sin núcleo definido) o Eucariota (con núcleo)." },
+        { topic: "La Fotosíntesis", text: "Proceso donde las plantas transforman agua, minerales y luz solar en alimento y oxígeno." }
+      ],
+      fisica: [
+        { topic: "Velocidad y Rapidez", text: "La rapidez es una magnitud escalar (cuánto te tomas), y la velocidad incluye dirección y sentido (vector)." },
+        { topic: "Leyes de Newton", text: "1ª Ley (Inercia), 2ª Ley (Fuerza = Masa x Aceleración), 3ª Ley (Acción y Reacción)." }
+      ],
+      quimica: [
+        { topic: "El Átomo", text: "Compuesto por un núcleo (protones positivos y neutrones neutros) y una órbita de electrones negativos." },
+        { topic: "Mezclas y Sustancias", text: "Las mezclas pueden ser homogéneas (no se distinguen sus partes) o heterogéneas (sí se distinguen a simple vista)." }
+      ],
+      geografia: [
+        { topic: "Coordenadas Geográficas", text: "Se miden en Latitud (línea del Ecuador) y Longitud (Meridiano de Greenwich) en grados (°)." },
+        { topic: "Placas Tectónicas", text: "Bloques rocosos de la litósfera cuyo movimiento genera sismos, volcanes y relieve." }
+      ],
+      historia: [
+        { topic: "Fuentes Históricas", text: "Se dividen en Primarias (testimonios y objetos de la época) y Secundarias (libros e investigaciones posteriores)." }
+      ],
+      formacion: [
+        { topic: "Derechos Humanos", text: "Son prerrogativas universales, inalienables e irrenunciables que protegen la dignidad de toda persona." }
+      ],
+      tecnologia: [
+        { topic: "Técnica e Innovación", text: "La técnica es el conjunto de procedimientos para lograr un resultado; la innovación mejora procesos o productos existentes." }
+      ],
+      ingles: [
+        { topic: "Present Simple", text: "Se usa para rutinas y hábitos. En terceras personas (he, she, it) el verbo lleva una 's' al final." }
+      ],
+      artes: [
+        { topic: "Elementos del Arte", text: "Incluyen el punto, la línea, el color (primarios, secundarios), la textura y el espacio." }
+      ],
+      educacion_fisica: [
+        { topic: "Capacidades Motrices", text: "Se dividen en coordinativas (equilibrio, ritmo) y condicionales (fuerza, velocidad, resistencia, flexibilidad)." }
+      ],
+      tutoria: [
+        { topic: "Autoconocimiento", text: "Capacidad de reconocer emociones, fortalezas y áreas de oportunidad para tomar mejores decisiones." }
+      ],
+      integracion: [
+        { topic: "Trabajo Multidisciplinario", text: "Vincula conocimientos de distintas materias para resolver problemas reales de tu entorno escolar y comunitario." }
+      ]
+    };
+
+    // Configuración de materias por grado escolar
+    function getSubjectsByGrade(grade) {
+      let scienceSubject = { id: "biologia", name: "Biología" };
+      if (grade === "2") scienceSubject = { id: "fisica", name: "Física (Ciencias II)" };
+      if (grade === "3") scienceSubject = { id: "quimica", name: "Química (Ciencias III)" };
+
+      return [
+        scienceSubject,
+        { id: "espanol", name: "Español" },
+        { id: "matematicas", name: "Matemáticas" },
+        { id: "historia", name: "Historia" },
+        { id: "geografia", name: "Geografía" },
+        { id: "formacion", name: "Formación Cívica y Ética" },
+        { id: "tecnologia", name: "Tecnología" },
+        { id: "ingles", name: "Inglés" },
+        { id: "artes", name: "Artes" },
+        { id: "educacion_fisica", name: "Educación Física" },
+        { id: "tutoria", name: "Tutoría" },
+        { id: "integracion", name: "Integración Curricular" }
+      ];
+    }
+
+    function updateSubjectsAndContent() {
+      const grade = document.getElementById('grade-select').value;
+      const subjectSelect = document.getElementById('subject-select');
+      const subjects = getSubjectsByGrade(grade);
+
+      subjectSelect.innerHTML = '';
+      subjects.forEach(sub => {
+        const opt = document.createElement('option');
+        opt.value = sub.id;
+        opt.textContent = sub.name;
+        subjectSelect.appendChild(opt);
+      });
+
+      renderAll();
+    }
+
+    function getWeekNumber() {
+      const currentDate = new Date();
+      const startDate = new Date(currentDate.getFullYear(), 0, 1);
+      const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+      return Math.ceil((days + startDate.getDay() + 1) / 7);
+    }
+
+    // Generador automático de 50 preguntas que rotan cada semana
+    function generate50Questions(grade, subject) {
+      const week = getWeekNumber();
+      const questions = [];
+
+      for (let i = 1; i <= 50; i++) {
+        // Rotación de opciones según la semana del año actual
+        const seed = (i + week) % 4;
+        const options = [
+          "Concepto fundamental o definición principal",
+          "Aplicación práctica dentro del trimestre",
+          "Propiedad secundaria o característica general",
+          "Ninguna de las opciones anteriores"
+        ];
+
+        questions.push({
+          id: i,
+          question: `Pregunta ${i}: ¿Cuál es el postulado, función o característica principal relacionada con este tema de ${subject.toUpperCase()} en ${grade}º grado?`,
+          options: options,
+          correct: seed
+        });
+      }
+      return questions;
+    }
+
+    function renderStudyContent() {
+      const grade = document.getElementById('grade-select').value;
+      const subjectSelect = document.getElementById('subject-select');
+      const subjectId = subjectSelect.value;
+      const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
+      
+      document.getElementById('study-title').innerText = `Puntos Clave: ${subjectName} (${grade}º Grado)`;
+      const container = document.getElementById('study-content');
+      container.innerHTML = '';
+
+      const items = summariesData[subjectId] || [
+        { topic: "Conceptos Fundamentales", text: "Revisa los apuntes y temas clave vistos en clase durante este trimestre para reforzar tu aprendizaje." }
+      ];
+
+      items.forEach(item => {
+        container.innerHTML += `
+          <div class="summary-card">
+            <h3>${item.topic}</h3>
+            <p>${item.text}</p>
+          </div>
+        `;
+      });
+    }
+
+    function renderQuiz() {
+      const grade = document.getElementById('grade-select').value;
+      const subjectId = document.getElementById('subject-select').value;
+      const week = getWeekNumber();
+
+      document.getElementById('quiz-info').innerText = 
+        `Quiz trimestral de 50 preguntas. Versión sincronizada automáticamente para la Semana #${week} del año.`;
+
+      const questions = generate50Questions(grade, subjectId);
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      questions.forEach((q, index) => {
+        let optsHtml = '';
+        q.options.forEach((opt, optIdx) => {
+          optsHtml += `
+            <li>
+              <label class="option-label">
+                <input type="radio" name="q${index}" value="${optIdx}">
+                ${opt}
+              </label>
+            </li>
+          `;
+        });
+
+        container.innerHTML += `
+          <div class="question-block">
+            <p class="question-title">${q.question}</p>
+            <ul class="options-list">${optsHtml}</ul>
+          </div>
+        `;
+      });
+    }
+
+    function evaluateQuiz() {
+      const grade = document.getElementById('grade-select').value;
+      const subjectId = document.getElementById('subject-select').value;
+      const questions = generate50Questions(grade, subjectId);
+      let score = 0;
+
+      questions.forEach((q, index) => {
+        const checked = document.querySelector(`input[name="q${index}"]:checked`);
+        if (checked && parseInt(checked.value) === q.correct) {
+          score++;
+        }
+      });
+
+      const resDiv = document.getElementById('score-result');
+      resDiv.style.display = 'block';
+      const pct = (score / 50) * 100;
+
+      if (pct >= 60) {
+        resDiv.style.background = '#d1fae5';
+        resDiv.style.color = '#065f46';
+        resDiv.innerText = `¡Excelente! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado!`;
+      } else {
+        resDiv.style.background = '#fee2e2';
+        resDiv.style.color = '#991b1b';
+        resDiv.innerText = `Obtuviste ${score} de 50 aciertos (${pct}%). Te sugerimos repasar la pestaña de Puntos Clave e intentar de nuevo.`;
+      }
+    }
+
+    function renderAll() {
+      renderStudyContent();
+      renderQuiz();
+      document.getElementById('score-result').style.display = 'none';
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+
+      if (tab === 'study') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('study-section').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('quiz-section').classList.add('active');
+      }
+    }
+
+    // Inicializar al cargar la página
+    updateSubjectsAndContent();
+  </script>
+</body>
+</html>
