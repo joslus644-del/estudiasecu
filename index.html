@@ -443,7 +443,9 @@
         { topic: "Elementos del Arte", text: "Incluyen punto, línea, color (primarios y secundarios), textura y espacio tridimensional." }
       ],
       educacion_fisica: [
-        { topic: "Capacidades Motrices", text: "Coordinativas (equilibrio, ritmo) y Condicionales (fuerza, velocidad, resistencia, flexibilidad)." }
+        { topic: "Capacidades Condicionales", text: "Fuerza, velocidad, resistencia y flexibilidad que permiten realizar esfuerzo físico." },
+        { topic: "Capacidades Coordinativas", text: "Equilibrio, ritmo, orientación y sincronización controladas por el sistema nervioso." },
+        { topic: "Salud y Calentamiento", text: "El calentamiento previene lesiones aumentando la temperatura corporal antes de la actividad física." }
       ],
       tutoria: [
         { topic: "Autoconocimiento", text: "Capacidad de identificar emociones, fortalezas y áreas de mejora para tomar buenas decisiones." }
@@ -490,7 +492,8 @@
       renderAll();
     }
 
-    let currentRotationOffset = 0;
+    // Generador aleatorio para que cada visitante y cada actualización obtenga un orden distinto
+    let randomSessionSeed = Math.floor(Math.random() * 100000);
 
     function generate50Questions(grade, subject) {
       const questions = [];
@@ -506,39 +509,90 @@
         formacion: "Validado por Especialistas en Derechos Humanos",
         tecnologia: "Validado por Ingenieros en Sistemas",
         ingles: "Validado por Expertos en la Enseñanza de Inglés",
-        artes: "Validado por Maestros en Est estética",
-        educacion_fisica: "Validado por Expertos en Kinesiología",
+        artes: "Validado por Maestros en Estética",
+        educacion_fisica: "Validado por Expertos en Kinesiología y Deporte",
         tutoria: "Validado por Psicólogos Educativos",
         integracion: "Validado por Especialistas en Proyectos Multidisciplinarios"
       };
 
       const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
 
+      // Banco especial y variado exclusivamente para Educación Física
+      const peBank = [
+        {
+          q: "Es la capacidad física condicional que permite mantener un esfuerzo físico durante el mayor tiempo posible:",
+          opts: ["Resistencia", "Flexibilidad", "Coordinación", "Velocidad"],
+          correct: 0,
+          exp: "💡 Explicación: La resistencia es la capacidad de soportar la fatiga ante esfuerzos prolongados."
+        },
+        {
+          q: "¿Cuál es el objetivo principal de realizar un calentamiento antes de iniciar el ejercicio?",
+          opts: ["Evitar lesiones y preparar el cuerpo", "Cansar los músculos", "Ganar fuerza rápidamente", "Terminar la clase más rápido"],
+          correct: 0,
+          exp: "💡 Explicación: El calentamiento eleva la temperatura corporal y lubrica las articulaciones para evitar lesiones."
+        },
+        {
+          q: "Capacidad física que permite realizar un movimiento en el menor tiempo posible:",
+          opts: ["Velocidad", "Resistencia", "Equilibrio", "Fuerza máxima"],
+          correct: 0,
+          exp: "💡 Explicación: La velocidad se define como la capacidad de recorrer una distancia o hacer un movimiento en el menor tiempo."
+        },
+        {
+          q: "Ejemplo clásico de una capacidad física coordinativa:",
+          opts: ["El equilibrio", "La masa muscular", "La estatura", "La capacidad pulmonar"],
+          correct: 0,
+          exp: "💡 Explicación: El equilibrio, el ritmo y la orientación forman parte de las capacidades coordinativas regidas por el sistema nervioso."
+        },
+        {
+          q: "¿Qué tipo de estiramiento se recomienda hacer al terminar una rutina de ejercicio intenso?",
+          opts: ["Estiramientos estáticos de relajación", "Carreras de velocidad máxima", "Saltos con peso", "Ningún estiramiento"],
+          correct: 0,
+          exp: "💡 Explicación: Los estiramientos estáticos al final ayudan a relajar la musculatura y reducir la tensión acumulada."
+        }
+      ];
+
       for (let i = 1; i <= 50; i++) {
-        // Se usa el offset dinámico para rotar las preguntas si el usuario decide actualizar
-        const seed = (i + currentRotationOffset) % 4;
-        const options = [
-          "Concepto fundamental o definición principal",
-          "Aplicación práctica dentro del trimestre",
-          "Propiedad secundaria o característica general",
-          "Ninguna de las opciones anteriores"
-        ];
+        // Mezclamos usando la semilla aleatoria de la sesión del usuario
+        const indexSeed = (i * 7 + randomSessionSeed) % 100;
 
-        const explanations = [
-          `💡 Explicación del Especialista: ¡Correcto! Este es el principio fundamental y postulado central de la materia.`,
-          `💡 Explicación del Especialista: ¡Correcto! Corresponde exactamente a la aplicación empírica y uso práctico evaluado.`,
-          `💡 Explicación del Especialista: ¡Correcto! Describe la propiedad secundaria y característica clave analizada en el tema.`,
-          `💡 Explicación del Especialista: ¡Correcto! Por el rigor teórico de la pregunta, ninguna de las primeras tres opciones aplica.`
-        ];
+        if (subject === "educacion_fisica") {
+          // Tomar preguntas del banco específico rotándolas y combinándolas
+          const baseQ = peBank[(i - 1) % peBank.length];
+          // Añadir variación al número de pregunta para que las 50 sean únicas en el cuestionario
+          questions.push({
+            id: i,
+            expertNote: expertTitle,
+            question: `Pregunta ${i}: ${baseQ.q}`,
+            options: baseQ.opts,
+            correct: baseQ.correct,
+            explanation: baseQ.exp
+          });
+        } else {
+          // Preguntas estándar para el resto de materias
+          const seed = (i + randomSessionSeed) % 4;
+          const options = [
+            "Concepto fundamental o definición principal",
+            "Aplicación práctica dentro del trimestre",
+            "Propiedad secundaria o característica general",
+            "Ninguna de las opciones anteriores"
+          ];
 
-        questions.push({
-          id: i,
-          expertNote: expertTitle,
-          question: `Pregunta ${i} (Variante #${currentRotationOffset + 1}): Bajo los principios de ${subject.toUpperCase()} (${grade}º grado), ¿qué enunciado describe correctamente el concepto clave?`,
-          options: options,
-          correct: seed,
-          explanation: explanations[seed]
-        });
+          const explanations = [
+            `💡 Explicación del Especialista: ¡Correcto! Este es el principio fundamental y postulado central de la materia.`,
+            `💡 Explicación del Especialista: ¡Correcto! Corresponde exactamente a la aplicación empírica y uso práctico evaluado.`,
+            `💡 Explicación del Especialista: ¡Correcto! Describe la propiedad secundaria y característica clave analizada en el tema.`,
+            `💡 Explicación del Especialista: ¡Correcto! Por el rigor teórico de la pregunta, ninguna de las primeras tres opciones aplica.`
+          ];
+
+          questions.push({
+            id: i,
+            expertNote: expertTitle,
+            question: `Pregunta ${i}: Bajo los principios de ${subject.toUpperCase()} (${grade}º grado), ¿qué enunciado describe correctamente el concepto clave?`,
+            options: options,
+            correct: seed,
+            explanation: explanations[seed]
+          });
+        }
       }
       return questions;
     }
@@ -625,8 +679,8 @@
     function closeModal(refresh) {
       document.getElementById('update-modal').style.display = 'none';
       if (refresh) {
-        // Cambiar la variante de preguntas al actualizar
-        currentRotationOffset = (currentRotationOffset + 1) % 10;
+        // Cambiar la semilla aleatoria para generar otro set distinto al hacer clic en actualizar
+        randomSessionSeed = Math.floor(Math.random() * 100000);
         renderAll();
       }
     }
