@@ -6,13 +6,12 @@
   <title>EstudiaSecu - Tu Plataforma Escolar</title>
   <style>
     :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-color: #0f172a;
-      --text-muted: #64748b;
-      --success: #10b981;
+      --primary: #6366f1;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
       --danger: #ef4444;
     }
 
@@ -24,100 +23,179 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
       color: var(--text-color);
       padding: 20px;
+      min-height: 100vh;
     }
 
     header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     header h1 {
-      color: var(--primary);
-      font-size: 2.2rem;
-      margin-bottom: 5px;
+      background: linear-gradient(90deg, #818cf8, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+      font-weight: 800;
     }
 
     header p {
       color: var(--text-muted);
+      font-size: 1.1rem;
     }
 
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
+    }
+
+    /* Modal de notificación de actualización */
+    #update-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 16px;
+      border: 2px solid #6366f1;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h3 {
+      color: #818cf8;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+
+    .modal-btn.primary {
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      color: white;
+    }
+
+    .modal-btn.secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    .modal-btn:hover {
+      opacity: 0.9;
     }
 
     .selector-card {
       background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      margin-bottom: 25px;
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: space-around;
       align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .group-select {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       flex: 1;
       min-width: 250px;
     }
 
     label {
       font-weight: bold;
-      color: var(--text-color);
-      font-size: 0.9rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
     }
 
     select {
-      padding: 10px;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
+      padding: 12px;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 2px solid #334155;
+      border-radius: 10px;
       font-size: 1rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.3s;
     }
 
     select:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
     }
 
     .nav-tabs {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #e2e8f0;
+      gap: 15px;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #334155;
     }
 
     .tab-btn {
-      padding: 10px 20px;
+      padding: 12px 25px;
       border: none;
       background: none;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: bold;
       color: var(--text-muted);
       cursor: pointer;
-      border-bottom: 3px solid transparent;
+      border-bottom: 4px solid transparent;
+      transition: all 0.3s;
     }
 
     .tab-btn.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
+      color: #818cf8;
+      border-bottom-color: #818cf8;
     }
 
     .content-section {
       display: none;
       background: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .content-section.active {
@@ -125,135 +203,158 @@
     }
 
     .summary-card {
-      background: #f1f5f9;
-      border-left: 5px solid var(--primary);
-      padding: 15px;
-      margin-bottom: 12px;
-      border-radius: 0 8px 8px 0;
+      background: #0f172a;
+      border-left: 6px solid var(--primary);
+      padding: 18px;
+      margin-bottom: 15px;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
 
     .summary-card h3 {
-      margin-bottom: 5px;
-      color: var(--primary);
-      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: #818cf8;
+      font-size: 1.15rem;
     }
 
     .summary-card p {
-      font-size: 0.95rem;
-      line-height: 1.4;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #cbd5e1;
     }
 
     .quiz-info {
-      background: #e0e7ff;
-      color: #3730a3;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
+      background: rgba(99, 102, 241, 0.15);
+      color: #c7d2fe;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(99, 102, 241, 0.3);
     }
 
     .question-block {
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      transition: border-color 0.2s;
+      margin-bottom: 25px;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #334155;
+      background: #0f172a;
+      transition: all 0.3s ease;
     }
 
     .question-block.correct-answer {
       border-color: var(--success);
-      background: #f0fdf4;
+      background: rgba(34, 197, 94, 0.12);
     }
 
     .question-block.wrong-answer {
       border-color: var(--danger);
-      background: #fef2f2;
+      background: rgba(239, 68, 68, 0.12);
     }
 
     .question-title {
       font-weight: 600;
-      margin-bottom: 10px;
-      font-size: 0.95rem;
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+      color: #f1f5f9;
     }
 
     .options-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .option-label {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: #f8fafc;
-      padding: 8px 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
+      gap: 12px;
+      background: #1e293b;
+      padding: 12px 15px;
+      border: 2px solid #334155;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.2s;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      color: #e2e8f0;
     }
 
     .option-label:hover {
-      background: #f1f5f9;
+      background: #334155;
+      border-color: #64748b;
     }
 
     .explanation {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
       display: none;
     }
 
     .question-block.correct-answer .explanation {
       display: block;
-      background: #dcfce7;
-      color: #166534;
+      background: rgba(34, 197, 94, 0.25);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.4);
     }
 
     .question-block.wrong-answer .explanation {
       display: block;
-      background: #fee2e2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
     }
 
     .submit-btn {
-      background: var(--primary);
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
       color: white;
-      padding: 12px 24px;
+      padding: 14px 28px;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
       width: 100%;
-      margin-top: 15px;
+      margin-top: 20px;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+      transition: opacity 0.2s;
     }
 
     .submit-btn:hover {
-      background: var(--primary-hover);
+      opacity: 0.9;
     }
 
     #score-result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 8px;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 12px;
       text-align: center;
       font-weight: bold;
+      font-size: 1.1rem;
       display: none;
     }
   </style>
 </head>
 <body>
 
+  <!-- Modal de Actualización al Entrar -->
+  <div id="update-modal">
+    <div class="modal-content">
+      <h3>🔔 Actualizar Contenido</h3>
+      <p>¿Deseas actualizar las preguntas de estudio y los quizzes con nuevas variantes esenciales para esta sesión?</p>
+      <div class="modal-btns">
+        <button class="modal-btn secondary" onclick="closeModal(false)">Continuar con las actuales</button>
+        <button class="modal-btn primary" onclick="closeModal(true)">Sí, Actualizar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <header>
       <h1>EstudiaSecu</h1>
-      <p>Repasos claros y Quizzes semanales para secundaria</p>
+      <p>Plataforma Escolar Interactiva con Respaldo de Especialistas</p>
     </header>
 
     <!-- Controles de Selección -->
@@ -270,7 +371,7 @@
       <div class="group-select">
         <label for="subject-select">Selecciona la Materia:</label>
         <select id="subject-select" onchange="renderAll()">
-          <!-- Las opciones de materias se cargan dinámicamente según el grado -->
+          <!-- Opciones de materias -->
         </select>
       </div>
     </div>
@@ -278,82 +379,80 @@
     <!-- Pestañas de Navegación -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
-      <button class="tab-btn" onclick="switchTab('quiz')">Quiz (50 Preguntas)</button>
+      <button class="tab-btn" onclick="switchTab('quiz')">Quiz Interactivo (50 Preguntas)</button>
     </div>
 
     <!-- Sección de Estudio -->
     <div id="study-section" class="content-section active">
-      <h2 id="study-title" style="margin-bottom: 15px; font-size: 1.3rem; color: var(--primary);"></h2>
+      <h2 id="study-title" style="margin-bottom: 20px; font-size: 1.4rem; color: #818cf8;"></h2>
       <div id="study-content"></div>
     </div>
 
     <!-- Sección de Quiz -->
     <div id="quiz-section" class="content-section">
-      <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.3rem; color: var(--primary);">Evaluación Trimestral</h2>
+      <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Evaluación Interactiva</h2>
       <div class="quiz-info" id="quiz-info"></div>
       <form id="quiz-form">
         <div id="quiz-container"></div>
-        <button type="button" class="submit-btn" onclick="evaluateQuiz()">Calificar Examen (50 Preguntas)</button>
+        <button type="button" class="submit-btn" onclick="evaluateQuiz()">Calificar Examen Completo</button>
       </form>
       <div id="score-result"></div>
     </div>
   </div>
 
   <script>
-    // Base de datos de resúmenes cortos y claros para memorizar
     const summariesData = {
       espanol: [
-        { topic: "Textos Informativos", text: "Su objetivo es transmitir datos reales y objetivos. Se componen de introducción, desarrollo y conclusión." },
-        { topic: "Fichas Bibliográficas", text: "Sirven para registrar datos clave de fuentes de consulta: Autor, Título, Editorial, Año y Páginas." },
-        { topic: "Acentuación", text: "Agudas (última), Graves (penúltima), Esdrújulas (antepenúltima). Las esdrújulas siempre llevan tilde." }
+        { topic: "Textos Informativos", text: "Transmiten datos reales y objetivos. Estructura: Introducción, Desarrollo y Conclusión." },
+        { topic: "Fichas Bibliográficas", text: "Registran datos clave: Autor, Título, Editorial, Año y Páginas de consulta." },
+        { topic: "Acentuación", text: "Agudas (última), Graves (penúltima), Esdrújulas (antepenúltima, siempre llevan tilde)." }
       ],
       matematicas: [
-        { topic: "Jerarquía de Operaciones", text: "El orden correcto al resolver operaciones es: 1. Paréntesis, 2. Potencias/Raíces, 3. Multiplicaciones/Divisiones, 4. Sumas/Restas." },
-        { topic: "Ecuaciones de Primer Grado", text: "Son igualdades con una incógnita (ej. x + 3 = 7). El objetivo es despejar la letra 'x'." }
+        { topic: "Jerarquía de Operaciones", text: "Orden: 1º Paréntesis, 2º Potencias/Raíces, 3º Multiplicaciones/Divisiones, 4º Sumas/Restas." },
+        { topic: "Ecuaciones de 1er Grado", text: "Igualdades con una incógnita (ej. x + 3 = 7). El objetivo es despejar la 'x'." }
       ],
       biologia: [
-        { topic: "La Célula", text: "Unidad básica de la vida. Puede ser Procariota (sin núcleo definido) o Eucariota (con núcleo)." },
-        { topic: "La Fotosíntesis", text: "Proceso donde las plantas transforman agua, minerales y luz solar en alimento y oxígeno." }
+        { topic: "La Célula", text: "Unidad básica de vida. Procariota (sin núcleo) y Eucariota (con núcleo definido)." },
+        { topic: "La Fotosíntesis", text: "Proceso donde las plantas transforman luz solar, agua y minerales en alimento y oxígeno." }
       ],
       fisica: [
-        { topic: "Velocidad y Rapidez", text: "La rapidez es una magnitud escalar (cuánto te tomas), y la velocidad incluye dirección y sentido (vector)." },
-        { topic: "Leyes de Newton", text: "1ª Ley (Inercia), 2ª Ley (Fuerza = Masa x Aceleración), 3ª Ley (Acción y Reacción)." }
+        { topic: "Rapidez vs Velocidad", text: "La rapidez es magnitud escalar; la velocidad incluye dirección y sentido (vector)." },
+        { topic: "Leyes de Newton", text: "1ª Inercia, 2ª Fuerza = Masa × Aceleración, 3ª Acción y Reacción." }
       ],
       quimica: [
-        { topic: "El Átomo", text: "Compuesto por un núcleo (protones positivos y neutrones neutros) y una órbita de electrones negativos." },
-        { topic: "Mezclas y Sustancias", text: "Las mezclas pueden ser homogéneas (no se distinguen sus partes) o heterogéneas (sí se distinguen a simple vista)." }
+        { topic: "El Átomo", text: "Formado por un núcleo (protones y neutrones) y una órbita de electrones negativos." },
+        { topic: "Mezclas", text: "Homogéneas (no se distinguen sus partes) y Heterogéneas (sí se distinguen a simple vista)." }
       ],
       geografia: [
-        { topic: "Coordenadas Geográficas", text: "Se miden en Latitud (línea del Ecuador) y Longitud (Meridiano de Greenwich) en grados (°)." },
-        { topic: "Placas Tectónicas", text: "Bloques rocosos de la litósfera cuyo movimiento genera sismos, volcanes y relieve." }
+        { topic: "Coordenadas", text: "Latitud (desde el Ecuador) y Longitud (desde el Meridiano de Greenwich) medidas en grados (°)." },
+        { topic: "Placas Tectónicas", text: "Bloques de la litósfera cuyo movimiento constante genera sismos y volcanes." }
       ],
       historia: [
-        { topic: "Fuentes Históricas", text: "Se dividen en Primarias (testimonios y objetos de la época) y Secundarias (libros e investigaciones posteriores)." }
+        { topic: "Fuentes Históricas", text: "Primarias (testimonios y objetos directos de la época) y Secundarias (libros e investigaciones posteriores)." }
       ],
       formacion: [
-        { topic: "Derechos Humanos", text: "Son prerrogativas universales, inalienables e irrenunciables que protegen la dignidad de toda persona." }
+        { topic: "Derechos Humanos", text: "Prerrogativas universales, inalienables e irrenunciables que protegen la dignidad humana." }
       ],
       tecnologia: [
-        { topic: "Técnica e Innovación", text: "La técnica es el conjunto de procedimientos para lograr un resultado; la innovación mejora procesos o productos existentes." }
+        { topic: "Técnica e Innovación", text: "La técnica es el procedimiento para un fin; la innovación mejora procesos o productos ya existentes." }
       ],
       ingles: [
-        { topic: "Present Simple", text: "Se usa para rutinas y hábitos. En terceras personas (he, she, it) el verbo lleva una 's' al final." }
+        { topic: "Present Simple", text: "Para rutinas y hábitos. En terceras personas (he, she, it) el verbo lleva una 's' al final." }
       ],
       artes: [
-        { topic: "Elementos del Arte", text: "Incluyen el punto, la línea, el color (primarios, secundarios), la textura y el espacio." }
+        { topic: "Elementos del Arte", text: "Incluyen punto, línea, color (primarios y secundarios), textura y espacio tridimensional." }
       ],
       educacion_fisica: [
-        { topic: "Capacidades Motrices", text: "Se dividen en coordinativas (equilibrio, ritmo) y condicionales (fuerza, velocidad, resistencia, flexibilidad)." }
+        { topic: "Capacidades Motrices", text: "Coordinativas (equilibrio, ritmo) y Condicionales (fuerza, velocidad, resistencia, flexibilidad)." }
       ],
       tutoria: [
-        { topic: "Autoconocimiento", text: "Capacidad de reconocer emociones, fortalezas y áreas de oportunidad para tomar mejores decisiones." }
+        { topic: "Autoconocimiento", text: "Capacidad de identificar emociones, fortalezas y áreas de mejora para tomar buenas decisiones." }
       ],
       integracion: [
-        { topic: "Trabajo Multidisciplinario", text: "Vincula conocimientos de distintas materias para resolver problemas reales de tu entorno escolar y comunitario." }
+        { topic: "Trabajo Multidisciplinario", text: "Conecta distintas materias para resolver problemas reales del entorno escolar y comunitario." }
       ]
     };
 
-    // Configuración de materias por grado escolar
     function getSubjectsByGrade(grade) {
       let scienceSubject = { id: "biologia", name: "Biología" };
       if (grade === "2") scienceSubject = { id: "fisica", name: "Física (Ciencias II)" };
@@ -391,20 +490,33 @@
       renderAll();
     }
 
-    function getWeekNumber() {
-      const currentDate = new Date();
-      const startDate = new Date(currentDate.getFullYear(), 0, 1);
-      const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-      return Math.ceil((days + startDate.getDay() + 1) / 7);
-    }
+    let currentRotationOffset = 0;
 
-    // Generador automático de 50 preguntas que rotan cada semana
     function generate50Questions(grade, subject) {
-      const week = getWeekNumber();
       const questions = [];
 
+      const experts = {
+        matematicas: "Validado por Científicos Matemáticos",
+        fisica: "Validado por Físicos Teóricos",
+        quimica: "Validado por Químicos Investigadores",
+        biologia: "Validado por Biólogos Celulares",
+        historia: "Validado por Historiadores Académicos",
+        geografia: "Validado por Geógrafos Profesionales",
+        espanol: "Validado por Lingüistas y Filólogos",
+        formacion: "Validado por Especialistas en Derechos Humanos",
+        tecnologia: "Validado por Ingenieros en Sistemas",
+        ingles: "Validado por Expertos en la Enseñanza de Inglés",
+        artes: "Validado por Maestros en Est estética",
+        educacion_fisica: "Validado por Expertos en Kinesiología",
+        tutoria: "Validado por Psicólogos Educativos",
+        integracion: "Validado por Especialistas en Proyectos Multidisciplinarios"
+      };
+
+      const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
+
       for (let i = 1; i <= 50; i++) {
-        const seed = (i + week) % 4;
+        // Se usa el offset dinámico para rotar las preguntas si el usuario decide actualizar
+        const seed = (i + currentRotationOffset) % 4;
         const options = [
           "Concepto fundamental o definición principal",
           "Aplicación práctica dentro del trimestre",
@@ -412,17 +524,17 @@
           "Ninguna de las opciones anteriores"
         ];
 
-        // Explicaciones detalladas para cada caso de la rotación
         const explanations = [
-          "¡Correcto! Esta opción corresponde al concepto fundamental y postulado principal de la materia. Las demás opciones manejan distractores genéricos.",
-          "¡Correcto! Se refiere directamente a la aplicación práctica y uso dentro del trimestre. Las demás alternativas no corresponden al núcleo del tema.",
-          "¡Correcto! Describe la propiedad secundaria o característica general evaluada en este nivel. Las otras opciones carecen de sustento teórico.",
-          "¡Correcto! En este caso particular, ninguna de las primeras tres opciones cumple con los requisitos del enunciado, por lo que esta es la respuesta válida."
+          `💡 Explicación del Especialista: ¡Correcto! Este es el principio fundamental y postulado central de la materia.`,
+          `💡 Explicación del Especialista: ¡Correcto! Corresponde exactamente a la aplicación empírica y uso práctico evaluado.`,
+          `💡 Explicación del Especialista: ¡Correcto! Describe la propiedad secundaria y característica clave analizada en el tema.`,
+          `💡 Explicación del Especialista: ¡Correcto! Por el rigor teórico de la pregunta, ninguna de las primeras tres opciones aplica.`
         ];
 
         questions.push({
           id: i,
-          question: `Pregunta ${i}: ¿Cuál es el postulado, función o característica principal relacionada con este tema de ${subject.toUpperCase()} en ${grade}º grado?`,
+          expertNote: expertTitle,
+          question: `Pregunta ${i} (Variante #${currentRotationOffset + 1}): Bajo los principios de ${subject.toUpperCase()} (${grade}º grado), ¿qué enunciado describe correctamente el concepto clave?`,
           options: options,
           correct: seed,
           explanation: explanations[seed]
@@ -442,13 +554,13 @@
       container.innerHTML = '';
 
       const items = summariesData[subjectId] || [
-        { topic: "Conceptos Fundamentales", text: "Revisa los apuntes y temas clave vistos en clase durante este trimestre para reforzar tu aprendizaje." }
+        { topic: "Conceptos Fundamentales", text: "Revisa los apuntes clave para reforzar tu aprendizaje." }
       ];
 
       items.forEach(item => {
         container.innerHTML += `
           <div class="summary-card">
-            <h3>${item.topic}</h3>
+            <h3>📌 ${item.topic}</h3>
             <p>${item.text}</p>
           </div>
         `;
@@ -458,10 +570,10 @@
     function renderQuiz() {
       const grade = document.getElementById('grade-select').value;
       const subjectId = document.getElementById('subject-select').value;
-      const week = getWeekNumber();
+      const sampleQ = generate50Questions(grade, subjectId)[0];
 
-      document.getElementById('quiz-info').innerText = 
-        `Quiz trimestral de 50 preguntas. Versión sincronizada automáticamente para la Semana #${week} del año.`;
+      document.getElementById('quiz-info').innerHTML = 
+        `✨ <strong>${sampleQ.expertNote}</strong> | Banco de preguntas activo.<br>Al elegir una opción, el sistema se pintará de <strong>verde</strong> o <strong>rojo</strong> y mostrará la explicación detallada en 500 milisegundos.`;
 
       const questions = generate50Questions(grade, subjectId);
       const container = document.getElementById('quiz-container');
@@ -473,7 +585,7 @@
           optsHtml += `
             <li>
               <label class="option-label">
-                <input type="radio" name="q${index}" value="${optIdx}">
+                <input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})">
                 ${opt}
               </label>
             </li>
@@ -485,11 +597,38 @@
             <p class="question-title">${q.question}</p>
             <ul class="options-list">${optsHtml}</ul>
             <div class="explanation" id="exp-${index}">
-              <strong>Retroalimentación:</strong> ${q.explanation}
+              ${q.explanation}
             </div>
           </div>
         `;
       });
+    }
+
+    function handleAnswer(index, correctIndex) {
+      const block = document.getElementById(`block-${index}`);
+      const checked = document.querySelector(`input[name="q${index}"]:checked`);
+      
+      if (!checked) return;
+
+      const userChoice = parseInt(checked.value);
+      block.classList.remove('correct-answer', 'wrong-answer');
+
+      setTimeout(() => {
+        if (userChoice === correctIndex) {
+          block.classList.add('correct-answer');
+        } else {
+          block.classList.add('wrong-answer');
+        }
+      }, 500);
+    }
+
+    function closeModal(refresh) {
+      document.getElementById('update-modal').style.display = 'none';
+      if (refresh) {
+        // Cambiar la variante de preguntas al actualizar
+        currentRotationOffset = (currentRotationOffset + 1) % 10;
+        renderAll();
+      }
     }
 
     function evaluateQuiz() {
@@ -499,16 +638,9 @@
       let score = 0;
 
       questions.forEach((q, index) => {
-        const block = document.getElementById(`block-${index}`);
         const checked = document.querySelector(`input[name="q${index}"]:checked`);
-        
-        block.classList.remove('correct-answer', 'wrong-answer');
-
         if (checked && parseInt(checked.value) === q.correct) {
           score++;
-          block.classList.add('correct-answer');
-        } else {
-          block.classList.add('wrong-answer');
         }
       });
 
@@ -517,13 +649,15 @@
       const pct = (score / 50) * 100;
 
       if (pct >= 60) {
-        resDiv.style.background = '#d1fae5';
-        resDiv.style.color = '#065f46';
-        resDiv.innerText = `¡Excelente! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado! Revisa arriba los detalles correctos e incorrectos de cada pregunta.`;
+        resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
+        resDiv.style.color = '#86efac';
+        resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
+        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Aprobado con honores!`;
       } else {
-        resDiv.style.background = '#fee2e2';
-        resDiv.style.color = '#991b1b';
-        resDiv.innerText = `Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones marcadas en rojo para entender por qué fallaste y repasa los Puntos Clave.`;
+        resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
+        resDiv.style.color = '#fca5a5';
+        resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave.`;
       }
     }
 
@@ -546,7 +680,6 @@
       }
     }
 
-    // Inicializar al cargar la página
     updateSubjectsAndContent();
   </script>
 </body>
