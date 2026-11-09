@@ -444,18 +444,18 @@
   </div>
 
   <script>
-    // Resúmenes científicos estructurados con los 4 ejes de Matemáticas 2 (Álgebra, Proporcionalidad, Geometría, Estadística y Probabilidad)
+    // Resúmenes científicos estructurados con los 4 ejes obligatorios de Matemáticas 2 (Álgebra, Proporcionalidad, Geometría, Estadística y Probabilidad)
     const summariesData = {
       1: {
         matematicas: {
           1: [
-            { topic: "Sistemas de Numeraicón y Fracciones", text: "Operaciones fundamentales con números enteros, fracciones y decimales aplicados en la recta numérica." },
-            { topic: "Proporcionalidad Directa", text: "Cálculo de porcentajes, reglas de tres simples y problemas de proporcionalidad cotidiana." }
+            { topic: "Números Enteros y Fracciones", text: "Estudio de las operaciones con números con signo, suma, resta y ubicación en la recta numérica fraccionaria." },
+            { topic: "Proporcionalidad y Porcentajes", text: "Cálculo de razones, proporciones directas y resolución de problemas cotidianos de porcentajes y descuentos." }
           ]
         },
         biologia: {
           1: [
-            { topic: "Biodiversidad y Célula", text: "Estudio de las características de los seres vivos y la estructura celular fundamental." }
+            { topic: "La Célula y la Biodiversidad", text: "Estructura celular básica, características de los seres vivos y clasificación taxonómica general." }
           ]
         }
       },
@@ -482,7 +482,7 @@
         },
         fisica: {
           1: [
-            { topic: "Cinemática y Dinámica", text: "Estudio científico de la aceleración, velocidad vectorial y la aplicación de las Leyes de Newton." }
+            { topic: "Cinemática y Dinámica", text: "Estudio científico de la aceleración, velocidad vectorial y la aplicación formal de las Leyes de Newton." }
           ]
         },
         espanol: {
@@ -560,18 +560,22 @@
 
     let randomSessionSeed = Math.floor(Math.random() * 100000);
 
-    // Bancos de preguntas científicos, corregidos y específicos para cada grado y materia
+    // Bancos de preguntas científicas con contenido totalmente variado para 1ro y 2do de secundaria
     const masterBanks = {
       1: {
         matematicas: {
           1: [
-            { q: "¿Cuál es el resultado de operar (-8) + (+5) en el conjunto de números enteros?", opts: ["-3", "+3", "-13", "+13"], correct: 0, exp: "💡 Explicación científica: Al sumar un número negativo con uno positivo de mayor valor absoluto, prevalece el signo del número mayor y se restan sus valores." },
-            { q: "Al simplificar la fracción 24/36 a su mínima expresión irreducible, ¿qué fracción se obtiene?", opts: ["2/3", "4/6", "3/4", "1/2"], correct: 0, exp: "💡 Explicación científica: Dividiendo numerador y denominador entre su máximo común divisor (12), obtenemos 2/3." }
+            { q: "¿Cuál es el resultado de operar (-9) + (+4) en el conjunto de números enteros?", opts: ["-5", "+5", "-13", "+13"], correct: 0, exp: "💡 Explicación científica: Al sumar un número negativo con uno positivo de mayor valor absoluto, prevalece el signo negativo y se restan sus valores." },
+            { q: "Al simplificar la fracción 18/24 a su mínima expresión irreducible, ¿qué fracción se obtiene?", opts: ["3/4", "2/3", "4/5", "1/2"], correct: 0, exp: "💡 Explicación científica: Dividiendo numerador y denominador entre su máximo común divisor (6), obtenemos 3/4." },
+            { q: "¿Cómo se le llama al triángulo que tiene tres lados de distinta longitud?", opts: ["Escaleno", "Isósceles", "Equilátero", "Rectángulo"], correct: 0, exp: "💡 Explicación científica: El triángulo escaleno carece de lados iguales." },
+            { q: "Si una prenda de vestir cuesta $400 y tiene un descuento del 25%, ¿cuál es su precio final?", opts: ["$300", "$350", "$280", "$320"], correct: 0, exp: "💡 Explicación científica: El 25% de 400 es 100, por lo que 400 - 100 = 300." },
+            { q: "¿Cuál es el área de un rectángulo cuya base mide 8 cm y su altura mide 5 cm?", opts: ["40 cm²", "26 cm²", "13 cm²", "48 cm²"], correct: 0, exp: "💡 Explicación científica: El área del rectángulo se calcula multiplicando base por altura (8 × 5 = 40)." }
           ]
         },
         biologia: {
           1: [
-            { q: "¿Cuál es la unidad estructural y funcional básica de todos los organismos vivos?", opts: ["La célula", "El tejido muscular", "El órgano complejo", "El sistema circulatorio"], correct: 0, exp: "💡 Explicación científica: Toda forma de vida conocida está compuesta por una o más células." }
+            { q: "¿Cuál es la unidad estructural y funcional básica de todos los organismos vivos?", opts: ["La célula", "El tejido muscular", "El órgano complejo", "El sistema circulatorio"], correct: 0, exp: "💡 Explicación científica: Toda forma de vida conocida está compuesta por células." },
+            { q: "¿Qué proceso realizan los organismos autótrofos (como las plantas) para sintetizar glucosa usando luz solar?", opts: ["Fotosíntesis", "Respiración celular", "Mitosis", "Fermentación"], correct: 0, exp: "💡 Explicación científica: Los cloroplastos transforman la energía lumínica en energía química." }
           ]
         }
       },
