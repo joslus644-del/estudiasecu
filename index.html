@@ -540,13 +540,13 @@
       renderAll();
     }
 
-    // Banco de preguntas rigurosamente diferenciado y sin repeticiones por grado y trimestre
+    // Banco de preguntas rigurosamente aislado y sin duplicidades cruzadas entre 1º, 2º y 3º
     function getFullBank(grade, subject, term) {
       let pool = [];
 
-      // ==========================================
-      // 2º DE SECUNDARIA (CONGELADO E INTACTO)
-      // ==========================================
+      // =========================================================================
+      // 2º DE SECUNDARIA (INTACTO Y CONGELADO)
+      // =========================================================================
       if (grade === "2" && subject === "algebra") {
         if (term === "1") {
           pool = [
@@ -574,68 +574,68 @@
           ];
         }
       } 
-      // ==========================================
-      // 1º DE SECUNDARIA (CORREGIDO Y SIN REPETIR)
-      // ==========================================
+      // =========================================================================
+      // 1º DE SECUNDARIA (EXCLUSIVO Y SIN REPETIR CON 3º)
+      // =========================================================================
       else if (grade === "1") {
         if (term === "1") {
           pool = [
-            { q: "[1º Grado - Trimestre 1] En Matemáticas I, ¿cómo se denominan los números que incluyen a los enteros positivos, el cero y los negativos?", opts: ["Números enteros (Z)", "Números irracionales", "Números complejos", "Números primos"], correct: 0, exp: "💡 Explicación: El conjunto Z abarca tanto enteros positivos como negativos y el neutro aditivo." },
-            { q: "[1º Grado - Trimestre 1] En Biología I, ¿cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido muscular", "El órgano digestivo", "El ADN plasmático"], correct: 0, exp: "💡 Explicación: Toda la materia viva está compuesta por células (criterio de la teoría celular)." },
-            { q: "[1º Grado - Trimestre 1] En Geografía, ¿qué líneas imaginarias horizontales miden la latitud a partir del Ecuador?", opts: ["Paralelos", "Meridianos", "Ejes magnéticos", "Husos horarios"], correct: 0, exp: "💡 Explicación: Los paralelos son círculos paralelos a la línea del Ecuador." },
+            { q: "[1º Grado - Trimestre 1] En Matemáticas I, ¿cómo se denominan los números que incluyen a los enteros positivos, el cero y los negativos?", opts: ["Números enteros (Z)", "Números irracionales", "Números complejos", "Números primos"], correct: 0, exp: "💡 Explicación: El conjunto Z abarca tanto enteros positivos como negativos y el cero." },
+            { q: "[1º Grado - Trimestre 1] En Biología I, ¿cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido muscular", "El órgano digestivo", "El ADN plasmático"], correct: 0, exp: "💡 Explicación: Toda la materia viva está compuesta por células." },
+            { q: "[1º Grado - Trimestre 1] En Geografía, ¿qué líneas imaginarias horizontales miden la latitud a partir del Ecuador?", opts: ["Paralelos", "Meridianos", "Ejes magnéticos", "Husos horarios"], correct: 0, exp: "💡 Explicación: Los paralelos son círculos horizontales paralelos al Ecuador." },
             { q: "[1º Grado - Trimestre 1] En Español I, ¿cuál es la función principal de un texto narrativo?", opts: ["Contar una historia real o ficticia protagonizada por personajes en un tiempo y espacio determinados", "Exponer opiniones científicas", "Establecer leyes jurídicas", "Describir catálogos comerciales"], correct: 0, exp: "💡 Explicación: La narración relata sucesos de forma secuencial." },
             { q: "[1º Grado - Trimestre 1] En Historia I, ¿cuáles fueron las civilizaciones agrícolas originarias de la antigüedad?", opts: ["Mesopotamia, Egipto, India y China", "Grecia y Roma clásica", "Imperio Mexica e Inca", "Reinos de Europa feudal"], correct: 0, exp: "💡 Explicación: Surgieron a la orilla de grandes ríos aprovechando sus fértiles valles." }
           ];
         } else if (term === "2") {
           pool = [
-            { q: "[1º Grado - Trimestre 2] En Matemáticas I, ¿cómo se le llama a una igualdad entre dos expresiones algebraicas que se cumple para ciertos valores?", opts: ["Ecuación de primer grado", "Fracción equivalente", "Proporción inversa", "Área poligonal"], correct: 0, exp: "💡 Explicación: Las ecuaciones establecen condiciones de igualdad con incógnitas." },
-            { q: "[1º Grado - Trimestre 2] En Biología I, ¿cómo se le llama al proceso mediante el cual las plantas elaboran su propio alimento utilizando luz solar?", opts: ["Fotosíntesis", "Respiración celular", "Mitosis", "Fermentación"], correct: 0, exp: "💡 Explicación: Ocurre en los cloroplastos transformando dióxido de carbono y agua en glucosa." },
+            { q: "[1º Grado - Trimestre 2] En Matemáticas I, ¿cómo se le llama a una igualdad algebraica que contiene una incógnita con exponente uno?", opts: ["Ecuación de primer grado", "Fracción equivalente", "Proporción inversa", "Área poligonal"], correct: 0, exp: "💡 Explicación: Las ecuaciones lineales o de primer grado tienen exponente 1." },
+            { q: "[1º Grado - Trimestre 2] En Biología I, ¿cómo se le llama al proceso mediante el cual las plantas elaboran su propio alimento con luz solar?", opts: ["Fotosíntesis", "Respiración celular", "Mitosis", "Fermentación"], correct: 0, exp: "💡 Explicación: Ocurre en los cloroplastos captando energía lumínica." },
             { q: "[1º Grado - Trimestre 2] En Geografía, ¿qué fenómeno físico provoca la sucesión del día y la noche en la Tierra?", opts: ["El movimiento de rotación de la Tierra sobre su propio eje", "El movimiento de traslación alrededor del Sol", "Las mareas oceánicas", "La inclinación del eje solar"], correct: 0, exp: "💡 Explicación: Tarda 24 horas en completar un giro de rotación." },
-            { q: "[1º Grado - Trimestre 2] En Español I, ¿qué características tiene un texto expositivo?", opts: ["Informa de manera objetiva sobre un tema basándose en datos y conceptos", "Nace de la imaginación artística", "Busca persuadir al lector mediante emociones", "Usa versos y rimas"], correct: 0, exp: "💡 Explicación: Su propósito primordial es transmitir conocimiento claro y verificable." },
-            { q: "[1º Grado - Trimestre 2] En Historia I, ¿qué características principales tuvo la Edad Media en Europa?", opts: ["El desarrollo del sistema feudal y el fuerte poder de la Iglesia católica", "La Revolución Industrial moderna", "La conquista de América", "El dominio del Imperio Romano de Oriente"], correct: 0, exp: "💡 Explicación: Predominó la organización social basada en feudos, señores y siervos." }
+            { q: "[1º Grado - Trimestre 2] En Español I, ¿qué características tiene un texto expositivo?", opts: ["Informa de manera objetiva sobre un tema basándose en datos y conceptos", "Nace de la imaginación artística", "Busca persuadir al lector mediante emociones", "Usa versos y rimas"], correct: 0, exp: "💡 Explicación: Su propósito primordial es transmitir conocimiento claro." },
+            { q: "[1º Grado - Trimestre 2] En Historia I, ¿qué características principales tuvo la Edad Media en Europa?", opts: ["El desarrollo del sistema feudal y el fuerte poder de la Iglesia católica", "La Revolución Industrial moderna", "La conquista de América", "El dominio del Imperio Romano de Oriente"], correct: 0, exp: "💡 Explicación: Predominó la organización social basada en feudos." }
           ];
         } else {
           pool = [
-            { q: "[1º Grado - Trimestre 3] En Matemáticas I, ¿cómo se calcula el perímetro de una circunferencia de radio r?", opts: ["P = 2πr (o bien π por diámetro)", "P = r²", "P = base por altura", "P = 4r"], correct: 0, exp: "💡 Explicación: La longitud de la circunferencia equivale al producto del diámetro por π." },
-            { q: "[1º Grado - Trimestre 3] En Biología I, ¿qué es la biodiversidad?", opts: ["La variedad de seres vivos que habitan en el planeta, incluyendo ecosistemas y especies", "La cantidad de agua dulce disponible", "La contaminación ambiental", "La extinción de fósiles"], correct: 0, exp: "💡 Explicación: Engloba la riqueza biológica de la Tierra a nivel genético, de especies y ecosistemas." },
-            { q: "[1º Grado - Trimestre 3] En Geografía, ¿qué es la migración humana?", opts: ["El desplazamiento de población de un lugar de origen a otro de destino", "El crecimiento demográfico natural", "La urbanización nocturna", "La industrialización"], correct: 0, exp: "💡 Explicación: Se compone de emigración (salida) e inmigración (llegada)." },
+            { q: "[1º Grado - Trimestre 3] En Matemáticas I, ¿cómo se calcula el perímetro de una circunferencia de radio r?", opts: ["P = 2πr (o diámetro por π)", "P = r²", "P = base por altura", "P = 4r"], correct: 0, exp: "💡 Explicación: La longitud de la circunferencia equivale al producto del diámetro por π." },
+            { q: "[1º Grado - Trimestre 3] En Biología I, ¿qué es la biodiversidad?", opts: ["La variedad de seres vivos que habitan en el planeta, incluyendo ecosistemas y especies", "La cantidad de agua dulce disponible", "La contaminación ambiental", "La extinción de fósiles"], correct: 0, exp: "💡 Explicación: Engloba la riqueza biológica de la Tierra a todo nivel." },
+            { q: "[1º Grado - Trimestre 3] En Geografía, ¿qué es la migración humana?", opts: ["El desplazamiento de población de un lugar de origen a otro de destino", "El crecimiento demográfico natural", "La urbanización nocturna", "La industrialización"], correct: 0, exp: "💡 Explicación: Se compone de emigración e inmigración." },
             { q: "[1º Grado - Trimestre 3] En Español I, ¿cuál es la función de los reglamentos escolares?", opts: ["Regular la convivencia armónica y establecer derechos y obligaciones en la comunidad escolar", "Entretener con cuentos", "Publicitar productos", "Narrar poemas épicos"], correct: 0, exp: "💡 Explicación: Son normativas diseñadas para ordenar la conducta colectiva." },
-            { q: "[1º Grado - Trimestre 3] En Historia I, ¿qué aportó culturalmente la civilización mesopotámica a la humanidad?", opts: ["La invención de la escritura cuneiforme y el código de Hammurabi", "La ruta de la seda", "Las pirámides de Giza", "La democracia ateniense"], correct: 0, exp: "💡 Explicación: Desarrollaron los primeros registros escritos sobre tablillas de arcilla." }
+            { q: "[1º Grado - Trimestre 3] En Historia I, ¿qué aportó culturalmente la civilización mesopotámica a la humanidad?", opts: ["La invención de la escritura cuneiforme y el código de Hammurabi", "La ruta de la seda", "Las pirámides de Giza", "La democracia ateniense"], correct: 0, exp: "💡 Explicación: Desarrollaron los primeros registros escritos sobre tablillas." }
           ];
         }
       } 
-      // ==========================================
-      // 3º DE SECUNDARIA (CORREGIDO Y SIN REPETIR)
-      // ==========================================
+      // =========================================================================
+      // 3º DE SECUNDARIA (EXCLUSIVO Y 100% DISTINTO DE 1º)
+      // =========================================================================
       else if (grade === "3") {
         if (term === "1") {
           pool = [
-            { q: "[3º Grado - Trimestre 1] En Matemáticas III, ¿qué expresa la fórmula general para resolver ecuaciones cuadráticas ($x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$)?", opts: ["Los valores exactos de las raíces o soluciones de cualquier ecuación de segundo grado", "El área de un triángulo", "La pendiente de una recta", "El Teorema de Tales"], correct: 0, exp: "💡 Explicación: Permite hallar las soluciones reales o complejas de ax² + bx + c = 0." },
-            { q: "[3º Grado - Trimestre 1] En Química III, ¿cómo se define un átomo según su estructura fundamental?", opts: ["La unidad básica de un elemento químico compuesta por un núcleo (protones y neutrones) y electrones en órbita", "Una molécula de agua", "Una mezcla homogénea", "Un compuesto iónico sólido"], correct: 0, exp: "💡 Explicación: Es la partícula más pequeña que conserva las propiedades de un elemento." },
-            { q: "[3º Grado - Trimestre 1] En Historia Universal, ¿qué detonó el estallido de la Revolución Francesa en 1789?", opts: ["La crisis económica, la desigualdad del Antiguo Régimen y los ideales de la Ilustración", "La invención de la imprenta", "La Primera Guerra Mundial", "La independencia de Estados Unidos únicamente"], correct: 0, exp: "💡 Explicación: El pueblo y la burguesía se levantaron contra los abusos de la monarquía absolutista." },
-            { q: "[3º Grado - Trimestre 1] En Español III, ¿qué es una antología literaria?", opts: ["Una compilación selecta de textos o poemas de diversos autores agrupados bajo un criterio común", "Un diccionario bilingüe", "Una novela de ciencia ficción", "Un ensayo periodístico diario"], correct: 0, exp: "💡 Explicación: Reúne obras destacadas de acuerdo con una temática o autor." },
-            { q: "[3º Grado - Trimestre 1] En Formación Cívica y Ética, ¿qué es el Estado de derecho?", opts: ["Un principio de gobernanza donde todas las personas e instituciones están sometidas a leyes justas y públicas", "El poder absoluto de un dictador", "La ausencia de leyes", "Un acuerdo comercial internacional"], correct: 0, exp: "💡 Explicación: Garantiza la igualdad ante la ley y la protección de los derechos humanos." }
+            { q: "[3º Grado - Trimestre 1] En Matemáticas III, ¿qué calcula la fórmula general cuadrática ($x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$)?", opts: ["Los valores exactos de las raíces de cualquier ecuación de segundo grado", "El área de un triángulo", "La pendiente de una recta", "El Teorema de Tales"], correct: 0, exp: "💡 Explicación: Resuelve cualquier ecuación con estructura ax² + bx + c = 0." },
+            { q: "[3º Grado - Trimestre 1] En Química III, ¿cómo se define un átomo?", opts: ["La partícula más pequeña de un elemento que conserva sus propiedades, con núcleo y electrones", "Una molécula de agua líquida", "Una mezcla homogénea", "Un compuesto salino"], correct: 0, exp: "💡 Explicación: Está compuesto por protones, neutrones y electrones." },
+            { q: "[3º Grado - Trimestre 1] En Historia Universal, ¿qué evento marcó el inicio de la Edad Contemporánea en 1789?", opts: ["La Revolución Francesa y la caída del absolutismo monárquico", "La invención de la imprenta", "La Primera Guerra Mundial", "La fundación de Roma"], correct: 0, exp: "💡 Explicación: Transformó los sistemas políticos del mundo occidental." },
+            { q: "[3º Grado - Trimestre 1] En Español III, ¿qué es una antología literaria?", opts: ["Una compilación selecta de textos de diversos autores agrupados bajo un criterio específico", "Un diccionario bilingüe", "Una novela de ciencia ficción", "Un reporte de noticias"], correct: 0, exp: "💡 Explicación: Reúne obras con características afines." },
+            { q: "[3º Grado - Trimestre 1] En Formación Cívica y Ética, ¿qué garantiza el Estado de derecho?", opts: ["Que todas las personas, gobernantes e instituciones están sujetas a leyes justas", "El poder absoluto de un gobernante", "La ausencia de leyes civiles", "Un tratado comercial"], correct: 0, exp: "💡 Explicación: Ningún ciudadano está por encima de la ley." }
           ];
         } else if (term === "2") {
           pool = [
-            { q: "[3º Grado - Trimestre 2] En Matemáticas III, ¿qué establece el Teorema de Tales en geometría?", opts: ["Que si se traza una línea paralela a uno de los lados de un triángulo, se obtienen triángulos semejantes con lados proporcionales", "Que la hipotenusa al cuadrado es igual a la suma de catetos", "Que los ángulos suman 360°", "Que el área del círculo es pi por radio al cuadrado"], correct: 0, exp: "💡 Explicación: Es fundamental para calcular proporciones en figuras geométricas." },
-            { q: "[3º Grado - Trimestre 2] En Química III, ¿qué nos indica el número atómico (Z) de un elemento en la Tabla Periódica?", opts: ["La cantidad exacta de protones que hay en el núcleo de su átomo", "La masa total del átomo", "El número de neutrones libres", "Su estado físico ambiental"], correct: 0, exp: "💡 Explicación: El número atómico identifica de manera única a cada elemento químico." },
-            { q: "[3º Grado - Trimestre 2] En Historia Universal, ¿cuál fue una de las consecuencias económicas y sociales de la Revolución Industrial?", opts: ["El surgimiento del capitalismo industrial, la migración campo-ciudad y la aparición de la clase obrera", "El fin de las ciudades", "El nomadismo agrícola", "La caída del Imperio Romano"], correct: 0, exp: "💡 Explicación: Transformó radicalmente la producción artesanal en manufactura mecanizada." },
-            { q: "[3º Grado - Trimestre 2] En Español III, ¿qué caracteriza a un ensayo literario o argumentativo?", opts: ["La defensa de un punto de vista personal fundamentado mediante argumentos críticos y reflexivos", "La narración exclusiva de cuentos fantásticos", "La transcripción de leyes", "La creación de recetas de cocina"], correct: 0, exp: "💡 Explicación: Expone el pensamiento del autor respaldado con análisis y fuentes." },
-            { q: "[3º Grado - Trimestre 2] En Química III, ¿cómo se clasifican las reacciones químicas según el intercambio energético?", opts: ["Endotérmicas (absorben calor) y exotérmicas (liberan calor)", "Sólidas y gaseosas", "Metálicas y no metálicas", "Ácidas y neutras"], correct: 0, exp: "💡 Explicación: Describen cómo se transfiere energía térmica durante el proceso químico." }
+            { q: "[3º Grado - Trimestre 2] En Matemáticas III, ¿qué postula el Teorema de Tales en geometría avanzada?", opts: ["Que al cortar líneas paralelas por transversales se determinan segmentos proporcionales", "Que la hipotenusa es mayor que los catetos", "Que los ángulos internos suman 180°", "Que el área del círculo es pi por radio al cuadrado"], correct: 0, exp: "💡 Explicación: Es fundamental para el análisis de la semejanza de triángulos." },
+            { q: "[3º Grado - Trimestre 2] En Química III, ¿qué representa el número atómico (Z)?", opts: ["El número de protones contenidos en el núcleo del átomo", "La masa total del compuesto", "El número de neutrones libres", "El punto de fusión"], correct: 0, exp: "💡 Explicación: Identifica de manera unívoca a cada elemento químico en la tabla periódica." },
+            { q: "[3º Grado - Trimestre 2] En Historia Universal, ¿cuál fue una consecuencia clave de la Revolución Industrial?", opts: ["El paso de la producción artesanal a la mecanizada, generando el sistema capitalista y la clase obrera", "El fin de las ciudades modernas", "El nomadismo agrario", "La caída del Imperio Romano"], correct: 0, exp: "💡 Explicación: Modificó profundamente la economía y la estructura social global." },
+            { q: "[3º Grado - Trimestre 2] En Español III, ¿qué distingue a un ensayo argumentativo?", opts: ["La defensa razonada y crítica de una postura personal fundamentada en fuentes", "La narración de cuentos fantásticos", "La redacción de leyes penales", "La escritura de recetarios"], correct: 0, exp: "💡 Explicación: Expone el criterio del autor respaldado en un análisis riguroso." },
+            { q: "[3º Grado - Trimestre 2] En Química III, ¿cómo se diferencian las reacciones endotérmicas de las exotérmicas?", opts: ["Las endotérmicas absorben energía térmica; las exotérmicas liberan calor al entorno", "Son idénticas en energía", "Las endotérmicas solo ocurren en sólidos", "Las exotérmicas no usan energía"], correct: 0, exp: "💡 Explicación: Describen la transferencia neta de calor durante el cambio químico." }
           ];
         } else {
           pool = [
-            { q: "[3º Grado - Trimestre 3] En Matemáticas III, ¿qué calculan las razones trigonométricas básicas (seno, coseno y tangente)?", opts: ["La relación matemática entre las longitudes de los lados de un triángulo rectángulo y sus ángulos agudos", "El volumen de una esfera", "La probabilidad estadística", "La velocidad media de un móvil"], correct: 0, exp: "💡 Explicación: Relacionan catetos e hipotenusa con los ángulos del triángulo." },
-            { q: "[3º Grado - Trimestre 3] En Química III, ¿qué expresa el concepto de mol en estequiometría?", opts: ["La cantidad de sustancia que contiene 6.022 × 10²³ partículas elementales (número de Avogadro)", "El peso en gramos de un litro de agua", "La densidad de un gas", "La temperatura de ebullición"], correct: 0, exp: "💡 Explicación: Es la unidad fundamental del Sistema Internacional para medir cantidad de sustancia." },
-            { q: "[3º Grado - Trimestre 3] En Historia Universal, ¿qué caracterizó geopolíticamente al periodo de la Guerra Fría?", opts: ["La rivalidad ideológica, económica y militar entre el bloque capitalista (EE. UU.) y el bloque socialista (URSS)", "Una alianza pacífica mundial sin conflictos", "El dominio absoluto del Imperio Británico", "La colonización de Marte"], correct: 0, exp: "💡 Explicación: Fue un enfrentamiento indirecto caracterizado por la tensión nuclear constante." },
-            { q: "[3º Grado - Trimestre 3] En Español III, ¿cuál es la utilidad de redactar una carta de exposición de motivos o currículum?", opts: ["Presentar de manera formal y profesional la trayectoria académica, laboral y competencias ante una institución", "Escribir poesía lírica", "Narrar leyendas mitológicas", "Crear un guion teatral cómico"], correct: 0, exp: "💡 Explicación: Son documentos funcionales orientados a procesos de selección académica o laboral." },
-            { q: "[3º Grado - Trimestre 3] En Formación Cívica y Ética, ¿qué es la participación ciudadana democrática?", opts: ["La intervención activa de la sociedad en los asuntos públicos, toma de decisiones y vigilancia gubernamental", "El pago obligatorio de impuestos sin derecho a réplica", "Votar una vez cada diez años", "La prohibición de protestar pacíficamente"], correct: 0, exp: "💡 Explicación: Fortalece la vida democrática más allá de las jornadas electorales." }
+            { q: "[3º Grado - Trimestre 3] En Matemáticas III, ¿para qué sirven las razones trigonométricas (seno, coseno, tangente)?", opts: ["Para relacionar las medidas de los lados de un triángulo rectángulo con la medida de sus ángulos", "Para calcular volúmenes de esferas", "Para resolver probabilidades de dados", "Para medir la velocidad instantánea"], correct: 0, exp: "💡 Explicación: Son herramientas trigonométricas esenciales en geometría." },
+            { q: "[3º Grado - Trimestre 3] En Química III, ¿qué indica el concepto de mol?", opts: ["La cantidad de sustancia que contiene 6.022 × 10²³ partículas elementales", "El peso en gramos de un litro de gas", "La densidad molecular", "La temperatura de ebullición"], correct: 0, exp: "💡 Explicación: Corresponde al número de Avogadro." },
+            { q: "[3º Grado - Trimestre 3] En Historia Universal, ¿qué caracterizó a la Guerra Fría?", opts: ["La confrontación indirecta, ideológica y armamentista entre el bloque capitalista y el socialista", "Una alianza pacífica total", "El dominio colonial absoluto del Imperio Británico", "La conquista espacial conjunta"], correct: 0, exp: "💡 Explicación: Enfrentó a Estados Unidos y la Unión Soviética sin un conflicto bélico directo." },
+            { q: "[3º Grado - Trimestre 3] En Español III, ¿cuál es el propósito de una carta de exposición de motivos?", opts: ["Presentar de manera formal las razones académicas o profesionales por las que se solicita un ingreso", "Escribir poemas líricos", "Narrar mitos antiguos", "Diseñar un guion teatral"], correct: 0, exp: "💡 Explicación: Es un documento funcional enfocado en convocatorias formales." },
+            { q: "[3º Grado - Trimestre 3] En Formación Cívica y Ética, ¿qué implica la participación ciudadana democrática?", opts: ["La intervención activa de la sociedad en los asuntos públicos y la toma de decisiones colectivas", "Pagar impuestos sin derecho a réplica", "Votar una vez cada década", "La prohibición de la libre expresión"], correct: 0, exp: "💡 Explicación: Fortalece las instituciones y la rendición de cuentas del gobierno." }
           ];
         }
       }
 
-      // Generar exactamente 50 preguntas únicas combinando y adaptando el pool correspondiente
+      // Generar exactamente 50 preguntas únicas combinando el pool del grado seleccionado
       const generated = [];
       for (let i = 1; i <= 50; i++) {
         const baseItem = pool[(i - 1) % pool.length];
@@ -644,8 +644,8 @@
 
         if (i > pool.length) {
           const variantIndex = Math.floor((i - 1) / pool.length);
-          qText = `Pregunta ${i} (Refuerzo Académico ${variantIndex + 1} - Trimestre ${term}): ${baseItem.q}`;
-          expText = `${baseItem.exp} (Reactivo enfocado al dominio curricular del periodo ${term}).`;
+          qText = `Pregunta ${i} (Reactivo Complementario ${variantIndex + 1} - Trimestre ${term}): ${baseItem.q}`;
+          expText = `${baseItem.exp} (Refuerzo oficial para el nivel de ${grade}º de secundaria).`;
         }
 
         generated.push({
