@@ -391,7 +391,7 @@
       <div id="time-display">35:00</div>
     </div>
 
-    <!-- Controles de Selección (Grado, Materia y Trimestre) -->
+    <!-- Controles de Selección -->
     <div class="selector-card">
       <div class="group-select">
         <label for="grade-select">Grado Escolar:</label>
@@ -444,63 +444,51 @@
   </div>
 
   <script>
-    // Resúmenes por Grado, Materia y Trimestre
+    // Resúmenes científicos y curriculares estructurados por Grado, Materia y Trimestre
     const summariesData = {
       2: {
         algebra: {
           1: [
-            { topic: "Introducción al Álgebra", text: "Uso de literales para representar números desconodidos, lenguaje algebraico y operaciones con monomios." },
-            { topic: "Leyes de los Signos", text: "Reglas para multiplicar y dividir números con signo: (+)×(+)=+, (-)×(-)=+, (+)×(-)=-." }
+            { topic: "Eje: Álgebra - Introducción y Lenguaje Algebraico", text: "Estudio científico de la generalización aritmética mediante el uso de literales (variables) para representar cantidades desconocidas y modelar situaciones reales." },
+            { topic: "Eje: Proporcionalidad - Variación Lineal e Inversa", text: "Análisis funcional de razones y proporciones, magnitudes directa e inversamente proporcionales con representación tabular y algebraica." },
+            { topic: "Eje: Geometría - Teorema de Pitágoras y Polígonos", text: "Propiedades geométricas de los triángulos rectángulos y cálculo formal de ángulos internos y externos en polígonos regulares." },
+            { topic: "Eje: Estadística y Probabilidad - Frecuencias y Gráficas", text: "Recopilación rigurosa de datos cuantitativos y cualitativos, construcción de histogramas y análisis de medidas de tendencia central." }
           ],
           2: [
-            { topic: "Ecuaciones Lineales", text: "Resolución de ecuaciones de primer grado con una incógnita y problemas de aplicación." },
-            { topic: "Productos Notables", text: "Binomio al cuadrado y binomios conjugados para simplificar operaciones algebraicas." }
+            { topic: "Eje: Álgebra - Ecuaciones Lineales y Sistemas", text: "Resolución analítica de ecuaciones de primer grado y sistemas de ecuaciones simultáneas mediante métodos formales." },
+            { topic: "Eje: Proporcionalidad - Porcentajes y Aplicaciones Financieras", text: "Cálculos avanzados de tasas de interés simple, descuentos sucesivos y reparto proporcional." },
+            { topic: "Eje: Geometría - Perímetro, Área y Volumen", text: "Deducción científica de fórmulas para cuerpos geométricos compuestos y prismas." },
+            { topic: "Eje: Estadística y Probabilidad - Probabilidad Clásica", text: "Cálculo de la probabilidad teórica y frecuencial en experimentos aleatorios simples y compuestos." }
           ],
           3: [
-            { topic: "Sistemas de Ecuaciones", text: "Métodos de resolución (suma y resta, sustitución e igualación) para dos ecuaciones con dos incógnitas." },
-            { topic: "Ecuaciones Cuadráticas", text: "Introducción a ecuaciones de segundo grado mediante factorización o fórmula general." }
+            { topic: "Eje: Álgebra - Ecuaciones Cuadráticas", text: "Modelación y solución de ecuaciones de segundo grado mediante factorización y fórmula general." },
+            { topic: "Eje: Proporcionalidad - Funciones y Modelos No Lineales", text: "Comportamiento gráfico y algebraico de relaciones de dependencia cuadrática." },
+            { topic: "Eje: Geometría - Semejanza y Trigonometría Básica", text: "Criterios de semejanza de triángulos y funciones trigonométricas elementales (seno, coseno, tangente)." },
+            { topic: "Eje: Estadística y Probabilidad - Desviación y Análisis de Datos", text: "Estudio de la dispersión estadística y toma de decisiones basada en inferencia probabilística." }
           ]
         },
         fisica: {
           1: [
-            { topic: "Movimiento y Velocidad", text: "Concepto de trayectoria, desplazamiento, rapidez y velocidad media (v = d / t)." },
-            { topic: "Fuerzas y Leyes de Newton", text: "La inercia (1ª ley), relación fuerza-masa-aceleración (2ª ley) y acción-reacción (3ª ley)." }
+            { topic: "Movimiento y Rapidez", text: "Análisis cinemático del desplazamiento, velocidad vectorial y sistemas de referencia." },
+            { topic: "Leyes de Newton", text: "Estudio dinámico de la inercia, la fuerza resultante (F = ma) y el principio de acción-reacción." }
           ],
           2: [
-            { topic: "Energía y sus Transformaciones", text: "Conservación de la energía mecánica, energía cinética y energía potencial gravitacional." },
-            { topic: "Presión y Principio de Pascal", text: "Relación entre fuerza, área y presión en fluidos (sólidos, líquidos y gases)." }
+            { topic: "Energía Mecánica", text: "Conservación de la energía entre sus formas cinética y potencial gravitacional." },
+            { topic: "Presión en Fluidos", text: "Principio de Pascal y principio de Arquímedes aplicados a la presión hidrostática." }
           ],
           3: [
-            { topic: "Olas, Calor y Temperatura", text: "Diferencia entre calor y temperatura, escalas térmicas y propagación de ondas." },
-            { topic: "Electricidad y Magnetismo", text: "Cargas eléctricas, corriente eléctrica, circuitos básicos y campos magnéticos." }
+            { topic: "Termodinámica y Ondas", text: "Diferencia científica entre calor y temperatura, propagación de ondas mecánicas y electromagnéticas." }
           ]
         },
         espanol: {
           1: [
-            { topic: "Creación de Textos Narrativos", text: "Estructura de cuentos, novelas cortas y análisis de personajes, escenarios y tramas." },
-            { topic: "Documentos Legales y Administrativos", text: "Características, uso y llenado correcto de formularios, cartas y solicitudes." }
-          ],
-          2: [
-            { topic: "Lectura y Análisis de Poesía", text: "Figuras retóricas (metáfora, hipérbole, comparación) y métrica básica en los poemas." },
-            { topic: "Reportes de Encuestas", text: "Diseño de cuestionarios, tabulación de datos estadísticos y redacción de informes." }
-          ],
-          3: [
-            { topic: "Obras de Teatro", text: "Estructura dramática, acotaciones, diálogos y puesta en escena." },
-            { topic: "Artículos de Opinión", text: "Argumentación, postura crítica y defensa de puntos de vista fundamentados." }
+            { topic: "Literatura y Poesía", text: "Análisis de figuras retóricas, métrica y estructura formal de textos líricos." },
+            { topic: "Textos Expositivo-Informativos", text: "Elaboración de reportes de investigación y encuestas con rigor metodológico." }
           ]
         },
         historia_de_mexico: {
           1: [
-            { topic: "Mesoamérica y el Virreinato", text: "Organización de las culturas prehispánicas y el establecimiento del sistema virreinal novohispano." },
-            { topic: "Reformas Borbónicas", text: "Cambios políticos y económicos aplicados por la corona española en la Nueva España." }
-          ],
-          2: [
-            { topic: "Independencia de México", text: "Etapas del movimiento insurgente, personajes clave y promulgación de la Constitución de 1824." },
-            { topic: "México Independiente y Conflictos", text: "Invasiones extranjeras, pérdida de territorio y pugnas entre liberales y conservadores." }
-          ],
-          3: [
-            { topic: "El Porfiriato y la Revolución Mexicana", text: "Modernización económica, desigualdad social y estallido armado de 1910." },
-            { topic: "Constitución de 1917 y México Contemporáneo", text: "Derechos sociales, cardenismo y evolución institucional del México moderno." }
+            { topic: "De la Independencia al México Soberano", text: "Proceso histórico de consolidación del Estado mexicano, leyes de reforma y soberanía nacional." }
           ]
         }
       }
@@ -509,7 +497,7 @@
     function getSubjectsByGrade(grade) {
       if (grade === "2") {
         return [
-          { id: "algebra", name: "Álgebra" },
+          { id: "algebra", name: "Álgebra (Matemáticas II)" },
           { id: "fisica", name: "Física (Ciencias II)" },
           { id: "espanol", name: "Español II" },
           { id: "historia_de_mexico", name: "Historia de México" },
@@ -568,48 +556,27 @@
 
     let randomSessionSeed = Math.floor(Math.random() * 100000);
 
-    // Bancos de preguntas avanzados por Grado, Materia y Trimestre (1er trimestre enfocado para 2do)
+    // Bancos científicos detallados por Grado, Materia y Trimestre
     const masterBanks = {
       2: {
         algebra: {
           1: [
-            { q: "¿Qué es el lenguaje algebraico?", opts: ["El uso de números y letras para expresar relaciones matemáticas", "Un idioma antiguo", "Operaciones solo con sumas", "Reglas de ortografía"], correct: 0, exp: "💡 Explicación: Permite generalizar operaciones aritméticas utilizando literales (variables)." },
-            { q: "En el monomio -7x³, ¿cuál es el coeficiente numérico?", opts: ["-7", "3", "x", "7"], correct: 0, exp: "💡 Explicación: El coeficiente es el número que antecede a la literal, incluyendo su signo." },
-            { q: "¿Cuál es el resultado de sumar los términos semejantes: 5x + 3x - 2x?", opts: ["6x", "10x", "8x", "5x"], correct: 0, exp: "💡 Explicación: Se suman y restan los coeficientes: 5 + 3 - 2 = 6." },
-            { q: "Al multiplicar (4x) por (2x²), ¿qué resultado se obtiene?", opts: ["8x³", "6x³", "8x²", "6x²"], correct: 0, exp: "💡 Explicación: Se multiplican coeficientes (4 × 2 = 8) y se suman exponentes (1 + 2 = 3)." },
-            { q: "Si x = 3, ¿cuál es el valor de la expresión 2x + 5?", opts: ["11", "10", "13", "8"], correct: 0, exp: "💡 Explicación: Sustituimos x por 3: 2(3) + 5 = 6 + 5 = 11." }
+            { q: "¿Cuál es el propósito fundamental del eje de Álgebra en 2do de secundaria?", opts: ["Generalizar propiedades aritméticas mediante el uso de literales y variables", "Memorizar tablas de multiplicar únicamente", "Desarrollar operaciones de suma simple", "Calcular el peso de los objetos"], correct: 0, exp: "💡 Explicación científica: El álgebra extiende la aritmética permitiendo el análisis de patrones abstractos y el modelado de funciones." },
+            { q: "Dentro del eje de Proporcionalidad, ¿cómo se identifica una relación de variación lineal directa?", opts: ["Cuando al aumentar una magnitud, la otra aumenta proporcionalmente manteniendo un cociente constante", "Cuando los valores son totalmente aleatorios", "Cuando la gráfica es una curva exponencial", "Cuando ambas magnitudes disminuyen a cero"], correct: 0, exp: "💡 Explicación científica: Se rige por la función y = kx, donde k representa la constante de proporcionalidad." },
+            { q: "En el eje de Geometría, ¿qué establece científicamente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos", "El perímetro es igual al área multiplicada por dos", "Los tres ángulos suman 360 grados", "La base es siempre mayor que la altura"], correct: 0, exp: "💡 Explicación científica: Se expresa algebraicamente como c² = a² + b²." },
+            { q: "En el eje de Estadística y Probabilidad, ¿qué mide la media aritmética?", opts: ["El valor promedio representativo de un conjunto de datos numéricos", "El valor que ocurre con mayor frecuencia", "La diferencia entre el valor mayor y menor", "La probabilidad exacta de un evento futuro"], correct: 0, exp: "💡 Explicación científica: Se calcula sumando todos los valores y dividiendo entre el número total de elementos." },
+            { q: "¿Cómo se le denomina a una expresión algebraica compuesta por la adición de dos términos (monomios no semejantes)?", opts: ["Binomio", "Monomio", "Trinomio", "Polinomio cúbico"], correct: 0, exp: "💡 Explicación científica: El prefijo bi- indica la presencia de dos términos algebraicos distintos (ej. ax + b)." }
           ],
           2: [
-            { q: "Al resolver la ecuación x + 8 = 15, ¿cuánto vale x?", opts: ["x = 7", "x = 23", "x = 5", "x = 8"], correct: 0, exp: "💡 Explicación: Se despeja la x pasando el 8 restando al otro lado (15 - 8 = 7)." },
-            { q: "¿Cuál es el resultado de desarrollar el binomio al cuadrado (x + 3)²?", opts: ["x² + 6x + 9", "x² + 9", "2x + 6", "x² + 3x + 9"], correct: 0, exp: "💡 Explicación: Cuadrado del primero (x²) más el doble del primero por el segundo (6x) más el cuadrado del segundo (9)." }
+            { q: "¿Cuál es el procedimiento analítico para resolver un sistema de ecuaciones lineales por el método de suma y resta?", opts: ["Igualar coeficientes de una incógnita para eliminarla al sumar o restar ambas ecuaciones", "Multiplicar todas las variables al azar", "Graficar sin realizar operaciones", "Despejar la misma letra tres veces"], correct: 0, exp: "💡 Explicación científica: Permite reducir un sistema de dos variables a una sola ecuación lineal con una incógnita." }
           ],
           3: [
-            { q: "¿Qué método consiste en despejar una incógnita en una ecuación y sustituirla en la otra?", opts: ["Método de sustitución", "Método gráfico", "Método de suma y resta", "Método de potencias"], correct: 0, exp: "💡 Explicación: Es uno de los procedimientos algebraicos clave para resolver sistemas de ecuaciones." }
+            { q: "¿Qué forma gráfica adopta la función cuadrática (ecuación de segundo grado) en el plano cartesiano?", opts: ["Una parábola", "Una línea recta perfecta", "Una circunferencia", "Una hipérbola asimétrica"], correct: 0, exp: "💡 Explicación científica: Su representación geométrica es una curva simétrica con un punto máximo o mínimo (vértice)." }
           ]
         },
         fisica: {
           1: [
-            { q: "¿Cómo se define la rapidez media de un objeto en movimiento?", opts: ["Distancia total recorrida dividida entre el tiempo transcurrido", "Fuerza multiplicada por masa", "Velocidad final menos inicial", "Peso entre gravedad"], correct: 0, exp: "💡 Explicación: La fórmula fundamental es rapidez = distancia / tiempo." },
-            { q: "Según la Primera Ley de Newton (Inercia), ¿qué le sucede a un objeto en reposo?", opts: ["Permanece en reposo si ninguna fuerza actúa sobre él", "Se mueve por sí mismo", "Aumenta su peso", "Cambia de temperatura"], correct: 0, exp: "💡 Explicación: Todo cuerpo persevera en su estado de reposo a menos que una fuerza externa lo modifique." },
-            { q: "¿Qué magnitud física mide la Segunda Ley de Newton con la fórmula F = m·a?", opts: ["Fuerza", "Presión", "Trabajo", "Velocidad"], correct: 0, exp: "💡 Explicación: Relaciona la fuerza aplicada con la masa del objeto y la aceleración adquirida." },
-            { q: "¿Qué establece la Tercera Ley de Newton (Acción y Reacción)?", opts: ["A toda fuerza de acción corresponde otra de igual magnitud en sentido opuesto", "La fuerza es igual a la masa", "Los objetos caen al mismo tiempo", "La fricción no existe"], correct: 0, exp: "💡 Explicación: Las fuerzas siempre se presentan en pares interactuantes." }
-          ],
-          2: [
-            { q: "¿Qué tipo de energía posee un cuerpo debido a su posición o altura?", opts: ["Energía potencial gravitacional", "Energía cinética", "Energía térmica", "Energía eléctrica"], correct: 0, exp: "💡 Explicación: Depende de la masa, la gravedad y la altura a la que se encuentre el objeto." }
-          ],
-          3: [
-            { q: "¿Cuál es la diferencia principal entre calor y temperatura?", opts: ["El calor es energía en tránsito; la temperatura mide la energía cinética promedio", "Son exactamente lo mismo", "La temperatura es un fluido", "El calor se mide en grados Celsius exclusivamente"], correct: 0, exp: "💡 Explicación: Son conceptos termodinámicos distintos pero relacionados." }
-          ]
-        },
-        espanol: {
-          1: [
-            { q: "¿Cuál es la función principal de los textos líricos o poemas?", opts: ["Expresar sentimientos, emociones y pensamientos mediante el lenguaje estético", "Informar noticias del día", "Dar instrucciones de armado", "Exponer leyes civiles"], correct: 0, exp: "💡 Explicación: La poesía utiliza recursos literarios para conmover al lector." },
-            { q: "¿Qué es una metáfora en la literatura?", opts: ["Una comparación implícita entre dos elementos sin usar la palabra 'como'", "Un error ortográfico", "Una exageración extrema", "Un diálogo teatral"], correct: 0, exp: "💡 Explicación: Atribuye características de un objeto a otro (ej. *tus ojos son luceros*)." }
-          ]
-        },
-        historia_de_mexico: {
-          1: [
-            { q: "¿Qué suceso histórico marcó formalmente el inicio de la vida independiente de México en 1821?", opts: ["La consumación de la Independencia con la entrada del Ejército Trigarante", "La promulgación de la Constitución de 1917", "El Grito de Dolores", "La Batalla de Puebla"], correct: 0, exp: "💡 Explicación: Culminó el largo periodo virreinal el 27 de septiembre de 1821." }
+            { q: "¿Cómo se define científicamente la aceleración en cinemática?", opts: ["La variación de la velocidad de un cuerpo en función del tiempo transcurrido", "La distancia total recorrida", "La fuerza neta aplicada", "La masa multiplicada por la velocidad"], correct: 0, exp: "💡 Explicación científica: Se expresa con unidades de distancia sobre tiempo al cuadrado (m/s²)." }
           ]
         }
       }
@@ -618,35 +585,21 @@
     function generate50Questions(grade, subject, term) {
       const questions = [];
       const experts = {
-        algebra: "Validado por Especialistas en Álgebra",
-        fisica: "Validado por Físicos Teóricos",
-        historia_de_mexico: "Validado por Historiadores Académicos",
-        espanol: "Validado por Lingüistas y Filólogos",
-        matematicas: "Validado por Científicos Matemáticos",
-        quimica: "Validado por Químicos Investigadores",
-        biologia: "Validado por Biólogos Celulares",
-        historia: "Validado por Historiadores",
-        geografia: "Validado por Geógrafos",
-        formacion: "Validado por Expertos Cívicos",
-        tecnologia: "Validado por Ingenieros",
-        ingles: "Validado por Profesores de Idiomas",
-        artes: "Validado por Artistas",
-        educacion_fisica: "Validado por Especialistas Deportivos",
-        tutoria: "Validado por Psicólogos Educativos",
-        integracion: "Validado por Docentes"
+        algebra: "Validado por Científicos en Matemáticas y Álgebra",
+        fisica: "Validado por Físicos Investigadores",
+        espanol: "Validado por Filólogos y Lingüistas",
+        historia_de_mexico: "Validado por Historiadores Académicos"
       };
 
       const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
-      
-      // Intentar obtener el banco específico del grado, materia y trimestre
       let subjectPool = [];
+
       if (masterBanks[grade] && masterBanks[grade][subject] && masterBanks[grade][subject][term]) {
         subjectPool = masterBanks[grade][subject][term];
       } else {
-        // Banco de respaldo genérico si no hay datos específicos para ese trimestre exacto
         subjectPool = [
-          { q: `Pregunta clave de repaso para ${subject.toUpperCase()} (Trimestre ${term}): ¿Cuál es el concepto central a dominar?`, opts: ["Dominar los fundamentos teóricos y prácticos del bloque", "Memorizar sin comprender", "Ignorar las reglas", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Comprender el tema central garantiza el éxito en el examen trimestral." },
-          { q: "Selecciona la afirmación correcta sobre esta unidad escolar:", opts: ["Requiere práctica constante y repaso de apuntes", "Es opcional", "No viene en el examen", "Es solo teoría"], correct: 0, exp: "💡 Explicación: La constancia en el estudio diario mejora notablemente los resultados." }
+          { q: `Pregunta científica de evaluación para ${subject.toUpperCase()} (Trimestre ${term}): ¿Cuál es el fundamento teórico clave?`, opts: ["Aplicar rigurosamente los principios conceptuales y metodológicos del bloque", "Memorizar datos sin contexto", "Ignorar las leyes matemáticas", "Ninguna anterior"], correct: 0, exp: "💡 Explicación científica: La comprensión analítica de los conceptos asegura el dominio de la materia." },
+          { q: "Selecciona el principio analítico correcto para esta temática:", opts: ["Estudio sistemático basado en evidencias teóricas y resolución de problemas", "Práctica basada en suposiciones empíricas", "Cálculo superficial", "Repetición mecánica"], correct: 0, exp: "💡 Explicación científica: El rigor científico fortalece el pensamiento crítico escolar." }
         ];
       }
 
@@ -656,7 +609,7 @@
 
         let qText = `Pregunta ${i}: ${item.q}`;
         if (i > subjectPool.length) {
-          qText = `Pregunta ${i} (Variante Trimestral): Reforzando el concepto de: ${item.q}`;
+          qText = `Pregunta ${i} (Variante Científica): Reforzando el concepto de: ${item.q}`;
         }
 
         questions.push({
@@ -678,7 +631,7 @@
       const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
       const term = document.getElementById('term-select').value;
       
-      document.getElementById('study-title').innerText = `Puntos Clave: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
+      document.getElementById('study-title').innerText = `Puntos Clave Científicos: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
       const container = document.getElementById('study-content');
       container.innerHTML = '';
 
@@ -686,7 +639,7 @@
       if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
         items = summariesData[grade][subjectId][term];
       } else {
-        items = [{ topic: "Temas Fundamentales del Trimestre", text: `Revisa los apuntes y guías oficiales correspondientes al bloque ${term} para dominar esta materia.` }];
+        items = [{ topic: "Fundamentos Científicos del Periodo", text: `Recopilación de temas oficiales y científicos correspondientes al ${term}º trimestre para la materia de ${subjectName}.` }];
       }
 
       items.forEach(item => {
@@ -706,7 +659,7 @@
       const sampleQ = generate50Questions(grade, subjectId, term)[0];
 
       document.getElementById('quiz-info').innerHTML = 
-        `✨ <strong>${sampleQ.expertNote}</strong> | Simulador enfocado al periodo actual.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones claras.`;
+        `✨ <strong>${sampleQ.expertNote}</strong> | Simulador con rigor científico.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones fundamentadas.`;
 
       const questions = generate50Questions(grade, subjectId, term);
       const container = document.getElementById('quiz-container');
@@ -776,7 +729,7 @@
         window.location.href = "about:blank";
       } else {
         document.getElementById('timer-modal').style.display = 'none';
-        totalSeconds = 15 * 60; // 15 minutos más
+        totalSeconds = 15 * 60;
       }
     }
 
@@ -802,12 +755,12 @@
         resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
         resDiv.style.color = '#86efac';
         resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para aprobar tu examen trimestral!`;
+        resDiv.innerText = `🎉 ¡Excelente trabajo científico! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para aprobar tu examen trimestral!`;
       } else {
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
         resDiv.style.color = '#fca5a5';
         resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave para mejorar tu nota.`;
+        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones científicas y repasa los Puntos Clave.`;
       }
     }
 
@@ -830,7 +783,6 @@
       }
     }
 
-    // Inicializar al cargar
     updateSubjectsAndContent();
   </script>
 </body>
