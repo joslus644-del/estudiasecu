@@ -356,7 +356,7 @@
 
     #score-result {
       margin-top: 25px;
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
       text-align: center;
       font-weight: bold;
@@ -540,7 +540,7 @@
       renderAll();
     }
 
-    // Banco de preguntas con progresión de dificultad en Trimestres 2 y 3 para 1º y 3º
+    // Banco de preguntas con bloques 100% únicos y progresivos por grado y trimestre
     function getFullBank(grade, subject, term) {
       let pool = [];
 
@@ -579,7 +579,7 @@
       // =========================================================================
       else if (grade === "1") {
         if (term === "1") {
-          // Intacto y excelente tal como lo solicitaste
+          // Trimestre 1 (Intacto y excelente tal como lo pediste)
           if (subject === "matematicas") {
             pool = [
               { q: "[1º Matemáticas T1] ¿Cuál es el resultado de simplificar la operación con enteros: -15 + 8 - (-5)?", opts: ["-2", "-12", "2", "18"], correct: 0, exp: "💡 Explicación: -15 + 8 + 5 = -2." },
@@ -591,39 +591,43 @@
             ];
           }
         } else if (term === "2") {
-          // Nivel Intermedio / Más difícil para Trimestre 2
+          // Trimestre 2 (Nivel intermedio, totalmente nuevo y diferente al T1)
           if (subject === "matematicas") {
             pool = [
-              { q: "[1º Matemáticas T2] Al resolver la ecuación lineal 3x - 5 = 16, ¿cuál es el valor exacto de x?", opts: ["x = 7", "x = 3", "x = 11", "x = 21"], correct: 0, exp: "💡 Explicación: 3x = 21 → x = 7." },
-              { q: "[1º Matemáticas T2] ¿Cómo se calcula el porcentaje del 15% de descuento sobre una cantidad de $400?", opts: ["$60 de descuento", "$15 de descuento", "$40 de descuento", "$100 de descuento"], correct: 0, exp: "💡 Explicación: 400 × 0.15 = 60." },
-              { q: "[1º Matemáticas T2] ¿Cuál es el perímetro de un rectángulo que mide 12 cm de largo y 5 cm de ancho?", opts: ["34 cm", "60 cm", "17 cm", "24 cm"], correct: 0, exp: "💡 Explicación: Perímetro = 2(largo + ancho) = 2(12 + 5) = 34 cm." }
+              { q: "[1º Matemáticas T2] Al resolver la ecuación lineal de primer grado 4x - 8 = 16, ¿cuál es el valor de x?", opts: ["x = 6", "x = 4", "x = 8", "x = 2"], correct: 0, exp: "💡 Explicación: 4x = 24 → x = 6." },
+              { q: "[1º Matemáticas T2] Si un artículo cuesta $500 y tiene un descuento del 20%, ¿cuánto se pagará en total?", opts: ["$400", "$450", "$380", "$420"], correct: 0, exp: "💡 Explicación: El 20% de 500 es 100, por lo que 500 - 100 = $400." },
+              { q: "[1º Matemáticas T2] ¿Cuál es el perímetro de un terreno rectangular que mide 15 metros de largo y 8 metros de ancho?", opts: ["46 metros", "120 metros", "23 metros", "30 metros"], correct: 0, exp: "💡 Explicación: Perímetro = 2(largo + ancho) = 2(15 + 8) = 46 metros." }
             ];
           } else if (subject === "biologia") {
             pool = [
-              { q: "[1º Biología T2] ¿Qué proceso metabólico realizan las plantas verdes para transformar dióxido de carbono y agua en glucosa utilizando energía solar?", opts: ["Fotosíntesis", "Respiración celular aerobia", "Fermentación láctica", "Mitosis celular"], correct: 0, exp: "💡 Explicación: Ocurre en los cloroplastos mediante clorofila." },
-              { q: "[1º Biología T2] ¿Cuál es la diferencia principal entre la respiración aerobia y la anaerobia?", opts: ["La aerobia requiere oxígeno molecular para oxidar glucosa; la anaerobia se realiza en ausencia de oxígeno", "Son exactamente iguales en rendimiento energético", "La anaerobia produce más ATP", "La aerobia ocurre solo en bacterias primitivas"], correct: 0, exp: "💡 Explicación: El oxígeno es el aceptor final de electrones en la vía aerobia." }
+              { q: "[1º Biología T2] ¿Qué proceso realizan los organismos autótrofos (como las plantas) para fabricar su propio alimento utilizando luz solar?", opts: ["Fotosíntesis", "Respiración aerobia", "Fermentación", "Glucólisis"], correct: 0, exp: "💡 Explicación: La fotosíntesis transforma dióxido de carbono y agua en glucosa y oxígeno." },
+              { q: "[1º Biología T2] ¿Cómo se le llama a la red compleja donde se interconectan múltiples cadenas alimentarias en un ecosistema?", opts: ["Red trófica", "Cadena lineal simple", "Biocenosis estática", "Población aislada"], correct: 0, exp: "💡 Explicación: Muestra las múltiples rutas de alimentación entre los organismos." }
+            ];
+          } else if (subject === "geografia") {
+            pool = [
+              { q: "[1º Geografía T2] ¿Qué fenómeno físico genera la sucesión de las cuatro estaciones del año en la Tierra?", opts: ["El movimiento de traslación alrededor del Sol combinado con la inclinación del eje terrestre", "La rotación diaria de la Tierra sobre su propio eje", "Las variaciones en las mareas oceánicas", "La actividad volcánica submarina"], correct: 0, exp: "💡 Explicación: La inclinación del eje al trasladarse cambia la incidencia de los rayos solares." }
             ];
           } else {
             pool = [
-              { q: `[1º Grado - ${subject.toUpperCase()} T2] ¿Cómo se aplican los procedimientos intermedios en esta unidad?`, opts: ["Mediante análisis analíticos, resolución de casos y métodos de mayor complejidad operativa", "Repitiendo el primer trimestre", "Sin realizar ejercicios", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo trimestre eleva el nivel analítico y operativo." }
+              { q: `[1º Grado - ${subject.toUpperCase()} T2] ¿Cómo se abordan los contenidos procedimentales y analíticos de este segundo periodo?`, opts: ["Mediante casos de estudio intermedios, análisis conceptual y resolución práctica", "Repitiendo el primer trimestre", "Sin ejercicios", "Al azar"], correct: 0, exp: "💡 Explicación: Este trimestre profundiza en la aplicación práctica de los conocimientos." }
             ];
           }
         } else {
-          // Nivel Avanzado para Trimestre 3
+          // Trimestre 3 (Nivel avanzado de cierre, totalmente nuevo y distinto a T1 y T2)
           if (subject === "matematicas") {
             pool = [
-              { q: "[1º Matemáticas T3] ¿Cuál es el volumen de un cubo cuyas aristas miden 4 cm cada una?", opts: ["64 cm³", "16 cm³", "12 cm³", "32 cm³"], correct: 0, exp: "💡 Explicación: V = arista³ = 4 × 4 × 4 = 64 cm³." },
-              { q: "[1º Matemáticas T3] Al analizar un conjunto de datos estadísticos {4, 8, 6, 8, 9, 2, 8}, ¿cuál es la moda?", opts: ["El 8 (es el valor que más se repite)", "El 6", "El 9", "El 4"], correct: 0, exp: "💡 Explicación: La moda es el valor con mayor frecuencia absoluta." },
-              { q: "[1º Matemáticas T3] En una proporción directa, si 3 kilogramos de manzanas cuestan $75, ¿cuánto cuestan 7 kilogramos?", opts: ["$175", "$150", "$210", "$125"], correct: 0, exp: "💡 Explicación: 75 / 3 = 25 por kilo → 25 × 7 = $175." }
+              { q: "[1º Matemáticas T3] ¿Cuál es el volumen de un cubo cuyas aristas miden 5 cm cada una?", opts: ["125 cm³", "25 cm³", "15 cm³", "75 cm³"], correct: 0, exp: "💡 Explicación: V = arista³ = 5 × 5 × 5 = 125 cm³." },
+              { q: "[1º Matemáticas T3] En un conjunto de datos estadísticos sobre calificaciones: {7, 9, 8, 9, 10, 6, 9}, ¿cuál es la moda?", opts: ["El 9 (es el valor con mayor frecuencia)", "El 8", "El 7", "El 10"], correct: 0, exp: "💡 Explicación: La moda es el número que más veces se repite en el conjunto." },
+              { q: "[1º Matemáticas T3] Si 4 litros de gasolina cuestan $96, ¿cuál es el costo proporcional de 9 litros?", opts: ["$216", "$192", "$240", "$180"], correct: 0, exp: "💡 Explicación: 96 / 4 = 24 por litro → 24 × 9 = $216." }
             ];
           } else if (subject === "biologia") {
             pool = [
-              { q: "[1º Biología T3] ¿Qué establece la teoría de la evolución por selección natural propuesta por Charles Darwin?", opts: ["Los organismos con características mejor adaptadas a su entorno tienen mayor probabilidad de sobrevivir y reproducirse", "Los caracteres adquiridos durante la vida se heredan directamente", "Todas las especies surgieron simultáneamente sin cambios", "Las mutaciones genéticas siempre son perjudiciales"], correct: 0, exp: "💡 Explicación: La supervivencia diferencial ante presiones ambientales guía el cambio evolutivo." },
-              { q: "[1º Biología T3] ¿Qué es un ecosistema sustentable?", opts: ["Aquel que es capaz de mantener su biodiversidad, productividad y equilibrio ecológico a lo largo del tiempo sin agotarse", "Un sistema dominado por la actividad industrial humana", "Una zona sin presencia de agua", "Un desierto artificial"], correct: 0, exp: "💡 Explicación: La sustentabilidad implica el uso responsable y regenerativo de los recursos." }
+              { q: "[1º Biología T3] ¿Qué postula la teoría de la evolución por selección natural de Charles Darwin?", opts: ["Los organismos con adaptaciones favorables al ambiente tienen mayor éxito reproductivo y de supervivencia", "Los caracteres adquiridos durante la vida se heredan automáticamente", "Todas las especies aparecieron idénticas desde el origen", "Las mutaciones siempre son dañinas"], correct: 0, exp: "💡 Explicación: La presión ambiental favorece la permanencia de ciertas características ventajosas." },
+              { q: "[1º Biología T3] ¿Qué caracteriza a un ecosistema que cuenta con alta biodiversidad?", opts: ["La presencia de una gran variedad de especies de flora y fauna interactuando en equilibrio", "La existencia de una sola especie dominante", "La escasez total de recursos hídricos", "La intervención industrial intensiva"], correct: 0, exp: "💡 Explicación: La riqueza biológica garantiza la resiliencia ante cambios ambientales." }
             ];
           } else {
             pool = [
-              { q: `[1º Grado - ${subject.toUpperCase()} T3] ¿Qué nivel de exigencia evalúa el cierre de curso en este tercer periodo?`, opts: ["Síntesis avanzada, integración de saberes complejos y resolución analítica final", "Ejercicios introductorios básicos", "Memorización simple", "Evaluación opcional"], correct: 0, exp: "💡 Explicación: El trimestre final consolida el dominio total de los aprendizajes del grado." }
+              { q: `[1º Grado - ${subject.toUpperCase()} T3] ¿Cuál es la meta central de aprendizaje al concluir el tercer trimestre del ciclo?`, opts: ["Demostrar el dominio integral, síntesis y aplicación avanzada de los aprendizajes clave del grado", "Repasar el curso desde cero", "Evaluar conceptos de primaria", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Cierra el año escolar consolidando todos los temas de la asignatura." }
             ];
           }
         }
@@ -633,52 +637,60 @@
       // =========================================================================
       else if (grade === "3") {
         if (term === "1") {
-          // Intacto y excelente tal como lo solicitaste
+          // Trimestre 1 (Intacto y excelente tal como lo pediste)
           if (subject === "matematicas") {
             pool = [
               { q: "[3º Matemáticas T1] ¿Qué calcula la fórmula general cuadrática ($x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$)?", opts: ["Los valores exactos de las raíces de cualquier ecuación de segundo grado", "El área de un triángulo", "La pendiente de una recta", "El Teorema de Tales"], correct: 0, exp: "💡 Explicación: Resuelve cualquier ecuación con estructura ax² + bx + c = 0." }
             ];
           } else {
             pool = [
-              { q: `[3º Grado - ${subject.toUpperCase()} T1] ¿Cuál es el marco conceptual avanzado base en este nivel superior?`, opts: ["Los fundamentos críticos y teóricos avanzados de la asignatura", "Conceptos elementales de primaria", "Lecturas superficiales", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Establece el rigor analítico inicial del último grado de secundaria." }
+              { q: `[3º Grado - ${subject.toUpperCase()} T1] cuál es el marco conceptual avanzado base en este nivel superior?`, opts: ["Los fundamentos críticos y teóricos avanzados de la asignatura", "Conceptos elementales de primaria", "Lecturas superficiales", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Establece el rigor analítico inicial del último grado de secundaria." }
             ];
           }
         } else if (term === "2") {
-          // Nivel Superior / Más complejo para Trimestre 2
+          // Trimestre 2 (Nivel superior y analítico, totalmente nuevo y diferente al T1)
           if (subject === "matematicas") {
             pool = [
-              { q: "[3º Matemáticas T2] ¿Cómo se calcula la pendiente (m) de una recta dados dos puntos en el plano cartesiano (x1, y1) y (x2, y2)?", opts: ["m = (y2 - y1) / (x2 - x1)", "m = (x2 + x1) / 2", "m = y1 · y2", "m = x2 - x1"], correct: 0, exp: "💡 Explicación: La pendiente mide la razón de cambio vertical respecto a la horizontal." },
-              { q: "[3º Matemáticas T2] ¿Qué establece el Teorema de Tales en la semejanza de triángulos?", opts: ["Al cortar líneas paralelas con transversales, los segmentos determinados son proporcionales", "La suma de ángulos es siempre 90 grados", "El cuadrado de la hipotenusa es igual a la suma de catetos", "El perímetro es igual al área"], correct: 0, exp: "💡 Explicación: Es la base matemática para resolver problemas de escalas y proporciones geométricas." },
-              { q: "[3º Matemáticas T2] ¿Cuáles son las soluciones de la ecuación cuadrática factorizada (x - 3)(x + 4) = 0?", opts: ["x = 3 y x = -4", "x = -3 y x = 4", "x = 0 únicamente", "x = 12 y x = -12"], correct: 0, exp: "💡 Explicación: Cada factor se iguala a cero: x - 3 = 0 → x = 3; x + 4 = 0 → x = -4." }
+              { q: "[3º Matemáticas T2] ¿Cómo se calcula la pendiente (m) de una recta en el plano cartesiano dados dos puntos (x1, y1) y (x2, y2)?", opts: ["m = (y2 - y1) / (x2 - x1)", "m = (x2 + x1) / 2", "m = y1 · y2", "m = x2 - x1"], correct: 0, exp: "💡 Explicación: Mide la tasa de cambio vertical en relación con la horizontal." },
+              { q: "[3º Matemáticas T2] ¿Qué establece el Teorema de Tales en la geometría superior?", opts: ["Si dos o más rectas paralelas se cortan por dos transversales, los segmentos determinados son proporcionales", "El cuadrado de la hipotenusa es igual a la suma de catetos", "La suma de los ángulos internos de un triángulo es 90 grados", "El área del círculo es igual al perímetro"], correct: 0, exp: "💡 Explicación: Es la base para el estudio formal de la semejanza de triángulos." },
+              { q: "[3º Matemáticas T2] ¿Cuáles son las soluciones de la ecuación cuadrática factorizada (x - 5)(x + 2) = 0?", opts: ["x = 5 y x = -2", "x = -5 y x = 2", "x = 0 únicamente", "x = 10 y x = -10"], correct: 0, exp: "💡 Explicación: Se iguala cada factor a cero: x - 5 = 0 → x = 5; x + 2 = 0 → x = -2." }
             ];
           } else if (subject === "quimica") {
             pool = [
-              { q: "[3º Química T2] ¿Qué representa el número atómico (Z) de un elemento químico?", opts: ["La cantidad exacta de protones ubicados en el núcleo de su átomo", "La masa atómica total del elemento", "El número de neutrones libres en la corteza", "Su punto de ebullición centesimal"], correct: 0, exp: "💡 Explicación: El número atómico identifica de forma única a cada elemento de la Tabla Periódica." },
-              { q: "[3º Química T2] ¿Cómo se clasifican las reacciones químicas de acuerdo con la absorción o liberación de energía térmica?", opts: ["Endotérmicas (absorben calor) y exotérmicas (liberan calor)", "Sólidas y gaseosas", "Ácidas y neutras", "Metálicas y covalentes"], correct: 0, exp: "💡 Explicación: Describen el comportamiento energético del sistema durante el cambio químico." },
-              { q: "[3º Química T2] ¿Qué indica el coeficiente estequiométrico en una ecuación química balanceada?", opts: ["El número de moles o moléculas de cada reactivo y producto participante", "El peso en gramos de la muestra", "El número de electrones de valencia", "La densidad del compuesto"], correct: 0, exp: "💡 Explicación: Garantiza el cumplimiento de la Ley de la Conservación de la Materia." }
+              { q: "[3º Química T2] ¿Qué representa exactamente el número atómico (Z) de un elemento químico en la Tabla Periódica?", opts: ["La cantidad de protones contenidos en el núcleo de su átomo", "La masa atómica total del isótopo", "El número de neutrones libres en la corteza", "Su punto de ebullición estándar"], correct: 0, exp: "💡 Explicación: El número atómico identifica de manera unívoca a cada elemento químico." },
+              { q: "[3º Química T2] ¿Cómo se clasifican las reacciones químicas según el intercambio térmico con el entorno?", opts: ["Endotérmicas (absorben calor) y exotérmicas (liberan calor)", "Sólidas y gaseosas", "Ácidas y neutras", "Metálicas y no metálicas"], correct: 0, exp: "💡 Explicación: Describen si el proceso absorbe o libera energía en forma de calor." },
+              { q: "[3º Química T2] ¿Qué indica el coeficiente estequiométrico en una ecuación química balanceada?", opts: ["El número de moles o moléculas de cada reactivo y producto participante", "El peso en gramos de la muestra", "El número de electrones de valencia", "La densidad del compuesto"], correct: 0, exp: "💡 Explicación: Permite conservar la igualdad cuantitativa de la materia en la reacción." }
+            ];
+          } else if (subject === "historia") {
+            pool = [
+              { q: "[3º Historia T2] ¿Cuáles fueron las principales características económicas y sociales de la Revolución Industrial?", opts: ["El paso de la producción artesanal a la mecanizada, el auge del capitalismo y el surgimiento del proletariado obrero", "La desaparición absoluta de las ciudades", "El regreso al sistema feudal agrario", "El aislamiento comercial internacional"], correct: 0, exp: "💡 Explicación: Transformó radicalmente las formas de trabajo y la estructura social mundial." }
             ];
           } else {
             pool = [
-              { q: `[3º Grado - ${subject.toUpperCase()} T2] ¿Cómo se abordan los procesos analíticos intermedios en este periodo?`, opts: ["Mediante la aplicación rigurosa de métodos avanzados, modelos críticos y resolución de problemas", "Repitiendo el primer trimestre", "Sin actividades prácticas", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo trimestre profundiza en el razonamiento crítico avanzado." }
+              { q: `[3º Grado - ${subject.toUpperCase()} T2] ¿Cómo se abordan los procesos críticos intermedios en este periodo?`, opts: ["Mediante la aplicación rigurosa de métodos avanzados, análisis de casos y modelos formales", "Repitiendo el primer trimestre", "Sin actividades prácticas", "Al azar"], correct: 0, exp: "💡 Explicación: Profundiza en el razonamiento complejo y la aplicación teórica." }
             ];
           }
         } else {
-          // Nivel Máximo de Exigencia (Cierre de Secundaria) para Trimestre 3
+          // Trimestre 3 (Nivel máximo de exigencia y cierre de secundaria, totalmente distinto a T1 y T2)
           if (subject === "matematicas") {
             pool = [
-              { q: "[3º Matemáticas T3] ¿Qué calculan las razones trigonométricas básicas (seno, coseno y tangente) en un triángulo rectángulo?", opts: ["La relación matemática entre las longitudes de los lados y la medida de sus ángulos agudos", "El volumen tridimensional de una esfera", "La desviación estándar de una muestra", "La velocidad instantánea de un objeto"], correct: 0, exp: "💡 Explicación: Conectan las proporciones de los catetos e hipotenusa con los ángulos internos." },
-              { q: "[3º Matemáticas T3] ¿Cuál es el significado de que un sistema de ecuaciones lineales tenga 'infinitas soluciones' al graficarlo?", opts: ["Que ambas ecuaciones representan exactamente la misma recta en el plano cartesiano", "Que las rectas son paralelas y nunca se cruzan", "Que las rectas se intersectan en un único punto", "Que el sistema no tiene solución algebraica"], correct: 0, exp: "💡 Explicación: Al ser ecuaciones equivalentes, todos sus puntos coinciden infinitamente." },
-              { q: "[3º Matemáticas T3] ¿Qué indica un valor de probabilidad igual a 1 (o 100%) en un evento aleatorio?", opts: ["Que el evento es un suceso seguro que ocurrirá indefectiblemente", "Que el evento es imposible", "Que hay un 50% de probabilidad de error", "Que el experimento falló"], correct: 0, exp: "💡 Explicación: La escala de probabilidad oscila estrictamente entre 0 y 1." }
+              { q: "[3º Matemáticas T3] ¿Qué evalúan las razones trigonométricas (seno, coseno y tangente) en un triángulo rectángulo?", opts: ["La relación matemática entre las longitudes de los lados y la medida de sus ángulos agudos", "El volumen tridimensional de una esfera", "La desviación estándar de una muestra", "La velocidad instantánea de un objeto en movimiento"], correct: 0, exp: "💡 Explicación: Relacionan de manera fija los catetos y la hipotenusa con los ángulos del triángulo." },
+              { q: "[3º Matemáticas T3] ¿Qué significa gráficamente que un sistema de ecuaciones lineales tenga 'infinitas soluciones'?", opts: ["Que ambas ecuaciones corresponden exactamente a la misma recta superpuesta en el plano", "Que las rectas son paralelas y jamás se cruzan", "Que las rectas se intersectan en un único punto", "Que el sistema no tiene solución analítica"], correct: 0, exp: "💡 Explicación: Al ser ecuaciones equivalentes, todos sus puntos coinciden en la gráfica." },
+              { q: "[3º Matemáticas T3] ¿Qué indica una probabilidad de valor 1 (o 100%) al analizar un evento aleatorio?", opts: ["Que el evento es un suceso seguro que ocurrirá sin excepción", "Que el evento es completamente imposible", "Que hay un 50% de margen de error", "Que el experimento falló"], correct: 0, exp: "💡 Explicación: La escala de probabilidad va rigurosamente de 0 (imposible) a 1 (seguro)." }
             ];
           } else if (subject === "quimica") {
             pool = [
-              { q: "[3º Química T3] ¿Qué expresa el concepto de mol en estequiometría avanzada?", opts: ["La cantidad de sustancia que contiene exactamente 6.022 × 10²³ partículas elementales (número de Avogadro)", "El volumen ocupado por un kilogramo de líquido puro", "La densidad molecular estándar", "La temperatura de fusión"], correct: 0, exp: "💡 Explicación: Es la unidad fundamental del Sistema Internacional para contar entidades químicas." },
-              { q: "[3º Química T3] ¿Qué mide la escala de pH en disoluciones acuosas?", opts: ["La concentración de iones de hidrógeno (H⁺), determinando si una sustancia es ácida, neutra o básica", "La presión osmótica del compuesto", "El peso molecular del soluto", "La velocidad de evaporación"], correct: 0, exp: "💡 Explicación: Los valores menores a 7 indican acidez, y los mayores a 7 indican alcalinidad." },
-              { q: "[3º Química T3] ¿Cómo se define el enlace iónico en los compuestos químicos?", opts: ["La fuerza electrostática de atracción entre iones de cargas opuestas (generalmente un metal y un no metal)", "La compartición equitativa de pares de electrones", "El mar de electrones libres en metales sólidos", "Puentes de hidrógeno débiles"], correct: 0, exp: "💡 Explicación: Ocurre debido a la transferencia efectiva de electrones entre átomos." }
+              { q: "[3º Química T3] ¿Qué expresa el concepto fundamental de mol en estequiometría avanzada?", opts: ["La cantidad de sustancia que contiene 6.022 × 10²³ partículas elementales (número de Avogadro)", "El volumen ocupado por un kilogramo de líquido puro", "La densidad molecular estándar", "La temperatura de fusión"], correct: 0, exp: "💡 Explicación: Es la unidad del Sistema Internacional para medir la cantidad de sustancia." },
+              { q: "[3º Química T3] ¿Qué mide la escala de pH en las disoluciones acuosas?", opts: ["El grado de acidez o basicidad mediante la concentración de iones de hidrógeno (H⁺)", "La presión osmótica del compuesto", "El peso molecular del soluto", "La velocidad de evaporación"], correct: 0, exp: "💡 Explicación: Valores menores a 7 son ácidos, iguales a 7 son neutros y mayores a 7 son básicos." },
+              { q: "[3º Química T3] ¿Cómo se define el enlace iónico en la estructura de los compuestos?", opts: ["La fuerza electrostática de atracción entre iones con cargas opuestas (metal y no metal)", "La compartición equitativa de pares de electrones", "El mar de electrones libres en metales sólidos", "Puentes de hidrógeno débiles"], correct: 0, exp: "💡 Explicación: Se forma por la transferencia efectiva de electrones entre átomos." }
+            ];
+          } else if (subject === "historia") {
+            pool = [
+              { q: "[3º Historia T3] ¿Qué caracterizó geopolíticamente al periodo de la Guerra Fría tras la Segunda Guerra Mundial?", opts: ["La bipolaridad y tensión constante (económica, ideológica y armamentista) entre Estados Unidos y la URSS", "Una alianza pacífica mundial sin conflictos", "El dominio colonial absoluto del Imperio Británico", "La conquista espacial conjunta"], correct: 0, exp: "💡 Explicación: Enfrentó indirectamente al bloque capitalista y al bloque socialista." }
             ];
           } else {
             pool = [
-              { q: `[3º Grado - ${subject.toUpperCase()} T3] ¿Cuál es la meta académica al finalizar el tercer trimestre y concluir la secundaria?`, opts: ["Demostrar el dominio integral, síntesis crítica y aplicación avanzada de todos los saberes del nivel secundaria", "Repasar el programa desde cero", "Resolver exámenes de primaria", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Cierra el ciclo escolar con el máximo nivel de exigencia académica." }
+              { q: `[3º Grado - ${subject.toUpperCase()} T3] ¿Cuál es la meta académica al concluir el tercer trimestre y finalizar la secundaria?`, opts: ["Demostrar el dominio integral, síntesis crítica y aplicación avanzada de todos los saberes del nivel secundaria", "Repasar el programa desde cero", "Resolver exámenes de primaria", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Cierra el ciclo escolar con el máximo nivel de exigencia académica." }
             ];
           }
         }
