@@ -81,21 +81,6 @@
       margin: 0 auto;
     }
 
-    /* Modal de notificación de actualización */
-    #update-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-    }
-
     /* Modal del Temporizador de 35 minutos */
     #timer-modal {
       position: fixed;
@@ -183,7 +168,7 @@
       flex-direction: column;
       gap: 8px;
       flex: 1;
-      min-width: 250px;
+      min-width: 220px;
     }
 
     label {
@@ -382,19 +367,7 @@
 </head>
 <body>
 
-  <!-- Modal de Actualización al Entrar -->
-  <div id="update-modal">
-    <div class="modal-content">
-      <h3>🔔 Actualizar Contenido</h3>
-      <p>¿Deseas actualizar las preguntas de estudio y los quizzes con nuevas variantes esenciales para esta sesión?</p>
-      <div class="modal-btns">
-        <button class="modal-btn secondary" onclick="closeModal(false)">Continuar con las actuales</button>
-        <button class="modal-btn primary" onclick="closeModal(true)">Sí, Actualizar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de Notificación de los 35 minutos -->
+  <!-- Modal del Temporizador de 35 minutos -->
   <div id="timer-modal">
     <div class="modal-content">
       <h3>⏰ ¡Tiempo Cumplido!</h3>
@@ -418,21 +391,30 @@
       <div id="time-display">35:00</div>
     </div>
 
-    <!-- Controles de Selección -->
+    <!-- Controles de Selección (Grado, Materia y Trimestre) -->
     <div class="selector-card">
       <div class="group-select">
-        <label for="grade-select">Selecciona tu Grado:</label>
+        <label for="grade-select">Grado Escolar:</label>
         <select id="grade-select" onchange="updateSubjectsAndContent()">
           <option value="1">1º de Secundaria</option>
-          <option value="2">2º de Secundaria</option>
+          <option value="2" selected>2º de Secundaria</option>
           <option value="3">3º de Secundaria</option>
         </select>
       </div>
 
       <div class="group-select">
-        <label for="subject-select">Selecciona la Materia:</label>
+        <label for="subject-select">Materia:</label>
         <select id="subject-select" onchange="renderAll()">
-          <!-- Opciones dinámicas de materias según el grado -->
+          <!-- Opciones dinámicas -->
+        </select>
+      </div>
+
+      <div class="group-select">
+        <label for="term-select">Trimestre:</label>
+        <select id="term-select" onchange="renderAll()">
+          <option value="1">1er Trimestre</option>
+          <option value="2">2do Trimestre</option>
+          <option value="3">3er Trimestre</option>
         </select>
       </div>
     </div>
@@ -462,68 +444,66 @@
   </div>
 
   <script>
+    // Resúmenes por Grado, Materia y Trimestre
     const summariesData = {
-      espanol: [
-        { topic: "Textos Informativos", text: "Transmiten datos reales y objetivos. Estructura: Introducción, Desarrollo y Conclusión." },
-        { topic: "Fichas Bibliográficas", text: "Registran datos clave: Autor, Título, Editorial, Año y Páginas de consulta." },
-        { topic: "Acentuación", text: "Agudas (última), Graves (penúltima), Esdrújulas (antepenúltima, siempre llevan tilde)." }
-      ],
-      matematicas: [
-        { topic: "Jerarquía de Operaciones", text: "Orden: 1º Paréntesis, 2º Potencias/Raíces, 3º Multiplicaciones/Divisiones, 4º Sumas/Restas." },
-        { topic: "Ecuaciones de 1er Grado", text: "Igualdades con una incógnita (ej. x + 3 = 7). El objetivo es despejar la 'x'." }
-      ],
-      algebra: [
-        { topic: "Expresiones Algebraicas", text: "Combinación de números y letras (incógnitas) relacionados por operaciones aritméticas." },
-        { topic: "Leyes de los Signos", text: "Iguales dan positivo (+ × + = + y - × - = +); diferentes dan negativo (+ × - = -)." },
-        { topic: "Sistemas de Ecuaciones", text: "Conjunto de ecuaciones con varias incógnitas que se resuelven simultáneamente (método de suma y resta, sustitución)." }
-      ],
-      biologia: [
-        { topic: "La Célula", text: "Unidad básica de vida. Procariota (sin núcleo) y Eucariota (con núcleo definido)." },
-        { topic: "La Fotosíntesis", text: "Proceso donde las plantas transforman luz solar, agua y minerales en alimento y oxígeno." }
-      ],
-      fisica: [
-        { topic: "Rapidez vs Velocidad", text: "La rapidez es magnitud escalar; la velocidad incluye dirección y sentido (vector)." },
-        { topic: "Leyes de Newton", text: "1ª Inercia, 2ª Fuerza = Masa × Aceleración, 3ª Acción y Reacción." }
-      ],
-      quimica: [
-        { topic: "El Átomo", text: "Formado por un núcleo (protones y neutrones) y una órbita de electrones negativos." },
-        { topic: "Mezclas", text: "Homogéneas (no se distinguen sus partes) y Heterogéneas (sí se distinguen a simple vista)." }
-      ],
-      historia: [
-        { topic: "Historia de México y Mundial", text: "Estudio crítico de los procesos sociales, económicos y políticos que han transformado a las civilizaciones." },
-        { topic: "Independencia y Revolución", text: "Movimientos clave en la historia nacional que redefinieron las leyes y derechos del país." }
-      ],
-      formacion_humana: [
-        { topic: "Desarrollo Humano", text: "Proceso de crecimiento personal, ética, valores y toma de decisiones asertivas." }
-      ],
-      historia_de_mexico: [
-        { topic: "México Virreinal e Independiente", text: "Transformaciones políticas, culturales y territoriales desde el virreinato hasta el México moderno." }
-      ],
-      geografia: [
-        { topic: "Coordenadas", text: "Latitud (desde el Ecuador) y Longitud (desde el Meridiano de Greenwich) medidas en grados (°)." },
-        { topic: "Placas Tectónicas", text: "Bloques de la litósfera cuyo movimiento constante genera sismos y volcanes." }
-      ],
-      formacion: [
-        { topic: "Derechos Humanos", text: "Prerrogativas universales, inalienables e irrenunciables que protegen la dignidad humana." }
-      ],
-      tecnologia: [
-        { topic: "Técnica e Innovación", text: "La técnica es el procedimiento para un fin; la innovación mejora procesos o productos ya existentes." }
-      ],
-      ingles: [
-        { topic: "Present Simple", text: "Para rutinas y hábitos. En terceras personas (he, she, it) el verbo lleva una 's' al final." }
-      ],
-      artes: [
-        { topic: "Elementos del Arte", text: "Incluyen punto, línea, color (primarios y secundarios), textura y espacio tridimensional." }
-      ],
-      educacion_fisica: [
-        { topic: "Capacidades Condicionales", text: "Fuerza, velocidad, resistencia y flexibilidad que permiten realizar esfuerzo físico." }
-      ],
-      tutoria: [
-        { topic: "Autoconocimiento", text: "Capacidad de identificar emociones, fortalezas y áreas de mejora para tomar buenas decisiones." }
-      ],
-      integracion: [
-        { topic: "Trabajo Multidisciplinario", text: "Conecta distintas materias para resolver problemas reales del entorno escolar y comunitario." }
-      ]
+      2: {
+        algebra: {
+          1: [
+            { topic: "Introducción al Álgebra", text: "Uso de literales para representar números desconodidos, lenguaje algebraico y operaciones con monomios." },
+            { topic: "Leyes de los Signos", text: "Reglas para multiplicar y dividir números con signo: (+)×(+)=+, (-)×(-)=+, (+)×(-)=-." }
+          ],
+          2: [
+            { topic: "Ecuaciones Lineales", text: "Resolución de ecuaciones de primer grado con una incógnita y problemas de aplicación." },
+            { topic: "Productos Notables", text: "Binomio al cuadrado y binomios conjugados para simplificar operaciones algebraicas." }
+          ],
+          3: [
+            { topic: "Sistemas de Ecuaciones", text: "Métodos de resolución (suma y resta, sustitución e igualación) para dos ecuaciones con dos incógnitas." },
+            { topic: "Ecuaciones Cuadráticas", text: "Introducción a ecuaciones de segundo grado mediante factorización o fórmula general." }
+          ]
+        },
+        fisica: {
+          1: [
+            { topic: "Movimiento y Velocidad", text: "Concepto de trayectoria, desplazamiento, rapidez y velocidad media (v = d / t)." },
+            { topic: "Fuerzas y Leyes de Newton", text: "La inercia (1ª ley), relación fuerza-masa-aceleración (2ª ley) y acción-reacción (3ª ley)." }
+          ],
+          2: [
+            { topic: "Energía y sus Transformaciones", text: "Conservación de la energía mecánica, energía cinética y energía potencial gravitacional." },
+            { topic: "Presión y Principio de Pascal", text: "Relación entre fuerza, área y presión en fluidos (sólidos, líquidos y gases)." }
+          ],
+          3: [
+            { topic: "Olas, Calor y Temperatura", text: "Diferencia entre calor y temperatura, escalas térmicas y propagación de ondas." },
+            { topic: "Electricidad y Magnetismo", text: "Cargas eléctricas, corriente eléctrica, circuitos básicos y campos magnéticos." }
+          ]
+        },
+        espanol: {
+          1: [
+            { topic: "Creación de Textos Narrativos", text: "Estructura de cuentos, novelas cortas y análisis de personajes, escenarios y tramas." },
+            { topic: "Documentos Legales y Administrativos", text: "Características, uso y llenado correcto de formularios, cartas y solicitudes." }
+          ],
+          2: [
+            { topic: "Lectura y Análisis de Poesía", text: "Figuras retóricas (metáfora, hipérbole, comparación) y métrica básica en los poemas." },
+            { topic: "Reportes de Encuestas", text: "Diseño de cuestionarios, tabulación de datos estadísticos y redacción de informes." }
+          ],
+          3: [
+            { topic: "Obras de Teatro", text: "Estructura dramática, acotaciones, diálogos y puesta en escena." },
+            { topic: "Artículos de Opinión", text: "Argumentación, postura crítica y defensa de puntos de vista fundamentados." }
+          ]
+        },
+        historia_de_mexico: {
+          1: [
+            { topic: "Mesoamérica y el Virreinato", text: "Organización de las culturas prehispánicas y el establecimiento del sistema virreinal novohispano." },
+            { topic: "Reformas Borbónicas", text: "Cambios políticos y económicos aplicados por la corona española en la Nueva España." }
+          ],
+          2: [
+            { topic: "Independencia de México", text: "Etapas del movimiento insurgente, personajes clave y promulgación de la Constitución de 1824." },
+            { topic: "México Independiente y Conflictos", text: "Invasiones extranjeras, pérdida de territorio y pugnas entre liberales y conservadores." }
+          ],
+          3: [
+            { topic: "El Porfiriato y la Revolución Mexicana", text: "Modernización económica, desigualdad social y estallido armado de 1910." },
+            { topic: "Constitución de 1917 y México Contemporáneo", text: "Derechos sociales, cardenismo y evolución institucional del México moderno." }
+          ]
+        }
+      }
     };
 
     function getSubjectsByGrade(grade) {
@@ -554,7 +534,6 @@
           { id: "tutoria", name: "Tutoría" }
         ];
       } else {
-        // 1º de Secundaria por defecto
         return [
           { id: "matematicas", name: "Matemáticas I" },
           { id: "biologia", name: "Biología (Ciencias I)" },
@@ -589,96 +568,87 @@
 
     let randomSessionSeed = Math.floor(Math.random() * 100000);
 
-    // Bancos de preguntas exclusivos y sin repeticiones por materia
+    // Bancos de preguntas avanzados por Grado, Materia y Trimestre (1er trimestre enfocado para 2do)
     const masterBanks = {
-      algebra: [
-        { q: "¿Cómo se le llama a una expresión algebraica formada por un solo término?", opts: ["Monomio", "Binomio", "Trinomio", "Polinomio"], correct: 0, exp: "💡 Explicación: Un monomio consta de un solo término algebraico (ej. 5x²)." },
-        { q: "Al simplificar la expresión 3x + 2x - x, ¿qué resultado obtienes?", opts: ["4x", "5x", "6x", "3x"], correct: 0, exp: "💡 Explicación: Se suman los coeficientes semejantes (3 + 2 - 1 = 4)." },
-        { q: "¿Cuál es el resultado de multiplicar (2x) por (3x)?", opts: ["6x²", "5x²", "6x", "5x"], correct: 0, exp: "💡 Explicación: Se multiplican coeficientes (2 × 3 = 6) y se suman exponentes de las letras (x × x = x²)." },
-        { q: "Resuelve el sistema de ecuaciones sumando: x + y = 10 y x - y = 2. ¿Cuánto vale x?", opts: ["x = 6", "x = 5", "x = 8", "x = 4"], correct: 0, exp: "💡 Explicación: Sumando ambas ecuaciones: 2x = 12, por lo tanto x = 6." },
-        { q: "¿Qué representa la 'x' en una ecuación algebraica?", opts: ["Una incógnita o valor desconocido", "Un número constante", "Una unidad de medida de longitud", "Un error matemático"], correct: 0, exp: "💡 Explicación: Es la letra o variable cuyo valor debemos despejar y encontrar." },
-        { q: "¿Cuál es el resultado de desarrollar el binomio al cuadrado (x + 1)?", opts: ["x² + 2x + 1", "x² + 1", "2x + 1", "x² + x + 1"], correct: 0, exp: "💡 Explicación: Cuadrado del primero más el doble del primero por el segundo más el cuadrado del segundo." },
-        { q: "Si 5x = 35, ¿cuál es el valor de x?", opts: ["x = 7", "x = 5", "x = 6", "x = 8"], correct: 0, exp: "💡 Explicación: Se despeja dividiendo 35 entre 5." },
-        { q: "¿Cómo se llama una expresión algebraica formada por dos términos?", opts: ["Binomio", "Monomio", "Trinomio", "Materia prima"], correct: 0, exp: "💡 Explicación: Bi significa dos (ej. a + b)." },
-        { q: "¿Cuál es el grado del monomio 4x³y²?", opts: ["5", "3", "2", "4"], correct: 0, exp: "💡 Explicación: El grado se obtiene sumando los exponentes de las variables (3 + 2 = 5)." },
-        { q: "Resuelve: 4(x - 2) = 12. ¿Cuánto vale x?", opts: ["x = 5", "x = 3", "x = 4", "x = 2"], correct: 0, exp: "💡 Explicación: Se multiplica 4 por x y por -2, quedando 4x - 8 = 12 → 4x = 20 → x = 5." }
-      ],
-      fisica: [
-        { q: "Según la Primera Ley de Newton (Inercia), ¿qué le ocurre a un objeto en reposo?", opts: ["Permanece en reposo si no actúan fuerzas sobre él", "Se mueve solo al instante", "Aumenta su velocidad", "Cambia de color"], correct: 0, exp: "💡 Explicación: Todo cuerpo persevera en su estado de reposo a menos que una fuerza externa lo obligue a cambiar." },
-        { q: "¿Cuál es la fórmula fundamental de la Segunda Ley de Newton?", opts: ["Fuerza = Masa × Aceleración", "Velocidad = Distancia / Tiempo", "Trabajo = Fuerza / Área", "Energía = Masa / Gravedad"], correct: 0, exp: "💡 Explicación: F = m·a relaciona directamente la fuerza aplicada con la masa y la aceleración." },
-        { q: "¿Qué caracteriza a la Tercera Ley de Newton (Acción y Reacción)?", opts: ["A toda acción corresponde una reacción igual y opuesta", "Los cuerpos caen a la misma velocidad", "La energía se crea y se destruye", "La masa es constante"], correct: 0, exp: "💡 Explicación: Si un objeto ejerce fuerza sobre otro, este último ejerce otra de igual magnitud en sentido contrario." },
-        { q: "¿Cuál es la principal diferencia entre rapidez y velocidad?", opts: ["La velocidad incluye dirección y sentido (es un vector)", "La rapidez mide el peso", "No existe diferencia teórica", "La rapidez utiliza unidades de volumen"], correct: 0, exp: "💡 Explicación: La rapidez es una magnitud escalar y la velocidad incluye la dirección." },
-        { q: "¿Qué unidad se utiliza para medir la Fuerza en el Sistema Internacional?", opts: ["Newton (N)", "Joule (J)", "Watt (W)", "Pascal (Pa)"], correct: 0, exp: "💡 Explicación: El Newton es la unidad estándar de fuerza." }
-      ],
-      historia_de_mexico: [
-        { q: "¿Qué periodo abarca la historia de México conocido como el Virreinato de la Nueva España?", opts: ["Desde la caída de Tenochtitlan en 1521 hasta la Independencia en 1821", "De 1910 a 1917", "Del año 0 al 1000 d.C.", "Durante la época prehispánica exclusivamente"], correct: 0, exp: "💡 Explicación: Fueron 300 años de dominio colonial español en el territorio mexicano." },
-        { q: "¿Quién inició el movimiento de Independencia de México la madrugada del 16 de septiembre de 1810?", opts: ["Miguel Hidalgo y Costilla", "José María Morelos y Pavón", "Agustín de Iturbide", "Vicente Guerrero"], correct: 0, exp: "💡 Explicación: El cura Miguel Hidalgo dio el Grito en Dolores." }
-      ],
-      espanol: [
-        { q: "¿Qué nombre reciben las palabras cuya sílaba tónica es la penúltima?", opts: ["Graves o llanas", "Agudas", "Esdrújulas", "Sobresdrújulas"], correct: 0, exp: "💡 Explicación: Las palabras graves se acentúan en la penúltima sílaba." },
-        { q: "¿Cuál es la estructura elemental de un texto informativo?", opts: ["Introducción, Desarrollo y Conclusión", "Planteamiento, Nudo y Desenlace", "Verso, Estrofa y Rima", "Acto, Cuadro y Escena"], correct: 0, exp: "💡 Explicación: Los textos informativos organizan datos de forma lógica en tres partes." }
-      ],
-      matematicas: [
-        { q: "¿Cuál es el resultado de la operación combinada: 10 + 2 × 5?", opts: ["20", "60", "17", "12"], correct: 0, exp: "💡 Explicación: Primero se multiplica (2 × 5 = 10) y luego se suma (10 + 10 = 20)." }
-      ],
-      biologia: [
-        { q: "¿Cuál es la unidad anatómica y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido", "El órgano", "El sistema"], correct: 0, exp: "💡 Explicación: Todo ser vivo está compuesto por una o más células." }
-      ],
-      quimica: [
-        { q: "¿Cómo se le llama a la partícula subatómica con carga eléctrica negativa?", opts: ["Electrón", "Protón", "Neutrón", "Ion"], correct: 0, exp: "💡 Explicación: Los electrones se ubican en la órbita del átomo con carga negativa." }
-      ],
-      geografia: [
-        { q: "¿Qué línea imaginaria horizontal divide a la Tierra en Hemisferio Norte y Hemisferio Sur?", opts: ["Línea del Ecuador", "Meridiano de Greenwich", "Trópico de Cáncer", "Círculo Polar Ártico"], correct: 0, exp: "💡 Explicación: El Ecuador se ubica en la latitud 0°." }
-      ],
-      historia: [
-        { q: "¿Cómo se denominan los testimonios o documentos directos creados en la época estudiada?", opts: ["Fuentes primarias", "Fuentes secundarias", "Mitos populares", "Novelas de ficción"], correct: 0, exp: "💡 Explicación: Las fuentes primarias provienen directamente del momento histórico analizado." }
-      ],
-      formacion: [
-        { q: "¿Cómo se definen los Derechos Humanos?", opts: ["Prerrogativas universales e inalienables que protegen la dignidad de toda persona", "Reglas temporales de una empresa privada", "Leyes exclusivas de un país desarrollado", "Acuerdos comerciales internacionales"], correct: 0, exp: "💡 Explicación: Pertenecen a todo ser humano sin distinción de raza, nacionalidad o género." }
-      ],
-      tecnologia: [
-        { q: "¿Qué diferencia conceptual existe entre técnica e innovación?", opts: ["La innovación mejora procesos o productos existentes aportando novedad", "Son términos idénticos", "La técnica solo se aplica en robótica", "La innovación es un error técnico"], correct: 0, exp: "💡 Explicación: La técnica es el procedimiento y la innovación optimiza o crea soluciones nuevas." }
-      ],
-      ingles: [
-        { q: "In the Simple Present tense, what happens to the verb with third-person singular (he, she, it)?", opts: ["An 's' or 'es' is added at the end", "It changes to past tense", "It becomes plural", "It is deleted from the sentence"], correct: 0, exp: "💡 Explicación: Las reglas del Present Simple exigen la terminación -s/-es para he, she e it." }
-      ],
-      artes: [
-        { q: "¿Cuáles son considerados los colores primarios tradicionales en las artes plásticas?", opts: ["Rojo, Amarillo y Azul", "Verde, Naranja y Violeta", "Blanco, Negro y Gris", "Rosa, Celeste y Marrón"], correct: 0, exp: "💡 Explicación: A partir de estos tres colores se pueden mezclar y obtener los demás." }
-      ],
-      educacion_fisica: [
-        { q: "¿Qué capacidad física condicional permite mantener un esfuerzo prolongado resistiendo la fatiga?", opts: ["La resistencia", "La velocidad máxima", "La flexibilidad", "La estatura corporal"], correct: 0, exp: "💡 Explicación: La resistencia capacita al organismo para soportar cargas de larga duración." }
-      ],
-      tutoria: [
-        { q: "¿Qué implica el concepto de autoconocimiento personal?", opts: ["Identificar con claridad emociones, fortalezas, debilidades y metas propias", "Memorizar datos históricos ajenos", "Conocer los gustos de los amigos", "Aprender fórmulas de física"], correct: 0, exp: "💡 Explicación: El autoconocimiento es el cimiento del desarrollo emocional y la toma de decisiones." }
-      ],
-      integracion: [
-        { q: "¿Cuál es el propósito central del trabajo multidisciplinario o integración curricular?", opts: ["Conectar saberes de distintas materias para dar solución a problemas reales del entorno", "Hacer los exámenes más difíciles", "Estudiar una sola asignatura toda la semana", "Evitar realizar tareas prácticas"], correct: 0, exp: "💡 Explicación: Vincula diferentes disciplinas para comprender de forma integral los fenómenos." }
-      ]
+      2: {
+        algebra: {
+          1: [
+            { q: "¿Qué es el lenguaje algebraico?", opts: ["El uso de números y letras para expresar relaciones matemáticas", "Un idioma antiguo", "Operaciones solo con sumas", "Reglas de ortografía"], correct: 0, exp: "💡 Explicación: Permite generalizar operaciones aritméticas utilizando literales (variables)." },
+            { q: "En el monomio -7x³, ¿cuál es el coeficiente numérico?", opts: ["-7", "3", "x", "7"], correct: 0, exp: "💡 Explicación: El coeficiente es el número que antecede a la literal, incluyendo su signo." },
+            { q: "¿Cuál es el resultado de sumar los términos semejantes: 5x + 3x - 2x?", opts: ["6x", "10x", "8x", "5x"], correct: 0, exp: "💡 Explicación: Se suman y restan los coeficientes: 5 + 3 - 2 = 6." },
+            { q: "Al multiplicar (4x) por (2x²), ¿qué resultado se obtiene?", opts: ["8x³", "6x³", "8x²", "6x²"], correct: 0, exp: "💡 Explicación: Se multiplican coeficientes (4 × 2 = 8) y se suman exponentes (1 + 2 = 3)." },
+            { q: "Si x = 3, ¿cuál es el valor de la expresión 2x + 5?", opts: ["11", "10", "13", "8"], correct: 0, exp: "💡 Explicación: Sustituimos x por 3: 2(3) + 5 = 6 + 5 = 11." }
+          ],
+          2: [
+            { q: "Al resolver la ecuación x + 8 = 15, ¿cuánto vale x?", opts: ["x = 7", "x = 23", "x = 5", "x = 8"], correct: 0, exp: "💡 Explicación: Se despeja la x pasando el 8 restando al otro lado (15 - 8 = 7)." },
+            { q: "¿Cuál es el resultado de desarrollar el binomio al cuadrado (x + 3)²?", opts: ["x² + 6x + 9", "x² + 9", "2x + 6", "x² + 3x + 9"], correct: 0, exp: "💡 Explicación: Cuadrado del primero (x²) más el doble del primero por el segundo (6x) más el cuadrado del segundo (9)." }
+          ],
+          3: [
+            { q: "¿Qué método consiste en despejar una incógnita en una ecuación y sustituirla en la otra?", opts: ["Método de sustitución", "Método gráfico", "Método de suma y resta", "Método de potencias"], correct: 0, exp: "💡 Explicación: Es uno de los procedimientos algebraicos clave para resolver sistemas de ecuaciones." }
+          ]
+        },
+        fisica: {
+          1: [
+            { q: "¿Cómo se define la rapidez media de un objeto en movimiento?", opts: ["Distancia total recorrida dividida entre el tiempo transcurrido", "Fuerza multiplicada por masa", "Velocidad final menos inicial", "Peso entre gravedad"], correct: 0, exp: "💡 Explicación: La fórmula fundamental es rapidez = distancia / tiempo." },
+            { q: "Según la Primera Ley de Newton (Inercia), ¿qué le sucede a un objeto en reposo?", opts: ["Permanece en reposo si ninguna fuerza actúa sobre él", "Se mueve por sí mismo", "Aumenta su peso", "Cambia de temperatura"], correct: 0, exp: "💡 Explicación: Todo cuerpo persevera en su estado de reposo a menos que una fuerza externa lo modifique." },
+            { q: "¿Qué magnitud física mide la Segunda Ley de Newton con la fórmula F = m·a?", opts: ["Fuerza", "Presión", "Trabajo", "Velocidad"], correct: 0, exp: "💡 Explicación: Relaciona la fuerza aplicada con la masa del objeto y la aceleración adquirida." },
+            { q: "¿Qué establece la Tercera Ley de Newton (Acción y Reacción)?", opts: ["A toda fuerza de acción corresponde otra de igual magnitud en sentido opuesto", "La fuerza es igual a la masa", "Los objetos caen al mismo tiempo", "La fricción no existe"], correct: 0, exp: "💡 Explicación: Las fuerzas siempre se presentan en pares interactuantes." }
+          ],
+          2: [
+            { q: "¿Qué tipo de energía posee un cuerpo debido a su posición o altura?", opts: ["Energía potencial gravitacional", "Energía cinética", "Energía térmica", "Energía eléctrica"], correct: 0, exp: "💡 Explicación: Depende de la masa, la gravedad y la altura a la que se encuentre el objeto." }
+          ],
+          3: [
+            { q: "¿Cuál es la diferencia principal entre calor y temperatura?", opts: ["El calor es energía en tránsito; la temperatura mide la energía cinética promedio", "Son exactamente lo mismo", "La temperatura es un fluido", "El calor se mide en grados Celsius exclusivamente"], correct: 0, exp: "💡 Explicación: Son conceptos termodinámicos distintos pero relacionados." }
+          ]
+        },
+        espanol: {
+          1: [
+            { q: "¿Cuál es la función principal de los textos líricos o poemas?", opts: ["Expresar sentimientos, emociones y pensamientos mediante el lenguaje estético", "Informar noticias del día", "Dar instrucciones de armado", "Exponer leyes civiles"], correct: 0, exp: "💡 Explicación: La poesía utiliza recursos literarios para conmover al lector." },
+            { q: "¿Qué es una metáfora en la literatura?", opts: ["Una comparación implícita entre dos elementos sin usar la palabra 'como'", "Un error ortográfico", "Una exageración extrema", "Un diálogo teatral"], correct: 0, exp: "💡 Explicación: Atribuye características de un objeto a otro (ej. *tus ojos son luceros*)." }
+          ]
+        },
+        historia_de_mexico: {
+          1: [
+            { q: "¿Qué suceso histórico marcó formalmente el inicio de la vida independiente de México en 1821?", opts: ["La consumación de la Independencia con la entrada del Ejército Trigarante", "La promulgación de la Constitución de 1917", "El Grito de Dolores", "La Batalla de Puebla"], correct: 0, exp: "💡 Explicación: Culminó el largo periodo virreinal el 27 de septiembre de 1821." }
+          ]
+        }
+      }
     };
 
-    function generate50Questions(grade, subject) {
+    function generate50Questions(grade, subject, term) {
       const questions = [];
       const experts = {
         algebra: "Validado por Especialistas en Álgebra",
         fisica: "Validado por Físicos Teóricos",
         historia_de_mexico: "Validado por Historiadores Académicos",
+        espanol: "Validado por Lingüistas y Filólogos",
         matematicas: "Validado por Científicos Matemáticos",
         quimica: "Validado por Químicos Investigadores",
         biologia: "Validado por Biólogos Celulares",
-        espanol: "Validado por Lingüistas y Filólogos",
-        historia: "Validado por Historiadores Académicos",
-        geografia: "Validado por Geógrafos Profesionales",
-        formacion: "Validado por Especialistas en Derechos Humanos",
-        tecnologia: "Validado por Ingenieros en Sistemas",
-        ingles: "Validado por Expertos en la Enseñanza de Idiomas",
-        artes: "Validado por Maestros en Estética y Bellas Artes",
-        educacion_fisica: "Validado por Expertos en Kinesiología y Deporte",
+        historia: "Validado por Historiadores",
+        geografia: "Validado por Geógrafos",
+        formacion: "Validado por Expertos Cívicos",
+        tecnologia: "Validado por Ingenieros",
+        ingles: "Validado por Profesores de Idiomas",
+        artes: "Validado por Artistas",
+        educacion_fisica: "Validado por Especialistas Deportivos",
         tutoria: "Validado por Psicólogos Educativos",
-        integracion: "Validado por Especialistas en Proyectos Multidisciplinarios"
+        integracion: "Validado por Docentes"
       };
 
       const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
-      const subjectPool = masterBanks[subject] || masterBanks["espanol"];
+      
+      // Intentar obtener el banco específico del grado, materia y trimestre
+      let subjectPool = [];
+      if (masterBanks[grade] && masterBanks[grade][subject] && masterBanks[grade][subject][term]) {
+        subjectPool = masterBanks[grade][subject][term];
+      } else {
+        // Banco de respaldo genérico si no hay datos específicos para ese trimestre exacto
+        subjectPool = [
+          { q: `Pregunta clave de repaso para ${subject.toUpperCase()} (Trimestre ${term}): ¿Cuál es el concepto central a dominar?`, opts: ["Dominar los fundamentos teóricos y prácticos del bloque", "Memorizar sin comprender", "Ignorar las reglas", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Comprender el tema central garantiza el éxito en el examen trimestral." },
+          { q: "Selecciona la afirmación correcta sobre esta unidad escolar:", opts: ["Requiere práctica constante y repaso de apuntes", "Es opcional", "No viene en el examen", "Es solo teoría"], correct: 0, exp: "💡 Explicación: La constancia en el estudio diario mejora notablemente los resultados." }
+        ];
+      }
 
       for (let i = 1; i <= 50; i++) {
         const itemIndex = (i - 1 + randomSessionSeed) % subjectPool.length;
@@ -686,12 +656,12 @@
 
         let qText = `Pregunta ${i}: ${item.q}`;
         if (i > subjectPool.length) {
-          qText = `Pregunta ${i} (Variante de Repaso): Reforzando el concepto de: ${item.q}`;
+          qText = `Pregunta ${i} (Variante Trimestral): Reforzando el concepto de: ${item.q}`;
         }
 
         questions.push({
           id: i,
-          expertNote: expertTitle,
+          expertNote: `${expertTitle} — ${term}º Trimestre`,
           question: qText,
           options: item.opts,
           correct: item.correct,
@@ -706,14 +676,18 @@
       const subjectSelect = document.getElementById('subject-select');
       const subjectId = subjectSelect.value;
       const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
+      const term = document.getElementById('term-select').value;
       
-      document.getElementById('study-title').innerText = `Puntos Clave: ${subjectName} (${grade}º Grado)`;
+      document.getElementById('study-title').innerText = `Puntos Clave: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
       const container = document.getElementById('study-content');
       container.innerHTML = '';
 
-      const items = summariesData[subjectId] || [
-        { topic: "Conceptos Fundamentales", text: "Revisa los apuntes clave para reforzar tu aprendizaje." }
-      ];
+      let items = [];
+      if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
+        items = summariesData[grade][subjectId][term];
+      } else {
+        items = [{ topic: "Temas Fundamentales del Trimestre", text: `Revisa los apuntes y guías oficiales correspondientes al bloque ${term} para dominar esta materia.` }];
+      }
 
       items.forEach(item => {
         container.innerHTML += `
@@ -728,12 +702,13 @@
     function renderQuiz() {
       const grade = document.getElementById('grade-select').value;
       const subjectId = document.getElementById('subject-select').value;
-      const sampleQ = generate50Questions(grade, subjectId)[0];
+      const term = document.getElementById('term-select').value;
+      const sampleQ = generate50Questions(grade, subjectId, term)[0];
 
       document.getElementById('quiz-info').innerHTML = 
-        `✨ <strong>${sampleQ.expertNote}</strong> | Examen único y exclusivo de esta materia.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones claras para memorizar.`;
+        `✨ <strong>${sampleQ.expertNote}</strong> | Simulador enfocado al periodo actual.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones claras.`;
 
-      const questions = generate50Questions(grade, subjectId);
+      const questions = generate50Questions(grade, subjectId, term);
       const container = document.getElementById('quiz-container');
       container.innerHTML = '';
 
@@ -780,14 +755,6 @@
       }, 500);
     }
 
-    function closeModal(refresh) {
-      document.getElementById('update-modal').style.display = 'none';
-      if (refresh) {
-        randomSessionSeed = Math.floor(Math.random() * 100000);
-        renderAll();
-      }
-    }
-
     // Lógica del Temporizador de 35 minutos
     let totalSeconds = 35 * 60;
     const timerInterval = setInterval(() => {
@@ -809,14 +776,15 @@
         window.location.href = "about:blank";
       } else {
         document.getElementById('timer-modal').style.display = 'none';
-        totalSeconds = 15 * 60; // Da 15 minutos más si decide continuar
+        totalSeconds = 15 * 60; // 15 minutos más
       }
     }
 
     function evaluateQuiz() {
       const grade = document.getElementById('grade-select').value;
       const subjectId = document.getElementById('subject-select').value;
-      const questions = generate50Questions(grade, subjectId);
+      const term = document.getElementById('term-select').value;
+      const questions = generate50Questions(grade, subjectId, term);
       let score = 0;
 
       questions.forEach((q, index) => {
@@ -834,7 +802,7 @@
         resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
         resDiv.style.color = '#86efac';
         resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para aprobar tu examen!`;
+        resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para aprobar tu examen trimestral!`;
       } else {
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
         resDiv.style.color = '#fca5a5';
@@ -862,6 +830,7 @@
       }
     }
 
+    // Inicializar al cargar
     updateSubjectsAndContent();
   </script>
 </body>
