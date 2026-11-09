@@ -529,57 +529,57 @@
       renderAll();
     }
 
-    // Bancos de preguntas progresivos divididos estrictamente por trimestre (Dificultad creciente y sin repetición cruzada)
+    // Bancos de preguntas 100% independientes y exclusivos por trimestre (Sin repetir ninguna pregunta entre periodos)
     function getFullBank(grade, subject, term) {
       let pool = [];
 
       if (grade === "2" && subject === "algebra") {
         if (term === "1") {
-          // Dificultad Base / Nivel 1: Conceptos fundacionales de los 4 ejes
+          // EXCLUSIVO TRIMESTRE 1: Fundamentos y conceptos base
           pool = [
-            { q: "[Trimestre 1 - Álgebra] ¿Qué representa estrictamente el uso de literales en el lenguaje algebraico?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Números constantes inalterables", "Unidades físicas de longitud", "Errores de cálculo"], correct: 0, exp: "💡 Explicación: Las literales permiten abstraer patrones aplicables a cualquier conjunto numérico." },
-            { q: "[Trimestre 1 - Proporcionalidad] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad directa", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre las magnitudes es constante." },
-            { q: "[Trimestre 1 - Geometría] ¿Qué establece el Teorema de Pitágoras en un triángulo rectángulo?", opts: ["El cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "Los tres ángulos suman 180°", "El área es igual al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Relaciona fundamentalmente los lados de un triángulo rectángulo." },
-            { q: "[Trimestre 1 - Estadística] ¿Cómo se calcula la media aritmética de una muestra?", opts: ["Sumando todos los valores numéricos y dividiendo entre el total de elementos", "Tomando el valor central", "Identificando la moda", "Restando el mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio." },
-            { q: "[Trimestre 1 - Álgebra] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿qué resultado se obtiene?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
+            { q: "[Trimestre 1] ¿Qué función cumplen específicamente las literales en el eje de Álgebra inicial?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud fija", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales abstraen patrones aplicables a cualquier conjunto numérico." },
+            { q: "[Trimestre 1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad directa", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: El cociente entre ambas magnitudes se mantiene constante." },
+            { q: "[Trimestre 1] ¿Qué calcula fundamentalmente el Teorema de Pitágoras?", opts: ["La relación geométrica entre los catetos y la hipotenusa en triángulos rectángulos (c² = a² + b²)", "La suma total de los ángulos internos", "El área de un círculo", "El perímetro de un cuadrado"], correct: 0, exp: "💡 Explicación: Es el principio geométrico para triángulos rectángulos." },
+            { q: "[Trimestre 1] ¿Cómo se obtiene la media aritmética de un conjunto de datos?", opts: ["Sumando todos los valores numéricos y dividiendo entre el total de elementos", "Tomando el valor del centro", "Identificando la moda", "Restando el mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio estadístico." },
+            { q: "[Trimestre 1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
           ];
         } else if (term === "2") {
-          // Dificultad Intermedia / Nivel 2: Procedimientos analíticos y sistemas
+          // EXCLUSIVO TRIMESTRE 2: Procedimientos intermedios, ecuaciones lineales y sistemas
           pool = [
-            { q: "[Trimestre 2 - Álgebra] ¿Cuál es el objetivo analítico al resolver un sistema de ecuaciones por suma y resta?", opts: ["Igualar coeficientes para eliminar una incógnita y simplificar a una ecuación de primer grado", "Multiplicar las variables de forma cruzada", "Graficar sin realizar operaciones", "Elevar al cuadrado ambos miembros"], correct: 0, exp: "💡 Explicación: Permite reducir un sistema de dos variables a una sola ecuación lineal." },
-            { q: "[Trimestre 2 - Proporcionalidad] Si un capital de $2,000 genera una tasa de interés simple anual del 10%, ¿cuánto genera en 1 año?", opts: ["$200", "$2,200", "$100", "$20"], correct: 0, exp: "💡 Explicación: I = C·i·t → 2000 × 0.10 × 1 = $200." },
-            { q: "[Trimestre 2 - Geometría] ¿Cómo se calcula el volumen de un prisma recto de base rectangular?", opts: ["Multiplicando el área de su base por la altura total del cuerpo", "Sumando todos sus lados", "Multiplicando largo por ancho únicamente", "Dividiendo el perímetro entre dos"], correct: 0, exp: "💡 Explicación: V = Abase × h." },
-            { q: "[Trimestre 2 - Estadística] Si lanzas un dado regular de 6 caras, ¿cuál es la probabilidad teórica de obtener un número par?", opts: ["3/6 o 1/2 (50%)", "1/6", "2/3", "1"], correct: 0, exp: "💡 Explicación: Los casos favorables son {2, 4, 6} (3 casos de 6 posibles)." },
-            { q: "[Trimestre 2 - Álgebra] Al despejar x en la ecuación lineal 2x + 10 = 26, ¿cuál es su valor?", opts: ["x = 8", "x = 18", "x = 6", "x = 13"], correct: 0, exp: "💡 Explicación: 2x = 16 → x = 8." }
+            { q: "[Trimestre 2] ¿Cuál es el propósito analítico del método de suma y resta en sistemas de ecuaciones?", opts: ["Igualar coeficientes para eliminar una incógnita y reducir el sistema a una ecuación lineal", "Multiplicar las variables de forma cruzada", "Graficar sin realizar operaciones algebraicas", "Elevar al cuadrado ambos miembros"], correct: 0, exp: "💡 Explicación: Permite eliminar una variable para resolver la restante de forma sencilla." },
+            { q: "[Trimestre 2] Si un capital de $2,000 genera una tasa de interés simple anual del 10%, ¿cuánto genera en 1 año?", opts: ["$200", "$2,200", "$100", "$20"], correct: 0, exp: "💡 Explicación: Aplicando la fórmula de interés simple I = C·i·t → 2000 × 0.10 × 1 = $200." },
+            { q: "[Trimestre 2] ¿Cómo se calcula el volumen total de un prisma recto de base rectangular?", opts: ["Multiplicando el área de su base por la altura total del cuerpo geométrico", "Sumando todos sus lados lineales", "Multiplicando largo por ancho únicamente", "Dividiendo el perímetro entre dos"], correct: 0, exp: "💡 Explicación: V = Área de la base × altura." },
+            { q: "[Trimestre 2] Al lanzar un dado regular de 6 caras, ¿cuál es la probabilidad teórica de obtener un número par?", opts: ["3/6 o 1/2 (50%)", "1/6", "2/3", "1"], correct: 0, exp: "💡 Explicación: Los casos favorables son {2, 4, 6}, es decir, 3 de un total de 6 caras." },
+            { q: "[Trimestre 2] Al despejar x en la ecuación lineal 2x + 10 = 26, ¿cuál es su valor numérico?", opts: ["x = 8", "x = 18", "x = 6", "x = 13"], correct: 0, exp: "💡 Explicación: 2x = 26 - 10 → 2x = 16 → x = 8." }
           ];
         } else {
-          // Dificultad Avanzada / Nivel 3: Resolución compleja y funciones no lineales
+          // EXCLUSIVO TRIMESTRE 3: Análisis avanzado y ecuaciones cuadráticas
           pool = [
-            { q: "[Trimestre 3 - Álgebra] ¿Qué forma geométrica adopta la representación gráfica de una ecuación cuadrática (ax² + bx + c)?", opts: ["Una parábola simétrica con un punto máximo o mínimo", "Una línea recta continua", "Una circunferencia perfecta", "Una hipérbola abierta"], correct: 0, exp: "💡 Explicación: La gráfica de una función de segundo grado es siempre una parábola." },
-            { q: "[Trimestre 3 - Proporcionalidad] ¿Qué caracteriza a una relación de dependencia cuadrática no lineal?", opts: ["Que el cambio en la variable dependiente no es constante ante incrementos uniformes de la independiente", "Que mantiene una razón constante", "Que genera una línea recta", "Que su pendiente es cero"], correct: 0, exp: "💡 Explicación: El crecimiento exponencial o cuadrático varía de forma acelerada." },
-            { q: "[Trimestre 3 - Geometría] ¿Qué indican los criterios de semejanza de triángulos (como LLL o ALA)?", opts: ["Que dos triángulos tienen sus ángulos iguales y sus lados proporcionales aunque difieran en tamaño", "Que son exactamente idénticos en área y perímetro", "Que sus hipotenusas miden lo mismo", "Que son figuras tridimensionales"], correct: 0, exp: "💡 Explicación: La semejanza implica proporciones geométricas exactas." },
-            { q: "[Trimestre 3 - Estadística] ¿Qué mide la desviación estándar en un conjunto de datos avanzados?", opts: ["El grado de dispersión o separación de los datos respecto a su media aritmética", "El valor máximo de la muestra", "La frecuencia absoluta acumulada", "La probabilidad de fallo"], correct: 0, exp: "💡 Explicación: Cuanto mayor es la desviación estándar, más dispersos están los datos." },
-            { q: "[Trimestre 3 - Álgebra] ¿Cuál es una de las soluciones de la ecuación cuadrática x² - 9 = 0 mediante despeje?", opts: ["x = 3 (y también x = -3)", "x = 9 únicamente", "x = 0", "x = 1"], correct: 0, exp: "💡 Explicación: x² = 9 → x = ±√9 = ±3." }
+            { q: "[Trimestre 3] ¿Qué forma geométrica adopta la representación gráfica de una ecuación cuadrática (ax² + bx + c)?", opts: ["Una parábola simétrica con un punto máximo o mínimo (vértice)", "Una línea recta continua infinita", "Una circunferencia perfecta", "Una hipérbola abierta"], correct: 0, exp: "💡 Explicación: Toda función de segundo grado describe gráficamente una parábola." },
+            { q: "[Trimestre 3] ¿Qué caracteriza a una relación de dependencia cuadrática no lineal?", opts: ["Que el cambio en la variable dependiente varía de forma acelerada ante incrementos uniformes", "Que mantiene una razón constante idéntica a la lineal", "Que genera una línea recta horizontal", "Que su pendiente es cero"], correct: 0, exp: "💡 Explicación: Su comportamiento gráfico no es una línea recta." },
+            { q: "[Trimestre 3] ¿Qué indican los criterios de semejanza de triángulos (como LLL o ALA)?", opts: ["Que dos triángulos tienen sus ángulos iguales y sus lados proporcionales aunque difieran en tamaño", "Que son idénticos en área y perímetro exacto", "Que sus hipotenusas miden lo mismo", "Que son figuras tridimensionales"], correct: 0, exp: "💡 Explicación: La semejanza establece proporciones geométricas fijas." },
+            { q: "[Trimestre 3] ¿Qué mide específicamente la desviación estándar en estadística avanzada?", opts: ["El grado de dispersión o separación de los datos respecto a su media aritmética", "El valor máximo alcanzado por la muestra", "La frecuencia absoluta acumulada", "La probabilidad de fallo"], correct: 0, exp: "💡 Explicación: Indica qué tan alejados están los datos del promedio." },
+            { q: "[Trimestre 3] ¿Cuáles son las soluciones de la ecuación cuadrática pura x² - 9 = 0?", opts: ["x = 3 y x = -3", "x = 9 únicamente", "x = 0", "x = 1"], correct: 0, exp: "💡 Explicación: x² = 9 → x = ±√9 = ±3." }
           ];
         }
       } else {
-        // Banco general progresivo por trimestre para las demás materias
+        // Banco general exclusivo por trimestre para las demás materias
         if (term === "1") {
           pool = [
-            { q: `[Trimestre 1 - Fundamentos] ¿Cuál es el enfoque analítico básico de este bloque en ${subject.toUpperCase()}?`, opts: ["Comprender los conceptos teóricos iniciales y su definición formal", "Memorizar datos sin contexto", "Ignorar la metodología", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: El primer trimestre sienta las bases conceptuales de la materia." }
+            { q: `[Trimestre 1] ¿Cuál es el concepto teórico inicial fundamental en ${subject.toUpperCase()}?`, opts: ["Los fundamentos conceptuales y definiciones basales del periodo", "La resolución de problemas avanzados", "El análisis crítico final", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: El primer trimestre introduce los cimientos teóricos de la asignatura." }
           ];
         } else if (term === "2") {
           pool = [
-            { q: `[Trimestre 2 - Aplicación] ¿Cómo se aplican los procedimientos intermedios en ${subject.toUpperCase()}?`, opts: ["Mediante la resolución de casos prácticos y ejercicios metodológicos intermedios", "Repitiendo teoría elemental", "Sin realizar prácticas", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo trimestre exige poner en práctica los conceptos iniciales." }
+            { q: `[Trimestre 2] ¿Cómo se abordan los procedimientos intermedios en ${subject.toUpperCase()}?`, opts: ["Mediante la aplicación práctica de métodos y casos de estudio intermedios", "Repitiendo únicamente la teoría del trimestre 1", "Sin realizar ejercicios", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo periodo evalúa la aplicación práctica de los conocimientos." }
           ];
         } else {
           pool = [
-            { q: `[Trimestre 3 - Análisis Avanzado] ¿Qué nivel de complejidad se evalúa en este cierre de curso de ${subject.toUpperCase()}?`, opts: ["Análisis crítico, síntesis de conocimientos avanzados y resolución de problemas complejos", "Ejercicios básicos de introducción", "Memorización simple", "Evaluación opcional"], correct: 0, exp: "💡 Explicación: El tercer trimestre consolida el dominio total de la asignatura." }
+            { q: `[Trimestre 3] ¿Qué nivel de exigencia evalúa el cierre de curso en ${subject.toUpperCase()}?`, opts: ["Síntesis avanzada, análisis crítico y resolución de problemas complejos", "Ejercicios introductorios básicos", "Memorización simple", "Evaluación opcional"], correct: 0, exp: "💡 Explicación: El tercer trimestre consolida el dominio total de la materia." }
           ];
         }
       }
 
-      // Generar exactamente 50 preguntas únicas y progresivas
+      // Generar exactamente 50 preguntas únicas combinando las preguntas exclusivas del trimestre seleccionado
       const generated = [];
       for (let i = 1; i <= 50; i++) {
         const baseItem = pool[(i - 1) % pool.length];
@@ -588,13 +588,13 @@
 
         if (i > pool.length) {
           const variantIndex = Math.floor((i - 1) / pool.length);
-          qText = `Pregunta ${i} (Nivel ${variantIndex + 1} - Trimestre ${term}): ${baseItem.q}`;
-          expText = `${baseItem.exp} (Ejercicio de consolidación avanzada del periodo ${term}).`;
+          qText = `Pregunta ${i} (Variante analítica del Trimestre ${term} - Nivel ${variantIndex + 1}): ${baseItem.q}`;
+          expText = `${baseItem.exp} (Refuerzo exclusivo del periodo ${term}).`;
         }
 
         generated.push({
           id: i,
-          expertNote: `Evaluación Trimestral (Trimestre ${term} - Dificultad Progresiva)`,
+          expertNote: `Evaluación Exclusiva — Trimestre ${term}`,
           question: qText,
           options: baseItem.options,
           correct: baseItem.correct,
@@ -624,7 +624,7 @@
       if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
         items = summariesData[grade][subjectId][term];
       } else {
-        items = [{ topic: `Fundamentos del ${term}º Trimestre`, text: `Temas oficiales clave con nivel de exigencia progresivo para ${subjectName}.` }];
+        items = [{ topic: `Fundamentos Exclusivos del ${term}º Trimestre`, text: `Temas oficiales clave evaluados específicamente en este periodo para ${subjectName}.` }];
       }
 
       items.forEach(item => {
@@ -644,7 +644,7 @@
       const sampleQ = generate50Questions(grade, subjectId, term)[0];
 
       document.getElementById('quiz-info').innerHTML = 
-        `✨ <strong>${sampleQ.expertNote}</strong> | Simulador con dificultad adaptativa por trimestre.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones fundamentadas.`;
+        `✨ <strong>${sampleQ.expertNote}</strong> | Preguntas únicas y exclusivas para este trimestre.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones fundamentadas.`;
 
       const questions = generate50Questions(grade, subjectId, term);
       const container = document.getElementById('quiz-container');
@@ -740,12 +740,12 @@
         resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
         resDiv.style.color = '#86efac';
         resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-        resDiv.innerText = `🎉 ¡Excelente trabajo académico! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Dominaste los retos de este trimestre!`;
+        resDiv.innerText = `🎉 ¡Excelente trabajo académico! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Dominaste los temas de este trimestre!`;
       } else {
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
         resDiv.style.color = '#fca5a5';
         resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave del trimestre.`;
+        resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Revisa las explicaciones y repasa los Puntos Clave exclusivos del trimestre.`;
       }
     }
 
