@@ -444,51 +444,42 @@
   </div>
 
   <script>
-    // Resúmenes científicos y curriculares estructurados por Grado, Materia y Trimestre
+    // Resúmenes científicos estructurados con los 4 ejes de Matemáticas 2 (Álgebra, Proporcionalidad, Geometría, Estadística y Probabilidad)
     const summariesData = {
       2: {
         algebra: {
           1: [
-            { topic: "Eje: Álgebra - Introducción y Lenguaje Algebraico", text: "Estudio científico de la generalización aritmética mediante el uso de literales (variables) para representar cantidades desconocidas y modelar situaciones reales." },
-            { topic: "Eje: Proporcionalidad - Variación Lineal e Inversa", text: "Análisis funcional de razones y proporciones, magnitudes directa e inversamente proporcionales con representación tabular y algebraica." },
-            { topic: "Eje: Geometría - Teorema de Pitágoras y Polígonos", text: "Propiedades geométricas de los triángulos rectángulos y cálculo formal de ángulos internos y externos en polígonos regulares." },
-            { topic: "Eje: Estadística y Probabilidad - Frecuencias y Gráficas", text: "Recopilación rigurosa de datos cuantitativos y cualitativos, construcción de histogramas y análisis de medidas de tendencia central." }
+            { topic: "1. Álgebra: Expresiones y Patrones", text: "Estudio riguroso del lenguaje algebraico utilizando variables (literales) para generalizar operaciones aritméticas y resolver problemas de secuencias numéricas." },
+            { topic: "2. Proporcionalidad: Variación Lineal e Inversa", text: "Análisis funcional de magnitudes correlacionadas, determinando razones, proporciones directas (y = kx) y razones inversas." },
+            { topic: "3. Geometría: Teorema de Pitágoras y Polígonos", text: "Demostración de las propiedades de los triángulos rectángulos (c² = a² + b²) y cálculo de ángulos internos y externos en polígonos." },
+            { topic: "4. Estadística y Probabilidad: Análisis de Datos", text: "Recopilación metódica de datos cuantitativos y cualitativos, representación gráfica en histogramas y cálculo de medidas de tendencia central." }
           ],
           2: [
-            { topic: "Eje: Álgebra - Ecuaciones Lineales y Sistemas", text: "Resolución analítica de ecuaciones de primer grado y sistemas de ecuaciones simultáneas mediante métodos formales." },
-            { topic: "Eje: Proporcionalidad - Porcentajes y Aplicaciones Financieras", text: "Cálculos avanzados de tasas de interés simple, descuentos sucesivos y reparto proporcional." },
-            { topic: "Eje: Geometría - Perímetro, Área y Volumen", text: "Deducción científica de fórmulas para cuerpos geométricos compuestos y prismas." },
-            { topic: "Eje: Estadística y Probabilidad - Probabilidad Clásica", text: "Cálculo de la probabilidad teórica y frecuencial en experimentos aleatorios simples y compuestos." }
+            { topic: "1. Álgebra: Ecuaciones de Primer Grado y Sistemas", text: "Resolución analítica de ecuaciones lineales con una incógnita y sistemas de dos ecuaciones simultáneas." },
+            { topic: "2. Proporcionalidad: Porcentajes y Tasas de Cambio", text: "Aplicación científica de tasas de crecimiento, interés simple y repartos proporcionales en contextos financieros." },
+            { topic: "3. Geometría: Perímetros, Áreas y Volúmenes", text: "Cálculo formal de áreas de figuras compuestas y volúmenes de cuerpos geométricos tridimensionales." },
+            { topic: "4. Estadística y Probabilidad: Probabilidad Teórica", text: "Determinación de la probabilidad clásica y frecuencial en eventos aleatorios independientes y dependientes." }
           ],
           3: [
-            { topic: "Eje: Álgebra - Ecuaciones Cuadráticas", text: "Modelación y solución de ecuaciones de segundo grado mediante factorización y fórmula general." },
-            { topic: "Eje: Proporcionalidad - Funciones y Modelos No Lineales", text: "Comportamiento gráfico y algebraico de relaciones de dependencia cuadrática." },
-            { topic: "Eje: Geometría - Semejanza y Trigonometría Básica", text: "Criterios de semejanza de triángulos y funciones trigonométricas elementales (seno, coseno, tangente)." },
-            { topic: "Eje: Estadística y Probabilidad - Desviación y Análisis de Datos", text: "Estudio de la dispersión estadística y toma de decisiones basada en inferencia probabilística." }
+            { topic: "1. Álgebra: Ecuaciones Cuadráticas", text: "Modelación y resolución de ecuaciones de segundo grado mediante factorización y fórmulas generales." },
+            { topic: "2. Proporcionalidad: Funciones No Lineales", text: "Estudio analítico y gráfico de relaciones de dependencia cuadrática y proporcionalidad múltiple." },
+            { topic: "3. Geometría: Semejanza y Trigonometría", text: "Criterios de semejanza de triángulos y aplicación de razones trigonométricas básicas (seno, coseno y tangente)." },
+            { topic: "4. Estadística y Probabilidad: Desviación y Probabilidad Condicionada", text: "Análisis de la dispersión de datos y probabilidad de eventos compuestos." }
           ]
         },
         fisica: {
           1: [
-            { topic: "Movimiento y Rapidez", text: "Análisis cinemático del desplazamiento, velocidad vectorial y sistemas de referencia." },
-            { topic: "Leyes de Newton", text: "Estudio dinámico de la inercia, la fuerza resultante (F = ma) y el principio de acción-reacción." }
-          ],
-          2: [
-            { topic: "Energía Mecánica", text: "Conservación de la energía entre sus formas cinética y potencial gravitacional." },
-            { topic: "Presión en Fluidos", text: "Principio de Pascal y principio de Arquímedes aplicados a la presión hidrostática." }
-          ],
-          3: [
-            { topic: "Termodinámica y Ondas", text: "Diferencia científica entre calor y temperatura, propagación de ondas mecánicas y electromagnéticas." }
+            { topic: "Cinemática y Dinámica", text: "Estudio científico de la aceleración, velocidad vectorial y la aplicación de las Leyes de Newton." }
           ]
         },
         espanol: {
           1: [
-            { topic: "Literatura y Poesía", text: "Análisis de figuras retóricas, métrica y estructura formal de textos líricos." },
-            { topic: "Textos Expositivo-Informativos", text: "Elaboración de reportes de investigación y encuestas con rigor metodológico." }
+            { topic: "Análisis de Textos Literarios", text: "Estudio de figuras retóricas y estructuras métricas en la lírica y la narrativa." }
           ]
         },
         historia_de_mexico: {
           1: [
-            { topic: "De la Independencia al México Soberano", text: "Proceso histórico de consolidación del Estado mexicano, leyes de reforma y soberanía nacional." }
+            { topic: "Independencia y Soberanía", text: "Proceso histórico de conformación de la nación mexicana durante el siglo XIX." }
           ]
         }
       }
@@ -497,7 +488,7 @@
     function getSubjectsByGrade(grade) {
       if (grade === "2") {
         return [
-          { id: "algebra", name: "Álgebra (Matemáticas II)" },
+          { id: "algebra", name: "Álgebra y Matemáticas II" },
           { id: "fisica", name: "Física (Ciencias II)" },
           { id: "espanol", name: "Español II" },
           { id: "historia_de_mexico", name: "Historia de México" },
@@ -556,27 +547,37 @@
 
     let randomSessionSeed = Math.floor(Math.random() * 100000);
 
-    // Bancos científicos detallados por Grado, Materia y Trimestre
+    // Bancos de preguntas científicos y corregidos (con preguntas y respuestas exactas y completas)
     const masterBanks = {
       2: {
         algebra: {
           1: [
-            { q: "¿Cuál es el propósito fundamental del eje de Álgebra en 2do de secundaria?", opts: ["Generalizar propiedades aritméticas mediante el uso de literales y variables", "Memorizar tablas de multiplicar únicamente", "Desarrollar operaciones de suma simple", "Calcular el peso de los objetos"], correct: 0, exp: "💡 Explicación científica: El álgebra extiende la aritmética permitiendo el análisis de patrones abstractos y el modelado de funciones." },
-            { q: "Dentro del eje de Proporcionalidad, ¿cómo se identifica una relación de variación lineal directa?", opts: ["Cuando al aumentar una magnitud, la otra aumenta proporcionalmente manteniendo un cociente constante", "Cuando los valores son totalmente aleatorios", "Cuando la gráfica es una curva exponencial", "Cuando ambas magnitudes disminuyen a cero"], correct: 0, exp: "💡 Explicación científica: Se rige por la función y = kx, donde k representa la constante de proporcionalidad." },
-            { q: "En el eje de Geometría, ¿qué establece científicamente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos", "El perímetro es igual al área multiplicada por dos", "Los tres ángulos suman 360 grados", "La base es siempre mayor que la altura"], correct: 0, exp: "💡 Explicación científica: Se expresa algebraicamente como c² = a² + b²." },
-            { q: "En el eje de Estadística y Probabilidad, ¿qué mide la media aritmética?", opts: ["El valor promedio representativo de un conjunto de datos numéricos", "El valor que ocurre con mayor frecuencia", "La diferencia entre el valor mayor y menor", "La probabilidad exacta de un evento futuro"], correct: 0, exp: "💡 Explicación científica: Se calcula sumando todos los valores y dividiendo entre el número total de elementos." },
-            { q: "¿Cómo se le denomina a una expresión algebraica compuesta por la adición de dos términos (monomios no semejantes)?", opts: ["Binomio", "Monomio", "Trinomio", "Polinomio cúbico"], correct: 0, exp: "💡 Explicación científica: El prefijo bi- indica la presencia de dos términos algebraicos distintos (ej. ax + b)." }
+            { q: "En el eje de Álgebra, ¿cuál es el propósito científico de utilizar literales (letras) junto con números?", opts: ["Generalizar relaciones aritméticas y modelar situaciones de variación desconocida", "Inventar palabras sin sentido matemático", "Sustituir por completo las operaciones de suma", "Calcular pesos y volúmenes físicos"], correct: 0, exp: "💡 Explicación científica: Las literales permiten abstraer patrones numéricos aplicables a cualquier conjunto de datos." },
+            { q: "Dentro del eje de Proporcionalidad, ¿cómo se representa algebraicamente una variación lineal directa?", opts: ["Mediante la función y = kx, donde k es la constante de proporcionalidad", "Mediante una división exponencial inversa", "Sumando un valor fijo independiente", "Multiplicando la variable por cero"], correct: 0, exp: "💡 Explicación científica: En la variación directa, el cociente entre las dos magnitudes se mantiene siempre constante." },
+            { q: "En el eje de Geometría, ¿qué establece formalmente el Teorema de Pitágoras en un triángulo rectángulo?", opts: ["Que el cuadrado de la longitud de la hipotenusa es igual a la suma de los cuadrados de los catetos", "Que los tres lados son exactamente iguales", "Que la suma de los ángulos internos es de 180°", "Que el área equivale al perímetro multiplicado por dos"], correct: 0, exp: "💡 Explicación científica: Se formula matemáticamente como c² = a² + b²." },
+            { q: "En el eje de Estadística y Probabilidad, ¿cómo se calcula la media aritmética de un conjunto de datos?", opts: ["Sumando todos los valores numéricos y dividiendo el resultado entre el número total de elementos", "Ordenando los números de menor a mayor y eligiendo el del centro", "Identificando el valor que más veces se repite en la lista", "Restando el valor mínimo al valor máximo obtenido"], correct: 0, exp: "💡 Explicación científica: La media aritmética representa el punto de equilibrio numérico o promedio ponderado de la muestra." },
+            { q: "¿Cómo se le llama algebraicamente a una expresión que consta de la adición o sustracción de dos términos no semejantes?", opts: ["Binomio", "Monomio", "Trinomio", "Ecuación cúbica"], correct: 0, exp: "💡 Explicación científica: El prefijo bi- denota exactamente dos términos algebraicos independientes (ej. 3x + 5)." }
           ],
           2: [
-            { q: "¿Cuál es el procedimiento analítico para resolver un sistema de ecuaciones lineales por el método de suma y resta?", opts: ["Igualar coeficientes de una incógnita para eliminarla al sumar o restar ambas ecuaciones", "Multiplicar todas las variables al azar", "Graficar sin realizar operaciones", "Despejar la misma letra tres veces"], correct: 0, exp: "💡 Explicación científica: Permite reducir un sistema de dos variables a una sola ecuación lineal con una incógnita." }
+            { q: "Al resolver un sistema de ecuaciones lineales por el método de suma y resta, ¿cuál es el objetivo principal?", opts: ["Igualar los coeficientes de una incógnita para eliminarla al operar ambas ecuaciones", "Multiplicar todas las variables al azar", "Graficar sin realizar cálculos analíticos", "Despejar la misma letra tres veces seguidas"], correct: 0, exp: "💡 Explicación científica: Permite reducir un sistema de dos variables a una sola ecuación lineal con una incógnita." }
           ],
           3: [
-            { q: "¿Qué forma gráfica adopta la función cuadrática (ecuación de segundo grado) en el plano cartesiano?", opts: ["Una parábola", "Una línea recta perfecta", "Una circunferencia", "Una hipérbola asimétrica"], correct: 0, exp: "💡 Explicación científica: Su representación geométrica es una curva simétrica con un punto máximo o mínimo (vértice)." }
+            { q: "¿Qué forma geométrica adopta la representación gráfica de una función cuadrática (ecuación de segundo grado)?", opts: ["Una parábola simétrica", "Una línea recta perfecta", "Una circunferencia cerrada", "Una hipérbola abierta"], correct: 0, exp: "💡 Explicación científica: Su curva simétrica posee un punto máximo o mínimo denominado vértice." }
           ]
         },
         fisica: {
           1: [
-            { q: "¿Cómo se define científicamente la aceleración en cinemática?", opts: ["La variación de la velocidad de un cuerpo en función del tiempo transcurrido", "La distancia total recorrida", "La fuerza neta aplicada", "La masa multiplicada por la velocidad"], correct: 0, exp: "💡 Explicación científica: Se expresa con unidades de distancia sobre tiempo al cuadrado (m/s²)." }
+            { q: "¿Cómo se define científicamente la aceleración en el estudio de la física?", opts: ["La variación de la velocidad de un cuerpo en función del tiempo transcurrido", "La distancia total recorrida en metros", "La fuerza neta aplicada sobre un objeto", "La masa multiplicada por la velocidad"], correct: 0, exp: "💡 Explicación científica: Se expresa formalmente en unidades de distancia sobre tiempo al cuadrado (m/s²)." }
+          ]
+        },
+        espanol: {
+          1: [
+            { q: "¿Cuál es la función principal de las figuras retóricas en los textos literarios o líricos?", opts: ["Embellecer el lenguaje y evocar emociones profundas mediante comparaciones y metáforas", "Informar datos reales con rigor científico", "Establecer reglas estrictas de ortografía", "Exponer leyes jurídicas e institucionales"], correct: 0, exp: "💡 Explicación científica: Los recursos literarios transforman el lenguaje cotidiano en una experiencia estética." }
+          ]
+        },
+        historia_de_mexico: {
+          1: [
+            { q: "¿Qué acontecimiento histórico consolidó formalmente la independencia política de México en 1821?", opts: ["La entrada del Ejército Trigarante a la Ciudad de México y la firma de los Tratados de Córdoba", "La promulgación de la Constitución de 1917", "El inicio del movimiento insurgente en Dolores", "La Batalla de Puebla contra el ejército francés"], correct: 0, exp: "💡 Explicación científica: Marcó la conclusión del periodo virreinal y el nacimiento del Estado soberano." }
           ]
         }
       }
@@ -598,8 +599,8 @@
         subjectPool = masterBanks[grade][subject][term];
       } else {
         subjectPool = [
-          { q: `Pregunta científica de evaluación para ${subject.toUpperCase()} (Trimestre ${term}): ¿Cuál es el fundamento teórico clave?`, opts: ["Aplicar rigurosamente los principios conceptuales y metodológicos del bloque", "Memorizar datos sin contexto", "Ignorar las leyes matemáticas", "Ninguna anterior"], correct: 0, exp: "💡 Explicación científica: La comprensión analítica de los conceptos asegura el dominio de la materia." },
-          { q: "Selecciona el principio analítico correcto para esta temática:", opts: ["Estudio sistemático basado en evidencias teóricas y resolución de problemas", "Práctica basada en suposiciones empíricas", "Cálculo superficial", "Repetición mecánica"], correct: 0, exp: "💡 Explicación científica: El rigor científico fortalece el pensamiento crítico escolar." }
+          { q: `Pregunta de evaluación científica para ${subject.toUpperCase()} (Trimestre ${term}): ¿Cuál es el fundamento analítico clave de esta unidad?`, opts: ["Aplicar rigurosamente los principios teóricos y metodológicos correspondientes al bloque", "Memorizar datos aislados sin contexto", "Ignorar las leyes analíticas", "Ninguna de las anteriores"], correct: 0, exp: "💡 Explicación científica: La comprensión analítica de los conceptos asegura el dominio integral de la materia." },
+          { q: "Selecciona el principio analítico correcto aplicable a este tema de estudio:", opts: ["Estudio sistemático fundamentado en evidencias teóricas y resolución de problemas", "Práctica basada en suposiciones empíricas", "Cálculo superficial sin comprobación", "Repetición mecánica de textos"], correct: 0, exp: "💡 Explicación científica: El rigor metodológico fortalece el razonamiento lógico y escolar." }
         ];
       }
 
@@ -639,7 +640,7 @@
       if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
         items = summariesData[grade][subjectId][term];
       } else {
-        items = [{ topic: "Fundamentos Científicos del Periodo", text: `Recopilación de temas oficiales y científicos correspondientes al ${term}º trimestre para la materia de ${subjectName}.` }];
+        items = [{ topic: "Fundamentos Científicos del Periodo", text: `Recopilación de temas curriculares correspondientes al ${term}º trimestre para la materia de ${subjectName}.` }];
       }
 
       items.forEach(item => {
