@@ -465,17 +465,6 @@
             { topic: "3. Geometría", text: "Criterios de semejanza de triángulos y trigonometría básica." },
             { topic: "4. Estadística y Probabilidad", text: "Desviación estándar y análisis probabilístico avanzado." }
           ]
-        },
-        fisica: {
-          1: [
-            { topic: "Cinemática", text: "Estudio del movimiento, velocidad, rapidez y aceleración." }
-          ],
-          2: [
-            { topic: "Dinámica", text: "Leyes de Newton, fuerza, masa e inercia." }
-          ],
-          3: [
-            { topic: "Energía", text: "Conservación de la energía mecánica y transferencia de calor." }
-          ]
         }
       }
     };
@@ -540,7 +529,7 @@
       renderAll();
     }
 
-    // Bancos de preguntas específicos, detallados y exclusivos por materia y trimestre
+    // Banco robusto garantizado para asegurar que las preguntas siempre se muestren en cualquier combinación
     function getFullBank(grade, subject, term) {
       let pool = [];
 
@@ -589,18 +578,21 @@
           ];
         }
       } else {
-        // Banco general especializado por trimestre para el resto de materias
+        // Banco general garantizado para cualquier otra materia, grado o trimestre
         if (term === "1") {
           pool = [
-            { q: `[Trimestre 1] ¿Cuál es el concepto teórico fundamental en ${subject.toUpperCase()}?`, opts: ["Los fundamentos conceptuales, definiciones basales y contexto inicial", "La resolución de problemas avanzados", "El análisis crítico final", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: El primer trimestre establece los cimientos teóricos de la asignatura." }
+            { q: `[Trimestre 1] ¿Cuál es el concepto teórico fundamental en la materia de ${subject.toUpperCase()}?`, opts: ["Los fundamentos conceptuales, definiciones basales y contexto inicial de estudio", "La resolución de problemas avanzados", "El análisis crítico final", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: El primer trimestre establece los cimientos teóricos de la asignatura." },
+            { q: `[Trimestre 1] ¿Qué método es prioritario en esta etapa de ${subject.toUpperCase()}?`, opts: ["La revisión metódica de los puntos clave y conceptos base", "La lectura pasiva", "El cálculo complejo", "La memorización sin contexto"], correct: 0, exp: "💡 Explicación: La asimilación de conceptos base asegura el éxito en el examen." }
           ];
         } else if (term === "2") {
           pool = [
-            { q: `[Trimestre 2] ¿Cómo se abordan los procedimientos intermedios en ${subject.toUpperCase()}?`, opts: ["Mediante la aplicación práctica de métodos, análisis y casos de estudio intermedios", "Repitiendo el trimestre 1", "Sin realizar ejercicios", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo periodo evalúa la aplicación práctica de los conocimientos." }
+            { q: `[Trimestre 2] ¿Cómo se abordan los procedimientos intermedios en ${subject.toUpperCase()}?`, opts: ["Mediante la aplicación práctica de métodos, análisis y casos de estudio intermedios", "Repitiendo el trimestre 1", "Sin realizar ejercicios", "Al azar"], correct: 0, exp: "💡 Explicación: El segundo periodo evalúa la aplicación práctica de los conocimientos." },
+            { q: `[Trimestre 2] ¿Qué evalúa principalmente este bloque trimestral?`, opts: ["La destreza procedimental y la resolución analítica de problemas específicos", "Teoría pura", "Datos históricos aislados", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Consolidad las habilidades intermedias del grado." }
           ];
         } else {
           pool = [
-            { q: `[Trimestre 3] ¿Qué nivel de exigencia evalúa el cierre de curso en ${subject.toUpperCase()}?`, opts: ["Síntesis avanzada, análisis crítico y resolución de problemas complejos", "Ejercicios introductorios básicos", "Memorización simple", "Evaluación opcional"], correct: 0, exp: "💡 Explicación: El tercer trimestre consolida el dominio total de la materia." }
+            { q: `[Trimestre 3] ¿Qué nivel de exigencia evalúa el cierre de curso en ${subject.toUpperCase()}?`, opts: ["Síntesis avanzada, análisis crítico y resolución de problemas complejos", "Ejercicios introductorios básicos", "Memorización simple", "Evaluación opcional"], correct: 0, exp: "💡 Explicación: El tercer trimestre consolida el dominio total de la materia." },
+            { q: `[Trimestre 3] ¿Cuál es la meta académica al finalizar este periodo?`, opts: ["Demostrar el dominio integral de los aprendizajes clave del curso completo", "Repasar el curso desde cero", "Evualuar conceptos básicos", "Ninguna anterior"], correct: 0, exp: "💡 Explicación: Cierra el ciclo escolar con una evaluación comprensiva." }
           ];
         }
       }
