@@ -15,8 +15,15 @@
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; }
-        header { text-align: center; margin-bottom: 25px; }
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; position: relative; }
+        
+        /* Botón de Candado Minimalista Flotante */
+        .admin-login-btn { position: absolute; top: 20px; right: 25px; z-index: 100; }
+        .btn-secret { background: transparent; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, opacity 0.2s; opacity: 0.7; }
+        .btn-secret svg { width: 24px; height: 24px; stroke: #ffffff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .btn-secret:hover { opacity: 1; transform: scale(1.1); }
+
+        header { text-align: center; margin-bottom: 25px; margin-top: 15px; }
         header h1 { background: linear-gradient(90deg, #818cf8, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.8rem; margin-bottom: 8px; font-weight: 800; }
         header p { color: var(--text-muted); font-size: 1.1rem; }
         
@@ -27,7 +34,7 @@
         
         .container { max-width: 950px; margin: 0 auto; }
 
-        /* Panel de Control de Administrador (Oculto por defecto para todos) */
+        /* Panel de Control de Administrador */
         .admin-panel { background: #111827; border: 2px dashed #818cf8; padding: 20px; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: none; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         .admin-header h3 { color: #a5b4fc; font-size: 1.2rem; }
@@ -36,11 +43,6 @@
         .btn-pause { background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; }
         .btn-resume:hover, .btn-pause:hover { opacity: 0.85; }
         
-        /* Botón discreto para activar modo Admin */
-        .admin-login-btn { text-align: right; margin-bottom: 15px; }
-        .btn-secret { background: transparent; color: #64748b; border: none; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
-        .btn-secret:hover { color: #818cf8; }
-
         /* Tabla de Visitas */
         .visits-table-container { max-height: 180px; overflow-y: auto; border-radius: 8px; border: 1px solid #374151; }
         table.visits-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
@@ -105,6 +107,16 @@
 </head>
 <body>
 
+    <!-- Botón de Candado Minimalista Flotante -->
+    <div class="admin-login-btn">
+        <button class="btn-secret" onclick="loginAdmin()" title="Acceso Administrador">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </button>
+    </div>
+
     <!-- Pantalla de Pausa con el Conejo Comiendo Césped -->
     <div id="paused-screen">
         <div class="bunny-box">
@@ -132,12 +144,7 @@
             <p>Plataforma Escolar Interactiva para Exámenes</p>
         </header>
 
-        <!-- Botón secreto para iniciar sesión como administrador -->
-        <div class="admin-login-btn">
-            <button class="btn-secret" onclick="loginAdmin()">🔒 Soy Administrador</button>
-        </div>
-
-        <!-- Panel de Control Privado (Solo aparece si pones tu clave) -->
+        <!-- Panel de Control Privado -->
         <div class="admin-panel" id="admin-panel">
             <div class="admin-header">
                 <h3>🛠️ Panel de Control de Visitas (Privado)</h3>
@@ -228,7 +235,7 @@
                 localStorage.setItem('estudiasecu_is_admin', 'true');
                 document.getElementById('admin-panel').style.display = 'block';
                 alert("¡Acceso de administrador concedido!");
-                checkPlatformStatus(); // Quita la pausa visual si eras tú el que estaba bloqueado
+                checkPlatformStatus();
             } else if (pass !== null) {
                 alert("Contraseña incorrecta.");
             }
@@ -296,13 +303,20 @@
             });
         }
 
-        // Ejecutar controles al cargar
         checkAdminSession();
         checkPlatformStatus();
         registerVisit();
         renderVisitsTable();
 
         const summariesData = {
+            1: {
+                biologia: {
+                    1: [
+                        { topic: "1. La Célula como Unidad de la Vida", text: "Estudio de la célula, distinguiendo componentes entre células procariotas y eucariotas." },
+                        { topic: "2. Biodiversidad", text: "Análisis de la riqueza biológica y adaptaciones evolutivas." }
+                    ]
+                }
+            },
             2: {
                 algebra: {
                     1: [
@@ -329,11 +343,33 @@
                     2: [{ topic: "Dinámica", text: "Leyes de Newton, fuerza, masa e inercia." }],
                     3: [{ topic: "Energía", text: "Conservación de la energía mecánica y transferencia de calor." }]
                 }
+            },
+            3: {
+                quimica: {
+                    1: [
+                        { topic: "1. Propiedades de la Materia", text: "Caracterización de sustancias puras, mezclas y métodos de separación." },
+                        { topic: "2. Estructura Atómica", text: "Modelos atómicos y organización periódica de los elementos." }
+                    ]
+                }
             }
         };
 
         function getSubjectsByGrade(grade) {
-            if (grade === "2") {
+            if (grade === "1") {
+                return [
+                    { id: "biologia", name: "Biología (Ciencias I)" },
+                    { id: "matematicas", name: "Matemáticas I" },
+                    { id: "espanol", name: "Español I" },
+                    { id: "historia", name: "Historia I" },
+                    { id: "geografia", name: "Geografía" },
+                    { id: "formacion", name: "Formación Cívica y Ética I" },
+                    { id: "ingles", name: "Inglés I" },
+                    { id: "artes", name: "Artes I" },
+                    { id: "tecnologia", name: "Tecnología I" },
+                    { id: "educacion_fisica", name: "Educación Física" },
+                    { id: "tutoria", name: "Tutoría" }
+                ];
+            } else if (grade === "2") {
                 return [
                     { id: "algebra", name: "Álgebra (Matemáticas II)" },
                     { id: "fisica", name: "Física (Ciencias II)" },
@@ -346,7 +382,7 @@
                     { id: "educacion_fisica", name: "Educación Física" },
                     { id: "tutoria", name: "Tutoría" }
                 ];
-            } else if (grade === "3") {
+            } else {
                 return [
                     { id: "matematicas", name: "Matemáticas III" },
                     { id: "quimica", name: "Química (Ciencias III)" },
@@ -356,20 +392,6 @@
                     { id: "ingles", name: "Inglés III" },
                     { id: "artes", name: "Artes III" },
                     { id: "tecnologia", name: "Tecnología III" },
-                    { id: "educacion_fisica", name: "Educación Física" },
-                    { id: "tutoria", name: "Tutoría" }
-                ];
-            } else {
-                return [
-                    { id: "matematicas", name: "Matemáticas I" },
-                    { id: "biologia", name: "Biología (Ciencias I)" },
-                    { id: "espanol", name: "Español I" },
-                    { id: "historia", name: "Historia I" },
-                    { id: "geografia", name: "Geografía" },
-                    { id: "formacion", name: "Formación Cívica y Ética I" },
-                    { id: "ingles", name: "Inglés I" },
-                    { id: "artes", name: "Artes I" },
-                    { id: "tecnologia", name: "Tecnología I" },
                     { id: "educacion_fisica", name: "Educación Física" },
                     { id: "tutoria", name: "Tutoría" }
                 ];
@@ -392,24 +414,82 @@
 
         function getFullBank(grade, subject, term) {
             let pool = [];
-            if (grade === "2" && subject === "algebra") {
-                if (term === "1") {
+
+            // --- 1º DE SECUNDARIA (EXCLUSIVO, BASADO EN CIENTÍFICOS Y ESPECIALISTAS) ---
+            if (grade === "1") {
+                if (subject === "biologia") {
+                    if (term === "1") {
+                        pool = [
+                            { q: "[1º Biología T1] Según la teoría celular moderna establecida por Rudolf Virchow, ¿cuál es el origen biológico de toda célula?", opts: ["Toda célula proviene exclusivamente de otra célula preexistente por división", "Las células surgen espontáneamente de la materia inorgánica", "Los tejidos se forman sin unidades microscópicas", "El ADN se crea de forma independiente al medio"], correct: 0, exp: "💡 Explicación profesional: De acuerdo con los postulados de la biología celular moderna, Virchow demostró científicamente el principio 'Omnis cellula e cellula' (toda célula deriva de otra célula), descartando la generación espontánea." },
+                            { q: "[1º Biología T1] ¿Qué diferencia estructural principal distingue a una célula procariota de una eucariota?", opts: ["La procariota carece de un núcleo definido delimitado por membrana; la eucariota sí lo posee", "La célula eucariota no contiene material genético ADN", "La célula procariota es 100 veces más grande que la eucariota", "No existen diferencias bioquímicas entre ambas"], correct: 0, exp: "💡 Explicación profesional: Según la citología y los biólogos evolutivos, 'Pro' significa antes del núcleo (libre en el citoplasma) y 'Eu' significa núcleo verdadero protegido por doble membrana." }
+                        ];
+                    } else if (term === "2") {
+                        pool = [
+                            { q: "[1º Biología T2] ¿Cómo define la ecología moderna a un ecosistema?", opts: ["Como el sistema biológico funcional constituido por una comunidad de organismos vivos y su medio físico interactuando", "Como una simple acumulación aislada de rocas sin vida", "Como una especie animal viviendo sola en cautiverio", "Como un fenómeno atmosférico temporal sin relación biológica"], correct: 0, exp: "💡 Explicación profesional: El concepto ecológico formal define al ecosistema como la unidad fundamental donde los factores bióticos (seres vivos) y abióticos (clima, suelo) se interconectan permanentemente." }
+                        ];
+                    } else {
+                        pool = [
+                            { q: "[1º Biología T3] ¿Por qué es fundamental la biodiversidad para la estabilidad global según los ecólogos?", opts: ["Porque la diversidad genética y de especies otorga mayor resiliencia frente a perturbaciones ambientales", "Porque acelera de forma destructiva la erosión del suelo", "Porque reduce la cantidad de oxígeno en la atmósfera", "Porque evita por completo cualquier cambio natural"], correct: 0, exp: "💡 Explicación profesional: La investigación ambiental demuestra que los ecosistemas ricos en biodiversidad absorben de manera más eficiente los desastres ecológicos y mantienen el equilibrio del planeta." }
+                        ];
+                    }
+                } else if (subject === "matematicas") {
                     pool = [
-                        { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
-                        { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
-                        { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Es el principio geométrico fundamental para triángulos rectángulos." },
-                        { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio numérico." },
-                        { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
+                        { q: `[1º Matemáticas T${term}] Según las propiedades de los números reales, ¿qué establece la propiedad conmutativa en la suma (a + b = b + a)?`, opts: ["Que el orden de los sumandos no altera el resultado total de la operación", "Que siempre debemos restar antes de sumar", "Que el resultado cambia si cambiamos de posición los números", "Que los números negativos se anulan al invertirse"], correct: 0, exp: "💡 Explicación profesional: En la matemática formal, la conmutatividad garantiza que la posición de los valores numéricos no afecta el valor final (por ejemplo, 4 + 7 es estrictamente igual a 7 + 4)." }
                     ];
                 } else {
                     pool = [
-                        { q: "[2º Grado - Álgebra T2] ¿Cuál es el propósito del método de suma y resta en sistemas de ecuaciones lineales?", opts: ["Igualar coeficientes para eliminar una incógnita y reducir el sistema a una sola variable", "Multiplicar de forma cruzada", "Graficar sin operar", "Elevar al cuadrado"], correct: 0, exp: "💡 Explicación: Permite eliminar una variable para resolver la ecuación restante." }
+                        { q: `[1º Grado - ${subject.toUpperCase()} T${term}] ¿Cuál es el objetivo principal del método científico en las ciencias de primer año?`, opts: ["Formular preguntas empíricas, observar sistemáticamente y comprobar hipótesis mediante evidencias", "Inventar datos sin comprobación matemática", "Aceptar teorías sin ningún análisis crítico", "Evitar cualquier registro experimental"], correct: 0, exp: "💡 Explicación profesional: Los especialistas en didáctica científica señalan que el primer año sienta las bases del razonamiento lógico, la experimentación y la validación de hechos." }
                     ];
                 }
-            } else {
-                pool = [
-                    { q: `[Evaluación Oficial - ${subject.toUpperCase()} Grado ${grade}] Pregunta general de repaso académico para el periodo.`, opts: ["Opción A: Concepto fundamental correcto y analítico", "Opción B", "Opción C", "Opción D"], correct: 0, exp: "💡 Explicación: Este reactivo evalúa la comprensión teórica y práctica clave de la materia." }
-                ];
+            } 
+            // --- 2º DE SECUNDARIA (100% INTACTO Y EXCELENTE, COMO PEDISTE) ---
+            else if (grade === "2") {
+                if (subject === "algebra") {
+                    if (term === "1") {
+                        pool = [
+                            { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
+                            { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
+                            { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Es el principio geométrico fundamental para triángulos rectángulos." },
+                            { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio numérico." },
+                            { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
+                        ];
+                    } else {
+                        pool = [
+                            { q: "[2º Grado - Álgebra T2] ¿Cuál es el propósito del método de suma y resta en sistemas de ecuaciones lineales?", opts: ["Igualar coeficientes para eliminar una incógnita y reducir el sistema a una sola variable", "Multiplicar de forma cruzada", "Graficar sin operar", "Elevar al cuadrado"], correct: 0, exp: "💡 Explicación: Permite eliminar una variable para resolver la ecuación restante." }
+                        ];
+                    }
+                } else {
+                    pool = [
+                        { q: `[Evaluación Oficial - ${subject.toUpperCase()} Grado ${grade}] Pregunta general de repaso académico para el periodo.`, opts: ["Opción A: Concepto fundamental correcto y analítico", "Opción B", "Opción C", "Opción D"], correct: 0, exp: "💡 Explicación: Este reactivo evalúa la comprensión teórica y práctica clave de la materia." }
+                    ];
+                }
+            } 
+            // --- 3º DE SECUNDARIA (EXCLUSIVO, BASADO EN CIENTÍFICOS Y ESPECIALISTAS) ---
+            else if (grade === "3") {
+                if (subject === "quimica") {
+                    if (term === "1") {
+                        pool = [
+                            { q: "[3º Química T1] Según los modelos atómicos mecanocuánticos contemporáneos, ¿cómo se define formalmente un orbital atómico?", opts: ["La región espacial de probabilidad matemática donde existe mayor posibilidad de hallar un electrón", "Una trayectoria circular rígida idéntica a la órbita de los planetas", "Una partícula sólida estática en el centro del núcleo", "Un campo magnético desprovisto de carga eléctrica"], correct: 0, exp: "💡 Explicación profesional (Física Cuántica): Científicos como Erwin Schrödinger demostraron que los electrones no siguen rieles fijos, sino que se describen mediante funciones de onda probabilísticas llamadas orbitales." },
+                            { q: "[3º Química T1] ¿Qué enuncia la Ley de la Conservación de la Materia formulada por Antoine Lavoisier?", opts: ["La materia no se crea ni se destruye en una reacción química ordinaria, solo se transforma", "Toda la masa de los reactivos desaparece al convertirse en gas", "Los átomos cambian de elemento de forma espontánea", "El peso de los cuerpos depende exclusivamente de la temperatura exterior"], correct: 0, exp: "💡 Explicación profesional (Química Moderna): El padre de la química moderna, Antoine Lavoisier, comprobó experimentalmente que la suma de las masas de los reactivos es exactamente igual a la masa de los productos." }
+                        ];
+                    } else if (term === "2") {
+                        pool = [
+                            { q: "[3º Química T2] ¿Qué representa el concepto de 'mol' en la estequiometría química?", opts: ["La unidad de medida que contiene exactamente 6.022 × 10²³ entidades elementales (Número de Avogadro)", "Un kilogramo exacto de cualquier elemento gaseoso", "Un volumen estandarizado de diez litros de disolución", "El peso atómico individual de un solo protón"], correct: 0, exp: "💡 Explicación profesional: Basado en las aportaciones de Amedeo Avogadro, el mol funciona como el 'puente de cuantificación' indispensable para pesar cantidades macroscópicas de átomos invisibles." }
+                        ];
+                    } else {
+                        pool = [
+                            { q: "[3º Química T3] Según la teoría de ácidos y bases de Arrhenius, ¿qué caracteriza a los ácidos fuertes en solución acuosa?", opts: ["Su disociación electrolítica es prácticamente del 100%, liberando una alta concentración de iones hidrógeno (H⁺)", "No permiten el paso de la corriente eléctrica en absoluto", "Reaccionan neutralizándose para convertirse en lípidos", "Mantienen siempre un pH neutro de 7.0"], correct: 0, exp: "💡 Explicación profesional: Svante Arrhenius determinó que un ácido fuerte rompe totalmente sus enlaces al disolverse en agua, liberando una gran cantidad de iones H⁺ libres." }
+                        ];
+                    }
+                } else if (subject === "matematicas") {
+                    pool = [
+                        { q: `[3º Matemáticas T${term}] ¿Qué indica geométricamente la pendiente 'm' en la ecuación de la recta y = mx + b?", opts: ["La tasa de variación o grado de inclinación de la línea recta con respecto al eje horizontal x", "El punto exacto de intersección con el eje vertical", "El área total delimitada bajo la gráfica", "La raíz cuadrada de los coeficientes algebraicos"], correct: 0, exp: "💡 Explicación profesional (Geometría Analítica): La pendiente 'm' cuantifica la razón de cambio vertical por cada unidad de desplazamiento horizontal en el plano cartesiano." }
+                    ];
+                } else {
+                    pool = [
+                        { q: `[3º Grado - ${subject.toUpperCase()} T${term}] ¿Qué nivel de madurez analítica exige esta materia terminal de secundaria?`, opts: ["Pensamiento abstracto avanzado, modelación formal y rigor científico rumbo al nivel medio superior", "Memorización simple de conceptos elementales de primaria", "Transcripción de textos sin comprensión lógica", "Operaciones aritméticas básicas sin variables"], correct: 0, exp: "💡 Explicación profesional: Tercer año consolida las competencias complejas necesarias para interpretar fenómenos científicos y sociales con rigor analítico superior." }
+                    ];
+                }
             }
 
             const generated = [];
@@ -441,7 +521,7 @@
             if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
                 items = summariesData[grade][subjectId][term];
             } else {
-                items = [{ topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave con nivel de dificultad progresivo evaluados específicamente en este periodo para asegurar el éxito escolar.` }];
+                items = [{ topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave con nivel de dificultad progresivo evaluados específicamente en este periodo para asegurar el éxito escolar en el grado ${grade}º.` }];
             }
             items.forEach(item => {
                 container.innerHTML += `
@@ -459,7 +539,7 @@
             const term = document.getElementById('term-select').value;
             const sampleQ = getFullBank(grade, subjectId, term)[0];
             
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones detalladas.`;
+            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones elaboradas de expertos y se bloqueará para asegurar tu aprendizaje real.`;
             
             const questions = getFullBank(grade, subjectId, term);
             const container = document.getElementById('quiz-container');
@@ -470,7 +550,7 @@
                 q.options.forEach((opt, optIdx) => {
                     optsHtml += `
                         <li>
-                            <label class="option-label">
+                            <label class="option-label" id="opt-${index}-${optIdx}">
                                 <input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})">
                                 ${opt}
                             </label>
@@ -491,20 +571,25 @@
 
         function handleAnswer(index, correctIndex) {
             const block = document.getElementById(`block-${index}`);
+            // Evitar que responda de nuevo si ya fue respondido o bloqueado
+            if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
+
+            const radios = document.querySelectorAll(`input[name="q${index}"]`);
             const checked = document.querySelector(`input[name="q${index}"]:checked`);
             if (!checked) return;
+
             const userChoice = parseInt(checked.value);
-            block.classList.remove('correct-answer', 'wrong-answer');
-            setTimeout(() => {
-                if (userChoice === correctIndex) {
-                    block.classList.add('correct-answer');
-                } else {
-                    block.classList.add('wrong-answer');
-                }
-            }, 500);
+
+            // Deshabilitar todos los radios de esta pregunta para evitar cambios y asegurar el aprendizaje
+            radios.forEach(r => r.disabled = true);
+
+            if (userChoice === correctIndex) {
+                block.classList.add('correct-answer');
+            } else {
+                block.classList.add('wrong-answer');
+            }
         }
 
-        // Lógica del Temporizador de 35 minutos
         let totalSeconds = 35 * 60;
         const timerInterval = setInterval(() => {
             if (totalSeconds > 0) {
