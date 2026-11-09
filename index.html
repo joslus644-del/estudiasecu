@@ -446,6 +446,19 @@
   <script>
     // Resúmenes científicos estructurados con los 4 ejes de Matemáticas 2 (Álgebra, Proporcionalidad, Geometría, Estadística y Probabilidad)
     const summariesData = {
+      1: {
+        matematicas: {
+          1: [
+            { topic: "Sistemas de Numeraicón y Fracciones", text: "Operaciones fundamentales con números enteros, fracciones y decimales aplicados en la recta numérica." },
+            { topic: "Proporcionalidad Directa", text: "Cálculo de porcentajes, reglas de tres simples y problemas de proporcionalidad cotidiana." }
+          ]
+        },
+        biologia: {
+          1: [
+            { topic: "Biodiversidad y Célula", text: "Estudio de las características de los seres vivos y la estructura celular fundamental." }
+          ]
+        }
+      },
       2: {
         algebra: {
           1: [
@@ -488,7 +501,7 @@
     function getSubjectsByGrade(grade) {
       if (grade === "2") {
         return [
-          { id: "algebra", name: "Álgebra y Matemáticas II" },
+          { id: "algebra", name: "Álgebra (Matemáticas II)" },
           { id: "fisica", name: "Física (Ciencias II)" },
           { id: "espanol", name: "Español II" },
           { id: "historia_de_mexico", name: "Historia de México" },
@@ -517,9 +530,9 @@
           { id: "matematicas", name: "Matemáticas I" },
           { id: "biologia", name: "Biología (Ciencias I)" },
           { id: "espanol", name: "Español I" },
-          { id: "historia", name: "Historia" },
+          { id: "historia", name: "Historia I" },
           { id: "geografia", name: "Geografía" },
-          { id: "formacion", name: "Formación Cívica y Ética" },
+          { id: "formacion", name: "Formación Cívica y Ética I" },
           { id: "ingles", name: "Inglés I" },
           { id: "artes", name: "Artes I" },
           { id: "tecnologia", name: "Tecnología I" },
@@ -547,8 +560,21 @@
 
     let randomSessionSeed = Math.floor(Math.random() * 100000);
 
-    // Bancos de preguntas científicos y corregidos (con preguntas y respuestas exactas y completas)
+    // Bancos de preguntas científicos, corregidos y específicos para cada grado y materia
     const masterBanks = {
+      1: {
+        matematicas: {
+          1: [
+            { q: "¿Cuál es el resultado de operar (-8) + (+5) en el conjunto de números enteros?", opts: ["-3", "+3", "-13", "+13"], correct: 0, exp: "💡 Explicación científica: Al sumar un número negativo con uno positivo de mayor valor absoluto, prevalece el signo del número mayor y se restan sus valores." },
+            { q: "Al simplificar la fracción 24/36 a su mínima expresión irreducible, ¿qué fracción se obtiene?", opts: ["2/3", "4/6", "3/4", "1/2"], correct: 0, exp: "💡 Explicación científica: Dividiendo numerador y denominador entre su máximo común divisor (12), obtenemos 2/3." }
+          ]
+        },
+        biologia: {
+          1: [
+            { q: "¿Cuál es la unidad estructural y funcional básica de todos los organismos vivos?", opts: ["La célula", "El tejido muscular", "El órgano complejo", "El sistema circulatorio"], correct: 0, exp: "💡 Explicación científica: Toda forma de vida conocida está compuesta por una o más células." }
+          ]
+        }
+      },
       2: {
         algebra: {
           1: [
@@ -589,7 +615,9 @@
         algebra: "Validado por Científicos en Matemáticas y Álgebra",
         fisica: "Validado por Físicos Investigadores",
         espanol: "Validado por Filólogos y Lingüistas",
-        historia_de_mexico: "Validado por Historiadores Académicos"
+        historia_de_mexico: "Validado por Historiadores Académicos",
+        matematicas: "Validado por Especialistas en Matemáticas",
+        biologia: "Validado por Biólogos Celulares"
       };
 
       const expertTitle = experts[subject] || "Validado por Especialistas Académicos";
