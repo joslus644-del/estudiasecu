@@ -260,7 +260,7 @@
         function checkPlatformStatus() {
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
-            const isAdmin = localStorage.getItem('estudiasecu_is_admin'] === 'true';
+            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
 
             if (status === 'paused' && !isAdmin) {
                 pausedScreen.style.display = 'flex';
@@ -275,7 +275,7 @@
         }
 
         function registerVisit() {
-            if (localStorage.getItem('estudiasecu_is_admin'] === 'true') return;
+            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
 
             let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
             const now = new Date();
@@ -323,6 +323,12 @@
                     1: [
                         { topic: "1. La Célula como Unidad de la Vida", text: "Estudio de la célula, distinguiendo componentes entre células procariotas y eucariotas." },
                         { topic: "2. Biodiversidad", text: "Análisis de la riqueza biológica y adaptaciones evolutivas." }
+                    ]
+                },
+                matematicas: {
+                    1: [
+                        { topic: "1. Números con Signo", text: "Operaciones de suma, resta, multiplicación y división con números enteros positivos y negativos." },
+                        { topic: "2. Fracciones y Decimales", text: "Conversiones, comparaciones y operaciones básicas de suma y resta con fracciones." }
                     ]
                 }
             },
@@ -421,32 +427,161 @@
             renderAll();
         }
 
-        // --- BANCO MASIVO DE 50 PREGUNTAS ÚNICAS Y DIFERENTES PARA CADA GRADO Y TRIMESTRE ---
+        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU ---
         function getFullBank(grade, subject, term) {
             let pool = [];
 
+            // --- 1º DE SECUNDARIA ---
             if (grade === "1") {
-                // 50 preguntas distintas para 1er año (Trimestre 1, 2 y 3)
-                for (let i = 1; i <= 50; i++) {
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `[Pregunta 1º Año - T${term} #${i}] Cuestión oficial única sobre fundamentos y desarrollo metodológico número ${i}.`,
-                        options: [
-                            `Respuesta Correcta A para reactivo ${i}`,
-                            `Opción incorrecta B para reactivo ${i}`,
-                            `Opción incorrecta C para reactivo ${i}`,
-                            `Opción incorrecta D para reactivo ${i}`
-                        ],
-                        correct: 0,
-                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Este principio se fundamenta en la teoría curricular establecida para el primer grado de secundaria.`
-                    });
+                if (subject === "biologia") {
+                    let bioQuestions = [
+                        { q: "¿Cuál es la unidad estructural y funcional básica de todo ser vivo?", opts: ["La célula", "El tejido", "El órgano", "El sistema"], exp: "La célula es la unidad de origen, estructura y función de todos los seres vivos." },
+                        { q: "¿Qué característica principal distingue a una célula procariota de una eucariota?", opts: ["Carece de núcleo definido rodeado por membrana", "No tiene ADN", "Es siempre pluricelular", "Carece de ribosomas"], exp: "La procariota tiene su material genético libre en el citoplasma sin una membrana nuclear." },
+                        { q: "¿Cuál es el orgánulo celular conocido como la 'central energética' debido a la producción de ATP?", opts: ["La mitocondria", "El cloroplasto", "El ribosoma", "El lisosoma"], exp: "La mitocondria realiza la respiración celular aerobia para generar energía en forma de ATP." },
+                        { q: "¿Qué orgánulo realiza el proceso de fotosíntesis capturando la energía solar?", opts: ["El cloroplasto", "La vacuola", "El núcleo", "El aparato de Golgi"], exp: "El cloroplasto contiene clorofila, pigmento indispensable para sintetizar glucosa." },
+                        { q: "¿Cuál es la función principal de la membrana celular?", opts: ["Regular la entrada y salida de sustancias", "Producir proteínas exclusivas", "Almacenar almidón", "Sostener la pared rígida"], exp: "La membrana actúa como una barrera semipermeable selectiva." },
+                        { q: "¿Cómo se llama el orgánulo encargado de sintetizar las proteínas?", opts: ["El ribosoma", "El centriolo", "El nucléolo", "La mitocondria"], exp: "El ribosoma lee el ARN mensajero para armar las cadenas de aminoácidos." },
+                        { q: "¿Qué sustancia otorga rigidez y soporte estructural a la pared de las células vegetales?", opts: ["La celulosa", "La quitina", "El glucógeno", "El almidón"], exp: "La celulosa es un polisacárido estructural complejo exclusivo de vegetales." },
+                        { q: "¿Cuál es el líquido gelatinoso donde se encuentran suspendidos los orgánulos?", opts: ["El citoplasma", "El jugo gástrico", "El plasma sanguíneo", "La savia"], exp: "El citoplasma contiene agua, sales y moléculas disueltas." },
+                        { q: "¿Qué diferencia estructural principal existe entre la célula animal y la vegetal?", opts: ["La vegetal posee pared celular y cloroplastos", "La animal tiene cloroplastos", "La vegetal no tiene núcleo", "La animal tiene pared de celulosa"], exp: "Las células vegetales cuentan con pared rígida y cloroplastos." },
+                        { q: "¿Cómo se denomina el orgánulo encargado de la digestión celular y reciclaje de desechos?", opts: ["El lisosoma", "El ribosoma", "El cloroplasto", "La mitocondria"], exp: "El lisosoma contiene enzimas hidrolíticas para descomponer materiales." },
+                        { q: "¿Qué nombre recibe el retículo endoplasmático tachonado de ribosomas?", opts: ["Rugoso", "Liso", "Plasmático", "Peroxisoma"], exp: "El retículo endoplasmático rugoso (RER) participa activamente en la síntesis proteica." },
+                        { q: "¿Cuál es la función principal del aparato de Golgi?", opts: ["Modificar, empaquetar y distribuir proteínas y lípidos", "Generar energía solar", "Copiar el ADN", "Destruir virus"], exp: "El aparato de Golgi empaqueta sustancias en vesículas para su transporte." },
+                        { q: "¿Qué estructura almacena el material genético (ADN) en las células eucariotas?", opts: ["El núcleo celular", "El ribosoma", "La vacuola", "La membrana"], exp: "El núcleo resguarda el ADN protegido por una doble membrana." },
+                        { q: "¿Cómo se denominan los organismos formados por una sola célula?", opts: ["Unicelulares", "Pluricelulares", "Autótrofos", "Descomponedores"], exp: "Organismos como bacterias y protozoarios son unicelulares." },
+                        { q: "¿Qué tipo de transporte celular no requiere gasto de energía metabólica (ATP)?", opts: ["El transporte pasivo", "El transporte activo", "La endocitosis", "La exocitosis"], exp: "El transporte pasivo (difusión y ósmosis) ocurre a favor del gradiente." },
+                        { q: "¿Cómo se define el concepto de biodiversidad?", opts: ["La variabilidad de organismos vivos en la Tierra", "La cantidad de rocas en un suelo", "El clima de una región", "La contaminación de un río"], exp: "Incluye la riqueza de especies, genética y de ecosistemas." },
+                        { q: "¿Quién propuso la teoría de la evolución por selección natural?", opts: ["Charles Darwin", "Gregor Mendel", "Louis Pasteur", "Robert Hooke"], exp: "Darwin y Wallace explicaron la evolución mediante la adaptación y supervivencia." },
+                        { q: "¿Qué es una adaptación biológica?", opts: ["Una característica heredada que ayuda a sobrevivir en el entorno", "Un cambio físico por vejez", "Una enfermedad adquirida", "Un accidente geográfico"], exp: "Las adaptaciones aumentan la eficacia biológica de las especies." },
+                        { q: "¿Cómo se le llama al proceso de desaparición total de una especie?", opts: ["Extinción", "Evolución", "Mutación", "Simbiosis"], exp: "Ocurre cuando el último individuo de una especie muere sin dejar descendencia." },
+                        { q: "¿Qué estudia la taxonomía?", opts: ["La clasificación ordenada de los seres vivos", "El clima mundial", "Las reacciones químicas del carbono", "Las leyes del movimiento"], exp: "Agrupa a los seres vivos en categorías taxonómicas jerárquicas." },
+                        { q: "¿Quién desarrolló el sistema de nomenclatura binomial en latín?", opts: ["Carlos Linneo", "Aristóteles", "Charles Darwin", "Gregor Mendel"], exp: "Linneo estableció el género y la especie para nombrar organismos." },
+                        { q: "¿Qué son los fósiles?", opts: ["Restos o impresiones de organismos antiguos preservados", "Rocas volcánicas recientes", "Minerales metálicos", "Células vivas congeladas"], exp: "Permiten reconstruir la historia de la vida y la evolución." },
+                        { q: "¿A qué se le denomina selección artificial?", opts: ["A la reproducción dirigida por humanos con características deseadas", "A la evolución natural en bosques", "A la clonación por computadoras", "A la extinción de animales"], exp: "Ejemplo: la domesticación de plantas y razas de perros." },
+                        { q: "¿Qué es un endemismo?", opts: ["Una especie exclusiva de una región geográfica muy específica", "Una plaga mundial", "Una célula enferma", "Un animal volador"], exp: "Especies que solo viven en un lugar determinado del planeta." },
+                        { q: "¿Qué relación biológica ocurre cuando dos especies se benefician mutuamente?", opts: ["Mutualismo", "Comensalismo", "Parasitismo", "Competencia"], exp: "Ambos organismos obtienen un beneficio para su supervivencia." },
+                        { q: "¿Cómo se le llama a la interacción donde un organismo caza a otro para alimentarse?", opts: ["Depredación", "Mutualismo", "Polinización", "Comensalismo"], exp: "El depredador se alimenta de la presa." },
+                        { q: "¿Qué representa una cadena trófica?", opts: ["La transferencia lineal de energía y nutrientes entre niveles", "Una red de carreteras", "La estructura del ADN", "El ciclo del agua"], exp: "Conecta a productores, consumidores y descomponedores." },
+                        { q: "¿Qué organismos ocupan el primer nivel trófico en un ecosistema?", opts: ["Los productores (plantas y algas)", "Los carnívoros", "Los hongos", "Los herbívoros"], exp: "Transforman la energía solar en materia orgánica." },
+                        { q: "¿Qué rol desempeñan los hongos y bacterias descomponedoras?", opts: ["Reciclar la materia orgánica convirtiéndola en nutrientes para el suelo", "Cazar animales grandes", "Producir oxígeno por fotosíntesis", "Consumir rocas"], exp: "Cierran el ciclo de la materia en los ecosistemas." },
+                        { q: "¿Qué es un ecosistema?", opts: ["Un sistema formado por seres vivos y el medio físico donde interactúan", "Una sola especie aislada", "Una atmósfera sin vida", "Un desierto de rocas"], exp: "Integra factores bióticos y abióticos." },
+                        { q: "¿Qué significa la sigla ADN?", opts: ["Ácido desoxirribonucleico", "Ácido dinámico normal", "Molécula de agua pura", "Nitrógeno celular activo"], exp: "Es la macromolécula portadora de la información genética." },
+                        { q: "¿Cómo se llaman las unidades básicas de la herencia ubicadas en los cromosomas?", opts: ["Genes", "Ribosomas", "Mitocondrias", "Glucosa"], exp: "Los genes determinan los caracteres hereditarios." },
+                        { q: "¿Quién es considerado el padre de la genética?", opts: ["Gregor Mendel", "Charles Darwin", "Albert Einstein", "Isaac Newton"], exp: "Descubrió las leyes de la herencia cruzando chícharos." },
+                        { q: "¿Qué es un alelo?", opts: ["Cada forma alternativa que puede tener un mismo gen", "Un tipo de célula sanguínea", "Una proteína de la membrana", "Un cromosoma gigante"], exp: "Determinan las distintas variantes de un carácter." },
+                        { q: "¿Cómo se le llama a la combinación de alelos que posee un organismo?", opts: ["Genotipo", "Fenotipo", "Mutación", "Cariotipo"], exp: "Es la dotación genética interna de un individuo." },
+                        { q: "¿Qué término describe la expresión física o observable de un genotipo?", opts: ["Fenotipo", "Genotipo", "Ribosoma", "Cromosoma"], exp: "Ejemplo: el color de cabello o la estatura observable." },
+                        { q: "¿Qué diferencia hay entre un alelo dominante y uno recesivo?", opts: ["El dominante se expresa siempre; el recesivo solo si ambos son iguales", "El recesivo es más fuerte", "No existe diferencia química", "El dominante mata a la célula"], exp: "El dominante enmascara al recesivo." },
+                        { q: "¿Cuántos pares de cromosomas tiene una célula somática humana normal?", opts: ["23 pares", "46 pares", "10 pares", "20 pares"], exp: "Totalizan 46 cromosomas en las células del cuerpo humano." },
+                        { q: "¿Cómo se llaman las células sexuales especializadas (espermatozoide y óvulo)?", opts: ["Gametos", "Somáticas", "Neuronas", "Bacterias"], exp: "Son células haploides destinadas a la reproducción." },
+                        { q: "¿Qué tipo de división celular da origen a dos células hijas idénticas?", opts: ["Mitosis", "Meiosis", "Fisión binaria simple", "Osmosis"], exp: "Permite el crecimiento, desarrollo y reparación de tejidos." },
+                        { q: "¿Qué es la meiosis?", opts: ["Un proceso de división que produce gametos con la mitad de cromosomas", "La creación de células de la piel", "La muerte celular programada", "La división de bacterias"], exp: "Genera diversidad genética en la reproducción sexual." },
+                        { q: "¿Qué es una enfermedad infecciosa?", opts: ["Aquélla causada por microorganismos patógenos transmisibles", "Una fractura ósea", "Una deficiencia de vitaminas", "Un golpe muscular"], exp: "Involucra virus, bacterias u hongos patógenos." },
+                        { q: "¿Cuál es la función del sistema inmunológico?", opts: ["Defender al organismo contra agentes extraños y patógenos", "Bombear la sangre", "Digerir los alimentos", "Filtrar el aire inspirado"], exp: "Protege al cuerpo mediante anticuerpos y glóbulos blancos." },
+                        { q: "¿Qué son las vacunas?", opts: ["Preparaciones biológicas que estimulan la creación de defensas", "Antibióticos fuertes para infecciones", "Vitaminas líquidas corporales", "Analgésicos para el dolor"], exp: "Entrenan al sistema inmune de forma segura." },
+                        { q: "¿A qué se le denomina calentamiento global?", opts: ["Al incremento gradual de la temperatura atmosférica por gases de efecto invernadero", "Al verano caluroso", "A la energía del sol directo", "Al centro de la Tierra"], exp: "Genera alteraciones climáticas mundiales." },
+                        { q: "¿Qué es la huella ecológica?", opts: ["Un indicador del impacto ambiental generado por la demanda humana de recursos", "Una pisada en el lodo", "El rastro de un animal", "La contaminación de un auto"], exp: "Mide cuánta superficie se necesita para producir lo que consumimos." },
+                        { q: "¿En qué consiste el desarrollo sustentable?", opts: ["Satisfacer necesidades actuales sin comprometer las de futuras generaciones", "Gastar todos los recursos rápido", "No usar ninguna tecnología", "Vivir sin electricidad"], exp: "Equilibra economía, sociedad y naturaleza." },
+                        { q: "¿Qué son las energías renovables?", opts: ["Fuentes energéticas obtenidas de recursos naturales inagotables", "El petróleo procesado", "El carbón mineral", "El gas natural fósil"], exp: "Ejemplos: energía solar, eólica e hidroeléctrica." },
+                        { q: "¿Por qué es crucial proteger la capa de ozono?", opts: ["Porque filtra la radiación ultravioleta nociva del Sol", "Porque produce la lluvia", "Porque evita los sismos", "Porque alimenta a las plantas"], exp: "Impide que los rayos UV dañen la vida terrestre." },
+                        { q: "¿Qué representa la homeostasis?", opts: ["La capacidad del organismo para mantener un estado interno estable", "La velocidad al correr", "El sueño profundo", "El crecimiento de los huesos"], exp: "Regula temperatura, pH y niveles de agua internos." }
+                    ];
+
+                    for (let i = 1; i <= 50; i++) {
+                        let item = bioQuestions[(i - 1) % bioQuestions.length];
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 1º Grado (BIOLOGÍA - Trimestre ${term})`,
+                            question: `Pregunta ${i}: ${item.q}`,
+                            options: item.opts,
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: ${item.exp}`
+                        });
+                    }
+                    return pool;
+                } else if (subject === "matematicas") {
+                    let mathQuestions = [
+                        { q: "¿Cuál es el resultado de la operación combinada: -8 + 15 - 3 + 4?", opts: ["8", "18", "4", "-8"], exp: "-8 + 15 = 7; 7 - 3 = 4; 4 + 4 = 8." },
+                        { q: "Si un termómetro marca 4 ºC bajo cero y la temperatura baja 7 ºC más, ¿qué temperatura marca ahora?", opts: ["-11 ºC", "3 ºC", "-3 ºC", "11 ºC"], exp: "Se suman ambas temperaturas negativas: -4 - 7 = -11 ºC." },
+                        { q: "Convierte la fracción 3/4 a un número decimal.", opts: ["0.75", "0.34", "1.33", "0.43"], exp: "Al dividir el numerador entre el denominador (3 ÷ 4), se obtiene exactamente 0.75." },
+                        { q: "¿Cuál es mayor: 2/3 o 3/5?", opts: ["2/3", "3/5", "Son iguales", "No se puede saber"], exp: "2/3 equivale a 0.666..., mientras que 3/5 equivale a 0.6. Por lo tanto, 2/3 es mayor." },
+                        { q: "Resuelve la siguiente suma de fracciones: 1/2 + 1/4.", opts: ["3/4", "2/6", "1/6", "5/4"], exp: "Se igualan denominadores (2/4 + 1/4 = 3/4)." },
+                        { q: "Calcula el 15% de 400.", opts: ["60", "45", "75", "150"], exp: "Se multiplica 400 por el factor decimal 0.15, lo que da como resultado 60." },
+                        { q: "Si 3 paletas cuestan 18 pesos, ¿cuánto cuestan 7 paletas al mismo precio unitario?", opts: ["42 pesos", "36 pesos", "49 pesos", "21 pesos"], exp: "Cada paleta cuesta 6 pesos (18 ÷ 3 = 6); luego se multiplica por 7 (6 × 7 = 42)." },
+                        { q: "Simplifica la expresión algebraica reduciendo términos semejantes: 2x + 3x + x.", opts: ["6x", "5x", "x³", "6x²"], exp: "Se suman los coeficientes numéricos de las literales iguales: 2 + 3 + 1 = 6x." },
+                        { q: "Encuentra el valor de x en la ecuación de primer grado: x - 5 = 10.", opts: ["x = 15", "x = 5", "x = 50", "x = 2"], exp: "Se despeja x sumando 5 en ambos lados: 10 + 5 = 15." },
+                        { q: "¿Cuánto suman los ángulos internos de cualquier triángulo plano?", opts: ["180°", "360°", "90°", "270°"], exp: "Es una propiedad geométrica fundamental de los triángulos." },
+                        { q: "¿Cómo se llaman los ángulos que miden estrictamente menos de 90°?", opts: ["Ángulos agudos", "Ángulos rectos", "Ángulos obtusos", "Ángulos llanos"], exp: "Los ángulos agudos tienen una amplitud menor a un ángulo recto." },
+                        { q: "¿Cuál es el perímetro de un cuadrado que mide 5 cm por cada lado?", opts: ["20 cm", "25 cm", "10 cm", "15 cm"], exp: "El perímetro es la suma de sus 4 lados iguales (5 × 4 = 20)." },
+                        { q: "¿Cuál es el área de un rectángulo cuya base mide 8 cm y su altura 4 cm?", opts: ["32 cm²", "24 cm²", "12 cm²", "16 cm²"], exp: "El área se calcula multiplicando base por altura (8 × 4 = 32)." },
+                        { q: "Resuelve la siguiente multiplicación de números con signo: (-6) × (-5).", opts: ["30", "-30", "-11", "11"], exp: "Ley de los signos en la multiplicación: negativo por negativo da positivo (6 × 5 = 30)." },
+                        { q: "Calcula el resultado de dividir: -56 ÷ 8.", opts: ["-7", "7", "-48", "48"], exp: "Signo diferente en división da resultado negativo (-56 ÷ 8 = -7)." },
+                        { q: "Encuentra el resultado de elevar al cuadrado: (-9)².", opts: ["81", "-81", "18", "-18"], exp: "Un número negativo multiplicado por sí mismo da positivo (-9 × -9 = 81)." },
+                        { q: "¿Cuál es la raíz cuadrada principal de 144?", opts: ["12", "14", "11", "13"], exp: "12 × 12 = 144." },
+                        { q: "Resuelve la operación con potencias: 2³.", opts: ["8", "6", "9", "4"], exp: "Significa multiplicar la base por sí misma tres veces (2 × 2 × 2 = 8)." },
+                        { q: "Halla el valor de x en la ecuación: 3x + 6 = 21.", opts: ["x = 5", "x = 9", "x = 7", "x = 3"], exp: "Se resta 6 (3x = 15) y se divide entre 3 (x = 5)." },
+                        { q: "Simplifica la expresión algebraica: 5a - 2a + 4a.", opts: ["7a", "3a", "11a", "a³"], exp: "Se operan los coeficientes: 5 - 2 + 4 = 7a." },
+                        { q: "¿Qué representa la pendiente en una función lineal de la forma y = mx + b?", opts: ["La inclinación y tasa de cambio de la recta", "El punto de corte vertical", "El área bajo la curva", "Una constante nula"], exp: "La letra m indica qué tan inclinada está la recta en el plano cartesiano." },
+                        { q: "Si un artículo cuesta 200 pesos y tiene un descuento del 30%, ¿cuánto se paga por él?", opts: ["140 pesos", "60 pesos", "170 pesos", "130 pesos"], exp: "El descuento es de 60 pesos (200 × 0.30); al restarlo queda 140 pesos." },
+                        { q: "¿Cuál es el volumen de un cubo cuyas aristas miden 3 cm?", opts: ["27 cm³", "9 cm³", "18 cm³", "54 cm³"], exp: "El volumen de un cubo se calcula elevando la arista al cubo (3 × 3 × 3 = 27)." },
+                        { q: "¿Cuánto suman los ángulos internos de un cuadrilátero regular o irregular?", opts: ["360°", "180°", "540°", "720°"], exp: "Todo cuadrilátero se puede dividir en dos triángulos (2 × 180° = 360°)." },
+                        { q: "Calcula el área de un triángulo cuya base mide 10 cm y su altura 6 cm.", opts: ["30 cm²", "60 cm²", "16 cm²", "15 cm²"], exp: "Fórmula del triángulo: (base × altura) ÷ 2 -> (10 × 6) ÷ 2 = 30." },
+                        { q: "Resuelve la jerarquía de operaciones: 5 + 3 × 2.", opts: ["11", "16", "13", "10"], exp: "Primero se realiza la multiplicación (3 × 2 = 6) y luego la suma (5 + 6 = 11)." },
+                        { q: "¿Qué fracción representa el número decimal 0.25 en su forma más simple?", opts: ["1/4", "2/5", "1/2", "3/4"], exp: "0.25 es igual a 25/100, que simplificado entre 25 da 1/4." },
+                        { q: "Encuentra la solución del sistema de ecuaciones lineales sencillas: x + y = 10 y x - y = 2.", opts: ["x = 6, y = 4", "x = 5, y = 5", "x = 8, y = 2", "x = 7, y = 3"], exp: "Sumando ambas ecuaciones se elimina y (2x = 12 -> x = 6, y = 4)." },
+                        { q: "¿Cuál es el resultado de simplificar la multiplicación de monomios: (3x²)(4x³)?", opts: ["12x⁵", "7x⁶", "12x⁶", "7x⁵"], exp: "Se multiplican coeficientes (3 × 4 = 12) y se suman exponentes de la misma base (2 + 3 = 5)." },
+                        { q: "Si la razón de proporción entre hombres y mujeres en un salón es 2 a 3, y hay 10 hombres, ¿cuántas mujeres hay?", opts: ["15", "12", "20", "25"], exp: "Se establece la proporción: por cada 2 hombres hay 3 mujeres (10 ÷ 2 = 5 grupos; 5 × 3 = 15)." },
+                        { q: "¿Cómo se le llama al lado opuesto al ángulo recto en un triángulo rectángulo?", opts: ["Hipotenusa", "Cateto adyacente", "Cateto opuesto", "Base"], exp: "La hipotenusa es siempre el lado de mayor longitud en un triángulo rectángulo." },
+                        { q: "Aplica el Teorema de Pitágoras: si los catetos miden 3 cm y 4 cm, ¿cuánto mide la hipotenusa?", opts: ["5 cm", "7 cm", "25 cm", "6 cm"], exp: "c² = 3² + 4² = 9 + 16 = 25; la raíz cuadrada de 25 es 5." },
+                        { q: "¿Qué es la moda en un conjunto de datos estadísticos?", opts: ["El valor que más se repite", "El promedio aritmético", "El valor central al ordenar los datos", "La diferencia entre el mayor y menor"], exp: "La moda representa la frecuencia más alta en la muestra." },
+                        { q: "¿Qué es la mediana de un conjunto de datos numéricos ordenados?", opts: ["El valor que ocupa la posición central", "El valor que más se repite", "La suma de todos dividida entre el total", "El valor menor de todos"], exp: "Divide la distribución exactamente en dos partes iguales." },
+                        { q: "Calcula el perímetro de una circunferencia cuyo radio mide 7 cm (usa π ≈ 3.1416).", opts: ["43.98 cm", "21.99 cm", "153.93 cm", "14.00 cm"], exp: "Fórmula de la circunferencia: P = 2πr (2 × 3.1416 × 7 ≈ 43.98)." },
+                        { q: "Resuelve la ecuación cuadrática incompleta: x² - 16 = 0.", opts: ["x = 4 y x = -4", "x = 16 y x = -16", "Solo x = 4", "No tiene solución real"], exp: "Se despeja x² = 16, obteniendo sus dos raíces reales (positiva y negativa)." },
+                        { q: "¿Cuál es el resultado de evaluar la expresión 2x² - 5 cuando x = 3?", opts: ["13", "31", "7", "11"], exp: "Se sustituye x por 3: 2(3)² - 5 = 2(9) - 5 = 18 - 5 = 13." },
+                        { q: "¿Qué nombre recibe el punto donde se cruzan los ejes X y Y en el plano cartesiano?", opts: ["Origen (0,0)", "Pendiente", "Abscisa pura", "Vértice absoluto"], exp: "Es el punto de referencia con coordenadas cero en ambos ejes." },
+                        { q: "Resuelve la división algebraica: 15x⁴ ÷ 3x².", opts: ["5x²", "5x⁶", "12x²", "5x"], exp: "Se dividen coeficientes (15 ÷ 3 = 5) y se restan los exponentes (4 - 2 = 2)." },
+                        { q: "Si un auto viaja a una velocidad constante de 80 km/h, ¿qué distancia recorre en 3 horas?", opts: ["240 km", "160 km", "83 km", "320 km"], exp: "Distancia = velocidad × tiempo (80 × 3 = 240 km)." },
+                        { q: "¿Cuál es el suplemento de un ángulo que mide 70°?", opts: ["110°", "20°", "90°", "290°"], exp: "Dos ángulos son suplementarios si suman 180° (180 - 70 = 110°)." },
+                        { q: "¿Cuál es el complemento de un ángulo que mide 35°?", opts: ["55°", "145°", "65°", "90°"], exp: "Dos ángulos son complementarios si suman 90° (90 - 35 = 55°)." },
+                        { q: "Convierte el porcentaje 75% a fracción simplificada.", opts: ["3/4", "1/4", "7/10", "5/8"], exp: "75% equivale a 75/100, que simplificado al dividir entre 25 resulta 3/4." },
+                        { q: "Resuelve la operación de signos múltiples: -(-15) + (-8).", opts: ["7", "23", "-23", "-7"], exp: "Menos por menos da más (+15 - 8 = 7)." },
+                        { q: "Calcula el área de un círculo cuyo radio mide 5 cm (usa π ≈ 3.1416).", opts: ["78.54 cm²", "31.42 cm²", "25.00 cm²", "10.00 cm²"], exp: "Fórmula del área del círculo: A = πr² (3.1416 × 5² = 3.1416 × 25 = 78.54)." },
+                        { q: "Encuentra el siguiente número en la sucesión aritmética: 3, 7, 11, 15, ...", opts: ["19", "18", "21", "17"], exp: "La regla de la sucesión aumenta sumando una constante de 4 en 4 (15 + 4 = 19)." },
+                        { q: "Resuelve la multiplicación notable (binomio al cuadrado): (x + 3)².", opts: ["x² + 6x + 9", "x² + 9", "x² + 3x + 9", "2x + 6"], exp: "Cuadrado del primero más el doble del primero por el segundo más el cuadrado del segundo." },
+                        { q: "Simplifica la fracción algebraica: 12x / 18x².", opts: ["2 / (3x)", "3 / (2x)", "6x", "2x / 3"], exp: "Se simplifica el coeficiente entre 6 y las x restando exponentes (12/18 = 2/3 y x/x² = 1/x)." },
+                        { q: "Si el perímetro de un hexágono regular es 48 cm, ¿cuánto mide cada uno de sus lados?", opts: ["8 cm", "6 cm", "12 cm", "7 cm"], exp: "Un hexágono tiene 6 lados iguales; se divide el perímetro total entre 6 (48 ÷ 6 = 8)." },
+                        { q: "¿Cuánto resulta al calcular la raíz cúbica de 64?", opts: ["4", "8", "6", "3"], exp: "Porque 4 × 4 × 4 = 64." }
+                    ];
+
+                    for (let i = 1; i <= 50; i++) {
+                        let item = mathQuestions[(i - 1) % mathQuestions.length];
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 1º Grado (MATEMÁTICAS - Trimestre ${term})`,
+                            question: `Pregunta ${i}: ${item.q}`,
+                            options: item.opts,
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: ${item.exp}`
+                        });
+                    }
+                    return pool;
+                } else {
+                    for (let i = 1; i <= 50; i++) {
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
+                            question: `[Pregunta 1º Año - T${term} #${i}] Cuestión oficial única sobre ${subject} número ${i}.`,
+                            options: [`Respuesta Correcta A para reactivo ${i}`, `Opción incorrecta B para reactivo ${i}`, `Opción incorrecta C para reactivo ${i}`, `Opción incorrecta D para reactivo ${i}`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso (Reactivo ${i}): Principio fundamental de la currícula de primer año.`
+                        });
+                    }
+                    return pool;
                 }
-                return pool;
             } 
+            // --- 2º DE SECUNDARIA ---
             else if (grade === "2") {
                 if (term === "1") {
-                    // TRÍMESTRE 1 DE 2DO AÑO 100% INTACTO Y ÚNICO
                     let baseT1 = [
                         { q: "¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
                         { q: "¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
@@ -467,40 +602,29 @@
                     }
                     return pool;
                 } else {
-                    // 50 preguntas distintas para 2do año Trimestre 2 y 3
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
                             question: `[Pregunta 2º Año - T${term} #${i}] Reactivo analítico avanzado número ${i} sobre los temas del periodo.`,
-                            options: [
-                                `Respuesta Correcta A para componente ${i}`,
-                                `Opción incorrecta B para componente ${i}`,
-                                `Opción incorrecta C para componente ${i}`,
-                                `Opción incorrecta D para componente ${i}`
-                            ],
+                            options: [`Respuesta Correcta A para componente ${i}`, `Opción incorrecta B para componente ${i}`, `Opción incorrecta C para componente ${i}`, `Opción incorrecta D para componente ${i}`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso (Reactivo ${i}): Demuestra la aplicación práctica de los procedimientos analíticos formales de segundo grado.`
+                            explanation: `💡 Explicación paso a paso (Reactivo ${i}): Demuestra la aplicación práctica de los procedimientos analíticos formales.`
                         });
                     }
                     return pool;
                 }
             } 
+            // --- 3º DE SECUNDARIA ---
             else if (grade === "3") {
-                // 50 preguntas distintas para 3er año (Trimestres 1, 2 y 3)
                 for (let i = 1; i <= 50; i++) {
                     pool.push({
                         id: i,
                         expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
                         question: `[Pregunta 3º Año - T${term} #${i}] Reactivo de consolidación terminal y razonamiento crítico número ${i}.`,
-                        options: [
-                            `Respuesta Correcta A para módulo ${i}`,
-                            `Opción incorrecta B para módulo ${i}`,
-                            `Opción incorrecta C para módulo ${i}`,
-                            `Opción incorrecta D para módulo ${i}`
-                        ],
+                        options: [`Respuesta Correcta A para módulo ${i}`, `Opción incorrecta B para módulo ${i}`, `Opción incorrecta C para módulo ${i}`, `Opción incorrecta D para módulo ${i}`],
                         correct: 0,
-                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Este concepto evalúa el dominio avanzado indispensable para concluir la educación secundaria.`
+                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Este concepto evalúa el dominio avanzado indispensable para concluir la secundaria.`
                     });
                 }
                 return pool;
