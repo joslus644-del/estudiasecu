@@ -424,22 +424,22 @@
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 1º DE SECUNDARIA: BANCO EXTENDIDO DE 50 PREGUNTAS ÚNICAS ---
+            // --- 1º DE SECUNDARIA ---
             if (grade === "1") {
                 for (let i = 1; i <= 50; i++) {
                     let topics1 = [
                         { q: `[1º Grado - T${term}] ¿Cuál es la función principal de la membrana celular en una célula eucariota?`, opts: ["Regular la entrada y salida de sustancias", "Sintetizar ADN exclusivamente", "Producir energía solar", "Almacenar almidón puro"], exp: "💡 Explicación experta: La membrana plasmática actúa como una barrera semipermeable selectiva que controla el intercambio de nutrientes y desechos." },
                         { q: `[1º Grado - T${term}] ¿Cómo se denominan los organismos capaces de fabricar su propio alimento mediante fotosíntesis?`, opts: ["Autótrofos", "Heterótrofos", "Desintegradores", "Parásitos obligados"], exp: "💡 Explicación experta: Los organismos autótrofos (como plantas y algas) transforman materia inorgánica en orgánica usando energía lumínica." },
                         { q: `[1º Grado - T${term}] ¿Qué elemento químico es la base fundamental de la materia orgánica y viva?`, opts: ["Carbono", "Oro", "Neón", "Platino"], exp: "💡 Explicación experta: El átomo de carbono posee una tetravalencia única que le permite formar enlaces estables y cadenas complejas esenciales para la vida." },
-                        { q: `[1º Grado - T${term}] En geografía, ¿cómo se le llama a las líneas imaginarias horizontales que miden la latitud?`, opts: ["Paralelos", "Meridianos", "Ejes magnéticos", "Polo norte geodésico"], correct: 0, exp: "💡 Explicación experta: Los paralelos son círculos concéntricos al ecuador que determinan la distancia angular en grados hacia el norte o sur." },
-                        { q: `[1º Grado - T${term}] ¿Qué ley de la física elemental describe la atracción gravitacional universal entre cuerpos con masa?`, opts: ["La ley de gravitación universal de Isaac Newton", "El principio de Arquímedes", "La teoría de la relatividad especial", "La ley de Ohm"], correct: 0, exp: "💡 Explicación experta: Newton estableció que toda partícula atrae a cualquier otra con una fuerza proporcional al producto de sus masas e inversamente proporcional al cuadrado de la distancia." }
+                        { q: `[1º Grado - T${term}] En geografía, ¿cómo se le llama a las líneas imaginarias horizontales que miden la latitud?`, opts: ["Paralelos", "Meridianos", "Ejes magnéticos", "Polo norte geodésico"], exp: "💡 Explicación experta: Los paralelos son círculos concéntricos al ecuador que determinan la distancia angular en grados hacia el norte o sur." },
+                        { q: `[1º Grado - T${term}] ¿Qué ley de la física elemental describe la atracción gravitacional universal entre cuerpos con masa?`, opts: ["La ley de gravitación universal de Isaac Newton", "El principio de Arquímedes", "La teoría de la relatividad especial", "La ley de Ohm"], exp: "💡 Explicación experta: Newton estableció que toda partícula atrae a cualquier otra con una fuerza proporcional al producto de sus masas e inversamente proporcional al cuadrado de la distancia." }
                     ];
                     let t = topics1[(i - 1) % topics1.length];
                     pool.push({
                         id: i,
                         expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
                         question: `Pregunta ${i}: ${t.q} (Ref. Conceptual ${i})`,
-                        options: t.opts,
+                        options: [t.opts[0], t.opts[1], t.opts[2], t.opts[3]],
                         correct: 0,
                         explanation: t.exp
                     });
@@ -480,7 +480,7 @@
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
                             question: `Pregunta ${i}: ${t2.q} (Bloque ${i})`,
-                            options: t2.opts,
+                            options: [t2.opts[0], t2.opts[1], t2.opts[2], t2.opts[3]],
                             correct: 0,
                             explanation: t2.exp
                         });
@@ -501,7 +501,7 @@
                         id: i,
                         expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
                         question: `Pregunta ${i}: ${t3.q} (Módulo ${i})`,
-                        options: t3.opts,
+                        options: [t3.opts[0], t3.opts[1], t3.opts[2], t3.opts[3]],
                         correct: 0,
                         explanation: t3.exp
                     });
