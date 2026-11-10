@@ -415,30 +415,20 @@
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 1º DE SECUNDARIA (EXCLUSIVO, BASADO EN CIENTÍFICOS Y ESPECIALISTAS) ---
+            // --- 1º DE SECUNDARIA (EXCLUSIVO, TRIMESTRES 1, 2 Y 3) ---
             if (grade === "1") {
-                if (subject === "biologia") {
-                    if (term === "1") {
-                        pool = [
-                            { q: "[1º Biología T1] Según la teoría celular moderna establecida por Rudolf Virchow, ¿cuál es el origen biológico de toda célula?", opts: ["Toda célula proviene exclusivamente de otra célula preexistente por división", "Las células surgen espontáneamente de la materia inorgánica", "Los tejidos se forman sin unidades microscópicas", "El ADN se crea de forma independiente al medio"], correct: 0, exp: "💡 Explicación profesional: De acuerdo con los postulados de la biología celular moderna, Virchow demostró científicamente el principio 'Omnis cellula e cellula' (toda célula deriva de otra célula), descartando la generación espontánea." },
-                            { q: "[1º Biología T1] ¿Qué diferencia estructural principal distingue a una célula procariota de una eucariota?", opts: ["La procariota carece de un núcleo definido delimitado por membrana; la eucariota sí lo posee", "La célula eucariota no contiene material genético ADN", "La célula procariota es 100 veces más grande que la eucariota", "No existen diferencias bioquímicas entre ambas"], correct: 0, exp: "💡 Explicación profesional: Según la citología y los biólogos evolutivos, 'Pro' significa antes del núcleo (libre en el citoplasma) y 'Eu' significa núcleo verdadero protegido por doble membrana." }
-                        ];
-                    } else if (term === "2") {
-                        pool = [
-                            { q: "[1º Biología T2] ¿Cómo define la ecología moderna a un ecosistema?", opts: ["Como el sistema biológico funcional constituido por una comunidad de organismos vivos y su medio físico interactuando", "Como una simple acumulación aislada de rocas sin vida", "Como una especie animal viviendo sola en cautiverio", "Como un fenómeno atmosférico temporal sin relación biológica"], correct: 0, exp: "💡 Explicación profesional: El concepto ecológico formal define al ecosistema como la unidad fundamental donde los factores bióticos (seres vivos) y abióticos (clima, suelo) se interconectan permanentemente." }
-                        ];
-                    } else {
-                        pool = [
-                            { q: "[1º Biología T3] ¿Por qué es fundamental la biodiversidad para la estabilidad global según los ecólogos?", opts: ["Porque la diversidad genética y de especies otorga mayor resiliencia frente a perturbaciones ambientales", "Porque acelera de forma destructiva la erosión del suelo", "Porque reduce la cantidad de oxígeno en la atmósfera", "Porque evita por completo cualquier cambio natural"], correct: 0, exp: "💡 Explicación profesional: La investigación ambiental demuestra que los ecosistemas ricos en biodiversidad absorben de manera más eficiente los desastres ecológicos y mantienen el equilibrio del planeta." }
-                        ];
-                    }
-                } else if (subject === "matematicas") {
+                if (term === "1") {
                     pool = [
-                        { q: `[1º Matemáticas T${term}] Según las propiedades de los números reales, ¿qué establece la propiedad conmutativa en la suma (a + b = b + a)?`, opts: ["Que el orden de los sumandos no altera el resultado total de la operación", "Que siempre debemos restar antes de sumar", "Que el resultado cambia si cambiamos de posición los números", "Que los números negativos se anulan al invertirse"], correct: 0, exp: "💡 Explicación profesional: En la matemática formal, la conmutatividad garantiza que la posición de los valores numéricos no afecta el valor final (por ejemplo, 4 + 7 es estrictamente igual a 7 + 4)." }
+                        { q: "[1º Grado - Trimestre 1] Según los postulados de Rudolf Virchow sobre la teoría celular, ¿cuál es el principio biológico del origen de las células?", opts: ["Toda célula proviene exclusivamente de otra célula preexistente por división", "Las células surgen espontáneamente de materia inanimada", "El material genético se crea sin ancestros previos", "Los tejidos crecen de forma independiente a la división"], correct: 0, exp: "💡 Explicación experta: Virchow estableció científicamente que la vida celular se hereda bajo la premisa 'Omnis cellula e cellula', significando que ninguna célula nace de la nada." },
+                        { q: "[1º Grado - Trimestre 1] ¿Qué diferencia estructural distingue a una célula procariota de una eucariota?", opts: ["La procariota carece de núcleo definido con membrana; la eucariota posee un núcleo delimitado", "La célula eucariota no contiene ADN", "La célula procariota es multicelular", "No existe diferencia química entre ambas"], correct: 0, exp: "💡 Explicación experta: 'Pro' indica anterior al núcleo libre en citoplasma, mientras que 'Eu' representa un núcleo verdadero resguardado por una doble membrana protectora." }
+                    ];
+                } else if (term === "2") {
+                    pool = [
+                        { q: "[1º Grado - Trimestre 2] ¿Cómo define la ecología científica contemporánea a un ecosistema?", opts: ["Como el sistema dinámico formado por una comunidad de organismos vivos (bióticos) y su medio físico (abióticos)", "Como una colección aislada de rocas estériles", "Como una sola especie animal viviendo sin entorno", "Como un cambio climatológico temporal sin vida"], correct: 0, exp: "💡 Explicación experta: El ecosistema representa la unidad funcional de la naturaleza donde la energía fluye y los elementos bióticos y abióticos interactúan constantemente." }
                     ];
                 } else {
                     pool = [
-                        { q: `[1º Grado - ${subject.toUpperCase()} T${term}] ¿Cuál es el objetivo principal del método científico en las ciencias de primer año?`, opts: ["Formular preguntas empíricas, observar sistemáticamente y comprobar hipótesis mediante evidencias", "Inventar datos sin comprobación matemática", "Aceptar teorías sin ningún análisis crítico", "Evitar cualquier registro experimental"], correct: 0, exp: "💡 Explicación profesional: Los especialistas en didáctica científica señalan que el primer año sienta las bases del razonamiento lógico, la experimentación y la validación de hechos." }
+                        { q: "[1º Grado - Trimestre 3] Según los biólogos ambientales, ¿por qué es crucial conservar la biodiversidad?", opts: ["Porque la diversidad genética y de especies otorga estabilidad y resiliencia ante crisis ambientales", "Porque acelera la desertificación del suelo", "Porque disminuye el nivel de oxígeno atmosférico", "Porque evita cualquier proceso evolutivo"], correct: 0, exp: "💡 Explicación experta: La investigación ecológica demuestra que los ecosistemas con alta biodiversidad resisten de mejor manera los desastres naturales y mantienen su equilibrio." }
                     ];
                 }
             } 
@@ -464,30 +454,20 @@
                     ];
                 }
             } 
-            // --- 3º DE SECUNDARIA (EXCLUSIVO, BASADO EN CIENTÍFICOS Y ESPECIALISTAS) ---
+            // --- 3º DE SECUNDARIA (EXCLUSIVO, TRIMESTRES 1, 2 Y 3) ---
             else if (grade === "3") {
-                if (subject === "quimica") {
-                    if (term === "1") {
-                        pool = [
-                            { q: "[3º Química T1] Según los modelos atómicos mecanocuánticos contemporáneos, ¿cómo se define formalmente un orbital atómico?", opts: ["La región espacial de probabilidad matemática donde existe mayor posibilidad de hallar un electrón", "Una trayectoria circular rígida idéntica a la órbita de los planetas", "Una partícula sólida estática en el centro del núcleo", "Un campo magnético desprovisto de carga eléctrica"], correct: 0, exp: "💡 Explicación profesional (Física Cuántica): Científicos como Erwin Schrödinger demostraron que los electrones no siguen rieles fijos, sino que se describen mediante funciones de onda probabilísticas llamadas orbitales." },
-                            { q: "[3º Química T1] ¿Qué enuncia la Ley de la Conservación de la Materia formulada por Antoine Lavoisier?", opts: ["La materia no se crea ni se destruye en una reacción química ordinaria, solo se transforma", "Toda la masa de los reactivos desaparece al convertirse en gas", "Los átomos cambian de elemento de forma espontánea", "El peso de los cuerpos depende exclusivamente de la temperatura exterior"], correct: 0, exp: "💡 Explicación profesional (Química Moderna): El padre de la química moderna, Antoine Lavoisier, comprobó experimentalmente que la suma de las masas de los reactivos es exactamente igual a la masa de los productos." }
-                        ];
-                    } else if (term === "2") {
-                        pool = [
-                            { q: "[3º Química T2] ¿Qué representa el concepto de 'mol' en la estequiometría química?", opts: ["La unidad de medida que contiene exactamente 6.022 × 10²³ entidades elementales (Número de Avogadro)", "Un kilogramo exacto de cualquier elemento gaseoso", "Un volumen estandarizado de diez litros de disolución", "El peso atómico individual de un solo protón"], correct: 0, exp: "💡 Explicación profesional: Basado en las aportaciones de Amedeo Avogadro, el mol funciona como el 'puente de cuantificación' indispensable para pesar cantidades macroscópicas de átomos invisibles." }
-                        ];
-                    } else {
-                        pool = [
-                            { q: "[3º Química T3] Según la teoría de ácidos y bases de Arrhenius, ¿qué caracteriza a los ácidos fuertes en solución acuosa?", opts: ["Su disociación electrolítica es prácticamente del 100%, liberando una alta concentración de iones hidrógeno (H⁺)", "No permiten el paso de la corriente eléctrica en absoluto", "Reaccionan neutralizándose para convertirse en lípidos", "Mantienen siempre un pH neutro de 7.0"], correct: 0, exp: "💡 Explicación profesional: Svante Arrhenius determinó que un ácido fuerte rompe totalmente sus enlaces al disolverse en agua, liberando una gran cantidad de iones H⁺ libres." }
-                        ];
-                    }
-                } else if (subject === "matematicas") {
+                if (term === "1") {
                     pool = [
-                        { q: `[3º Matemáticas T${term}] ¿Qué indica geométricamente la pendiente 'm' en la ecuación de la recta y = mx + b?", opts: ["La tasa de variación o grado de inclinación de la línea recta con respecto al eje horizontal x", "El punto exacto de intersección con el eje vertical", "El área total delimitada bajo la gráfica", "La raíz cuadrada de los coeficientes algebraicos"], correct: 0, exp: "💡 Explicación profesional (Geometría Analítica): La pendiente 'm' cuantifica la razón de cambio vertical por cada unidad de desplazamiento horizontal en el plano cartesiano." }
+                        { q: "[3º Grado - Trimestre 1] Según los modelos atómicos mecanocuánticos (Erwin Schrödinger), ¿qué es un orbital atómico?", opts: ["La región espacial de alta probabilidad matemática donde se localiza un electrón alrededor del núcleo", "Una órbita circular rígida e invariable similar a los planetas", "Una partícula sólida inmóvil en el centro del átomo", "Un campo magnético libre de carga"], correct: 0, exp: "💡 Explicación experta (Física Cuántica): Los electrones no viajan en pistas fijas, sino en funciones de onda de probabilidad llamadas orbitales." },
+                        { q: "[3º Grado - Trimestre 1] ¿Qué enuncia la Ley de la Conservación de la Materia de Antoine Lavoisier?", opts: ["La materia ni se crea ni se destruye en una reacción química ordinaria, solo se transforma", "Toda la masa de los reactivos se desvanece en forma de luz", "Los átomos cambian de identidad atómica espontáneamente", "El peso de los cuerpos depende exclusivamente de la estación del año"], correct: 0, exp: "💡 Explicación experta (Química Moderna): Lavoisier comprobó rigurosamente que la suma de la masa de los reactivos equivale de forma exacta a la masa de los productos." }
+                    ];
+                } else if (term === "2") {
+                    pool = [
+                        { q: "[3º Grado - Trimestre 2] En estequiometría química, ¿qué representa formalmente el concepto de 'mol'?", opts: ["La cantidad de sustancia que contiene exactamente 6.022 × 10²³ entidades elementales (Número de Avogadro)", "Un kilogramo exacto de cualquier compuesto gaseoso", "Un volumen estandarizado de diez litros de disolución", "El peso atómico aislado de un protón"], correct: 0, exp: "💡 Explicación experta: Fundamentado por Amedeo Avogadro, el mol funciona como la unidad cuantitativa estándar para contar átomos y moléculas invisibles." }
                     ];
                 } else {
                     pool = [
-                        { q: `[3º Grado - ${subject.toUpperCase()} T${term}] ¿Qué nivel de madurez analítica exige esta materia terminal de secundaria?`, opts: ["Pensamiento abstracto avanzado, modelación formal y rigor científico rumbo al nivel medio superior", "Memorización simple de conceptos elementales de primaria", "Transcripción de textos sin comprensión lógica", "Operaciones aritméticas básicas sin variables"], correct: 0, exp: "💡 Explicación profesional: Tercer año consolida las competencias complejas necesarias para interpretar fenómenos científicos y sociales con rigor analítico superior." }
+                        { q: "[3º Grado - Trimestre 3] Según la teoría de Arrhenius, ¿qué caracteriza a los ácidos fuertes disueltos en agua?", opts: ["Su disociación iónica es casi del 100%, liberando una alta concentración de iones hidrógeno (H⁺)", "Inhiben totalmente el paso de la corriente eléctrica", "Reaccionan convirtiéndose en bases neutras", "Presentan un pH constante de 7.0"], correct: 0, exp: "💡 Explicación experta: Svante Arrhenius demostró que un ácido fuerte rompe totalmente sus enlaces en agua, liberando una gran cantidad de iones H⁺ libres." }
                     ];
                 }
             }
@@ -539,7 +519,7 @@
             const term = document.getElementById('term-select').value;
             const sampleQ = getFullBank(grade, subjectId, term)[0];
             
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones elaboradas de expertos y se bloqueará para asegurar tu aprendizaje real.`;
+            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones de expertos y <strong>se bloqueará de inmediato</strong> para garantizar tu aprendizaje.`;
             
             const questions = getFullBank(grade, subjectId, term);
             const container = document.getElementById('quiz-container');
@@ -571,7 +551,7 @@
 
         function handleAnswer(index, correctIndex) {
             const block = document.getElementById(`block-${index}`);
-            // Evitar que responda de nuevo si ya fue respondido o bloqueado
+            // Si ya fue respondido o bloqueado, no hacer nada
             if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
 
             const radios = document.querySelectorAll(`input[name="q${index}"]`);
@@ -580,7 +560,7 @@
 
             const userChoice = parseInt(checked.value);
 
-            // Deshabilitar todos los radios de esta pregunta para evitar cambios y asegurar el aprendizaje
+            // DESHABILITAR INMEDIATAMENTE TODOS LOS RADIOS DE ESTA PREGUNTA (Impide cambiar respuesta)
             radios.forEach(r => r.disabled = true);
 
             if (userChoice === correctIndex) {
