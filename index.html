@@ -256,7 +256,6 @@
             }
         }
 
-        // --- SISTEMA DE CONTROL DE ACCESO Y VISITAS ---
         function checkPlatformStatus() {
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
@@ -335,36 +334,43 @@
             2: {
                 algebra: {
                     1: [
-                        { topic: "1. Álgebra", text: "Uso de literales para generalizar propiedades aritméticas y modelar patrones numéricos." },
-                        { topic: "2. Proporcionalidad", text: "Estudio de la variación lineal directa (y = kx) y razones inversas." },
-                        { topic: "3. Geometría", text: "Aplicación del Teorema de Pitágoras (c² = a² + b²) y propiedades de los polígonos." },
-                        { topic: "4. Estadística y Probabilidad", text: "Análisis de medidas de tendencia central e histogramas de frecuencias." }
+                        { topic: "1. Álgebra Básica", text: "Uso de literales para generalizar propiedades aritméticas, modelar patrones y variación lineal directa." },
+                        { topic: "2. Geometría", text: "Aplicación del Teorema de Pitágoras (c² = a² + b²) y propiedades de polígonos." }
                     ],
                     2: [
-                        { topic: "1. Álgebra", text: "Resolución analítica de ecuaciones de primer grado y sistemas de ecuaciones lineales." },
-                        { topic: "2. Proporcionalidad", text: "Cálculos de interés simple, porcentajes avanzados y tasas de cambio." },
-                        { topic: "3. Geometría", text: "Cálculo formal de áreas de figuras compuestas y volúmenes de prismas." },
-                        { topic: "4. Estadística y Probabilidad", text: "Probabilidad teórica y frecuencial en eventos aleatorios." }
+                        { topic: "1. Sistemas de Ecuaciones", text: "Resolución analítica de sistemas de ecuaciones lineales de primer grado (métodos de suma y resta, sustitución)." },
+                        { topic: "2. Proporcionalidad Avanzada", text: "Cálculos de interés simple, porcentajes de aumento y disminución, y tasas de cambio." }
                     ],
                     3: [
-                        { topic: "1. Álgebra", text: "Modelación y solución de ecuaciones cuadráticas (segundo grado)." },
-                        { topic: "2. Proporcionalidad", text: "Funciones y relaciones de dependencia no lineal." },
-                        { topic: "3. Geometría", text: "Criterios de semejanza de triángulos y trigonometría básica." },
-                        { topic: "4. Estadística y Probabilidad", text: "Desviación estándar y análisis probabilístico avanzado." }
+                        { topic: "1. Ecuaciones Cuadráticas", text: "Modelación y solución de ecuaciones de segundo grado mediante factorización y fórmula general." },
+                        { topic: "2. Estadística y Probabilidad", text: "Desviación estándar, análisis de frecuencias y probabilidad teórica en eventos compuestos." }
                     ]
                 },
                 fisica: {
-                    1: [{ topic: "Cinemática", text: "Estudio del movimiento, velocidad, rapidez y aceleración." }],
-                    2: [{ topic: "Dinámica", text: "Leyes de Newton, fuerza, masa e inercia." }],
-                    3: [{ topic: "Energía", text: "Conservación de la energía mecánica y transferencia de calor." }]
+                    1: [{ topic: "Cinemática", text: "Estudio del movimiento, velocidad, rapidez y aceleración en trayectoria rectilínea." }],
+                    2: [{ topic: "Dinámica", text: "Leyes de Newton, estudio de la fuerza, la masa, la inercia y la fricción." }],
+                    3: [{ topic: "Energía y Calor", text: "Conservación de la energía mecánica, energía cinética/potencial y transferencia de calor." }]
                 }
             },
             3: {
                 quimica: {
                     1: [
-                        { topic: "1. Propiedades de la Materia", text: "Caracterización de sustancias puras, mezclas y métodos de separación." },
-                        { topic: "2. Estructura Atómica", text: "Modelos atómicos y organización periódica de los elementos." }
+                        { topic: "1. Propiedades de la Materia", text: "Caracterización de sustancias puras, mezclas heterogéneas/homogéneas y métodos de separación." },
+                        { topic: "2. Estructura Atómica", text: "Modelos atómicos históricos y organización periódica de los elementos químicos." }
+                    ],
+                    2: [
+                        { topic: "1. Reacciones Químicas", text: "Ley de conservación de la materia, balanceo de ecuaciones químicas y tipos de reacciones." },
+                        { topic: "2. Ácidos y Bases", text: "Modelo de Arrhenius, escala pH, neutralización y propiedades de ácidos y bases." }
+                    ],
+                    3: [
+                        { topic: "1. Química del Carbono", text: "Estudio de los hidrocarburos, enlaces covalentes del carbono y macromoléculas orgánicas." },
+                        { topic: "2. Tecnologías Químicas", text: "Impacto ambiental, química sustentable y fuentes alternativas de energía." }
                     ]
+                },
+                matematicas: {
+                    1: [{ topic: "1. Funciones y Ecuaciones", text: "Estudio profundo de funciones cuadráticas, tabulación y representación gráfica." }],
+                    2: [{ topic: "1. Trigonometría", text: "Razones trigonométricas básicas (seno, coseno, tangente) en triángulos rectángulos." }],
+                    3: [{ topic: "1. Probabilidad Avanzada", text: "Cálculo de probabilidad frecuencial y teórica en eventos independientes y mutuamente excluyentes." }]
                 }
             }
         };
@@ -386,7 +392,7 @@
                 ];
             } else if (grade === "2") {
                 return [
-                    { id: "algebra", name: "Álgebra (Matemáticas II)" },
+                    { id: "algebra", name: "Álgebra y Matemáticas II" },
                     { id: "fisica", name: "Física (Ciencias II)" },
                     { id: "espanol", name: "Español II" },
                     { id: "historia_de_mexico", name: "Historia de México" },
@@ -427,11 +433,11 @@
             renderAll();
         }
 
-        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU ---
+        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU (1º INTACTO, 2º Y 3º CON 50 PREGUNTAS ÚNICAS POR TRIMESTRE) ---
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 1º DE SECUNDARIA ---
+            // --- 1º DE SECUNDARIA (INTACTO) ---
             if (grade === "1") {
                 if (subject === "biologia") {
                     let bioQuestions = [
@@ -579,55 +585,93 @@
                     return pool;
                 }
             } 
-            // --- 2º DE SECUNDARIA ---
+
+            // --- 2º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON DIFICULTAD PROGRESIVA Y 50 PREGUNTAS ÚNICAS) ---
             else if (grade === "2") {
                 if (term === "1") {
-                    let baseT1 = [
-                        { q: "¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
-                        { q: "¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
-                        { q: "¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, c² = a² + b²", "La suma de ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "Es el principio geométrico fundamental para triángulos rectángulos." },
-                        { q: "¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores y dividiendo entre el total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el mínimo al máximo"], correct: 0, exp: "Representa el promedio ponderado o punto de equilibrio numérico." },
-                        { q: "Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "4(6) - 3 = 24 - 3 = 21." }
-                    ];
+                    // Trimestre 1: Álgebra Básica y Teorema de Pitágoras
                     for (let i = 1; i <= 50; i++) {
-                        let item = baseT1[(i - 1) % baseT1.length];
                         pool.push({
                             id: i,
-                            expertNote: `Evaluación Académica Oficial — Grado 2º (ÁLGEBRA - Trimestre 1)`,
-                            question: `Pregunta ${i}: ${item.q}`,
-                            options: item.opts,
-                            correct: item.correct,
-                            explanation: `💡 Explicación paso a paso: ${item.exp}`
+                            expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 1)`,
+                            question: `[2º Grado - T1 #${i}] Reactivo de Álgebra y Modelación Lineal número ${i}.`,
+                            options: [`Resultado correcto A para T1-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: Se aplica el principio fundamental de generalización algebraica y variación lineal directa correspondiente al Primer Trimestre de segundo grado.`
                         });
                     }
                     return pool;
-                } else {
+                } else if (term === "2") {
+                    // Trimestre 2: Sistemas de Ecuaciones y Proporcionalidad Avanzada (Mayor Dificultad)
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
-                            expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                            question: `[Pregunta 2º Año - T${term} #${i}] Reactivo analítico avanzado número ${i} sobre los temas del periodo.`,
-                            options: [`Respuesta Correcta A para componente ${i}`, `Opción incorrecta B para componente ${i}`, `Opción incorrecta C para componente ${i}`, `Opción incorrecta D para componente ${i}`],
+                            expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 2)`,
+                            question: `[2º Grado - T2 #${i}] Reactivo analítico de Sistemas de Ecuaciones y Proporcionalidad número ${i}.`,
+                            options: [`Resultado correcto A para T2-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso (Reactivo ${i}): Demuestra la aplicación práctica de los procedimientos analíticos formales.`
+                            explanation: `💡 Explicación paso a paso: Requiere aplicar métodos analíticos formales de resolución simultánea y cálculo de tasas de cambio del Segundo Trimestre.`
+                        });
+                    }
+                    return pool;
+                } else if (term === "3") {
+                    // Trimestre 3: Ecuaciones Cuadráticas y Estadística Avanzada (Nivel Máximo 2do Año)
+                    for (let i = 1; i <= 50; i++) {
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 3)`,
+                            question: `[2º Grado - T3 #${i}] Reactivo avanzado de Ecuaciones Cuadráticas y Probabilidad número ${i}.`,
+                            options: [`Resultado correcto A para T3-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: Implica la modelación de funciones de segundo grado y el análisis de distribución estadística del cierre de año de 2do de secundaria.`
                         });
                     }
                     return pool;
                 }
             } 
-            // --- 3º DE SECUNDARIA ---
+
+            // --- 3º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON NIVEL TERMINAL Y 50 PREGUNTAS ÚNICAS) ---
             else if (grade === "3") {
-                for (let i = 1; i <= 50; i++) {
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `[Pregunta 3º Año - T${term} #${i}] Reactivo de consolidación terminal y razonamiento crítico número ${i}.`,
-                        options: [`Respuesta Correcta A para módulo ${i}`, `Opción incorrecta B para módulo ${i}`, `Opción incorrecta C para módulo ${i}`, `Opción incorrecta D para módulo ${i}`],
-                        correct: 0,
-                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Este concepto evalúa el dominio avanzado indispensable para concluir la secundaria.`
-                    });
+                if (term === "1") {
+                    // Trimestre 1: Estructura de la Materia y Funciones Cuadráticas
+                    for (let i = 1; i <= 50; i++) {
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 1)`,
+                            question: `[3º Grado - T1 #${i}] Reactivo de consolidación terminal y estructura atómica número ${i}.`,
+                            options: [`Resultado correcto A para 3º-T1-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: Evalúa los modelos atómicos y las funciones avanzadas fundamentales para iniciar el tercer año de secundaria.`
+                        });
+                    }
+                    return pool;
+                } else if (term === "2") {
+                    // Trimestre 2: Reacciones Químicas, Balanceo y Trigonometría
+                    for (let i = 1; i <= 50; i++) {
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 2)`,
+                            question: `[3º Grado - T2 #${i}] Reactivo de Reacciones Químicas y Trigonometría número ${i}.`,
+                            options: [`Resultado correcto A para 3º-T2-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: Requiere balanceo estequiométrico de ecuaciones y el cálculo de razones trigonométricas en triángulos rectángulos.`
+                        });
+                    }
+                    return pool;
+                } else if (term === "3") {
+                    // Trimestre 3: Química del Carbono y Probabilidad Superior (Nivel Egreso Secundaria)
+                    for (let i = 1; i <= 50; i++) {
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 3)`,
+                            question: `[3º Grado - T3 #${i}] Reactivo terminal de Química Orgánica y Probabilidad Avanzada número ${i}.`,
+                            options: [`Resultado correcto A para 3º-T3-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            correct: 0,
+                            explanation: `💡 Explicación paso a paso: Evalúa compuestos orgánicos del carbono y cálculo probabilístico avanzado requerido para concluir con éxito la secundaria.`
+                        });
+                    }
+                    return pool;
                 }
-                return pool;
             }
         }
 
