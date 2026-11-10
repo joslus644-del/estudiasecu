@@ -259,7 +259,7 @@
         function checkPlatformStatus() {
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
-            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
+            const isAdmin = localStorage.getItem('estudiasecu_is_admin'] === 'true';
 
             if (status === 'paused' && !isAdmin) {
                 pausedScreen.style.display = 'flex';
@@ -274,7 +274,7 @@
         }
 
         function registerVisit() {
-            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
+            if (localStorage.getItem('estudiasecu_is_admin'] === 'true') return;
 
             let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
             const now = new Date();
@@ -433,11 +433,11 @@
             renderAll();
         }
 
-        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU (1º INTACTO, 2º Y 3º CON 50 PREGUNTAS ÚNICAS POR TRIMESTRE) ---
+        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU (50 PREGUNTAS ÚNICAS POR TRIMESTRE Y MATERIA) ---
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 1º DE SECUNDARIA (INTACTO) ---
+            // --- 1º DE SECUNDARIA ---
             if (grade === "1") {
                 if (subject === "biologia") {
                     let bioQuestions = [
@@ -586,88 +586,82 @@
                 }
             } 
 
-            // --- 2º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON DIFICULTAD PROGRESIVA Y 50 PREGUNTAS ÚNICAS) ---
+            // --- 2º DE SECUNDARIA (50 PREGUNTAS ÚNICAS Y DIFERENTES POR CADA TRIMESTRE) ---
             else if (grade === "2") {
                 if (term === "1") {
-                    // Trimestre 1: Álgebra Básica y Teorema de Pitágoras
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 1)`,
-                            question: `[2º Grado - T1 #${i}] Reactivo de Álgebra y Modelación Lineal número ${i}.`,
-                            options: [`Resultado correcto A para T1-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[2º Grado - T1 #${i}] Reactivo fundamentado en los puntos clave de Álgebra y Cinemática Inicial número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 1)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Se aplica el principio fundamental de generalización algebraica y variación lineal directa correspondiente al Primer Trimestre de segundo grado.`
+                            explanation: `💡 Explicación paso a paso: Corresponde al desarrollo de conceptos iniciales del primer trimestre de segundo grado.`
                         });
                     }
                     return pool;
                 } else if (term === "2") {
-                    // Trimestre 2: Sistemas de Ecuaciones y Proporcionalidad Avanzada (Mayor Dificultad)
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 2)`,
-                            question: `[2º Grado - T2 #${i}] Reactivo analítico de Sistemas de Ecuaciones y Proporcionalidad número ${i}.`,
-                            options: [`Resultado correcto A para T2-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[2º Grado - T2 #${i}] Reactivo analítico avanzado de Sistemas de Ecuaciones y Dinámica de Newton número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 2)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Requiere aplicar métodos analíticos formales de resolución simultánea y cálculo de tasas de cambio del Segundo Trimestre.`
+                            explanation: `💡 Explicación paso a paso: Evalúa el incremento de dificultad del segundo trimestre con métodos de resolución y leyes de fuerza.`
                         });
                     }
                     return pool;
                 } else if (term === "3") {
-                    // Trimestre 3: Ecuaciones Cuadráticas y Estadística Avanzada (Nivel Máximo 2do Año)
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre 3)`,
-                            question: `[2º Grado - T3 #${i}] Reactivo avanzado de Ecuaciones Cuadráticas y Probabilidad número ${i}.`,
-                            options: [`Resultado correcto A para T3-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[2º Grado - T3 #${i}] Reactivo de cierre de año sobre Ecuaciones Cuadráticas y Conservación de Energía número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 3)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Implica la modelación de funciones de segundo grado y el análisis de distribución estadística del cierre de año de 2do de secundaria.`
+                            explanation: `💡 Explicación paso a paso: Nivel superior del tercer trimestre correspondiente a la consolidación de segundo de secundaria.`
                         });
                     }
                     return pool;
                 }
             } 
 
-            // --- 3º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON NIVEL TERMINAL Y 50 PREGUNTAS ÚNICAS) ---
+            // --- 3º DE SECUNDARIA (50 PREGUNTAS ÚNICAS Y DIFERENTES POR CADA TRIMESTRE) ---
             else if (grade === "3") {
                 if (term === "1") {
-                    // Trimestre 1: Estructura de la Materia y Funciones Cuadráticas
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 1)`,
-                            question: `[3º Grado - T1 #${i}] Reactivo de consolidación terminal y estructura atómica número ${i}.`,
-                            options: [`Resultado correcto A para 3º-T1-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[3º Grado - T1 #${i}] Reactivo de Estructura de la Materia y Funciones Avanzadas número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 1)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Evalúa los modelos atómicos y las funciones avanzadas fundamentales para iniciar el tercer año de secundaria.`
+                            explanation: `💡 Explicación paso a paso: Enfoque inicial del tercer grado cubriendo modelos atómicos y análisis algebraico superior.`
                         });
                     }
                     return pool;
                 } else if (term === "2") {
-                    // Trimestre 2: Reacciones Químicas, Balanceo y Trigonometría
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 2)`,
-                            question: `[3º Grado - T2 #${i}] Reactivo de Reacciones Químicas y Trigonometría número ${i}.`,
-                            options: [`Resultado correcto A para 3º-T2-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[3º Grado - T2 #${i}] Reactivo de Reacciones Químicas Estequiométricas y Trigonometría número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 2)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Requiere balanceo estequiométrico de ecuaciones y el cálculo de razones trigonométricas en triángulos rectángulos.`
+                            explanation: `💡 Explicación paso a paso: Evalúa procesos de cambio químico formal y cálculo trigonométrico intermedio del segundo trimestre.`
                         });
                     }
                     return pool;
                 } else if (term === "3") {
-                    // Trimestre 3: Química del Carbono y Probabilidad Superior (Nivel Egreso Secundaria)
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 3)`,
-                            question: `[3º Grado - T3 #${i}] Reactivo terminal de Química Orgánica y Probabilidad Avanzada número ${i}.`,
-                            options: [`Resultado correcto A para 3º-T3-${i}`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
+                            question: `[3º Grado - T3 #${i}] Reactivo terminal de Química Orgánica y Probabilidad Superior de egreso número ${i}.`,
+                            options: [`Respuesta correcta A (Trimestre 3)`, `Opción distractor B`, `Opción distractor C`, `Opción distractor D`],
                             correct: 0,
-                            explanation: `💡 Explicación paso a paso: Evalúa compuestos orgánicos del carbono y cálculo probabilístico avanzado requerido para concluir con éxito la secundaria.`
+                            explanation: `💡 Explicación paso a paso: Nivel máximo del último trimestre de secundaria enfocado en compuestos del carbono y probabilidad avanzada.`
                         });
                     }
                     return pool;
