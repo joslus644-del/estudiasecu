@@ -328,19 +328,19 @@
             2: {
                 fisica: {
                     1: [
-                        { topic: "1. Cinemática y Movimiento", text: "Estudio de la rapidez media, desplazamiento, aceleración y gráficas de movimiento." },
-                        { topic: "2. Dinámica y Fuerzas", text: "Leyes de Newton, inercia, masa, peso y fuerza de fricción." },
-                        { topic: "3. Energía y Calor", text: "Conservación de la energía mecánica, energía cinética/potencial y transferencia de calor." }
+                        { topic: "1. Cinemática — Movimiento y Velocidad", text: "Estudio de la rapidez media, desplazamiento, aceleración, MRU y MRUV." },
+                        { topic: "2. Dinámica — Leyes de Newton y Fuerza", text: "Leyes de Newton, inercia, masa, peso y fuerza de fricción." },
+                        { topic: "3. Energía, Trabajo y Calor", text: "Principio de conservación de la energía, energía cinética/potencial y transferencia térmica." }
                     ],
-                    2: [{ topic: "Dinámica Avanzada", text: "Aplicación profunda de las Leyes de Newton y sistemas de fuerzas en equilibrio." }],
-                    3: [{ topic: "Energía y Termodinámica", text: "Conservación de la energía mecánica y transferencia térmica." }]
+                    2: [{ topic: "Dinámica Avanzada", text: "Aplicación profunda de las Leyes de Newton y sistemas de fuerzas." }],
+                    3: [{ topic: "Energía y Termodinámica", text: "Conservación de la energía mecánica y transferencia de calor." }]
                 }
             },
             3: {
                 quimica: {
                     1: [
-                        { topic: "1. Propiedades de la Materia", text: "Caracterización de sustancias puras, mezclas heterogéneas/homogéneas y métodos de separación." },
-                        { topic: "2. Estructura Atómica", text: "Modelos atómicos históricos y organización periódica de los elementos químicos." }
+                        { topic: "1. Propiedades de la Materia", text: "Caracterización de sustancias puras y mezclas." },
+                        { topic: "2. Estructura Atómica", text: "Modelos atómicos y tabla periódica." }
                     ]
                 }
             }
@@ -353,27 +353,21 @@
                     { id: "matematicas", name: "Matemáticas I" },
                     { id: "espanol", name: "Español I" },
                     { id: "historia", name: "Historia I" },
-                    { id: "geografia", name: "Geografía" },
-                    { id: "formacion", name: "Formación Cívica y Ética I" },
-                    { id: "ingles", name: "Inglés I" }
+                    { id: "geografia", name: "Geografía" }
                 ];
             } else if (grade === "2") {
                 return [
                     { id: "fisica", name: "Física (Ciencias II)" },
                     { id: "algebra", name: "Álgebra y Matemáticas II" },
                     { id: "espanol", name: "Español II" },
-                    { id: "historia_de_mexico", name: "Historia de México" },
-                    { id: "formacion", name: "Formación Cívica y Ética" },
-                    { id: "ingles", name: "Inglés II" }
+                    { id: "historia_de_mexico", name: "Historia de México" }
                 ];
             } else {
                 return [
                     { id: "quimica", name: "Química (Ciencias III)" },
                     { id: "matematicas", name: "Matemáticas III" },
                     { id: "espanol", name: "Español III" },
-                    { id: "historia", name: "Historia Universal" },
-                    { id: "formacion", name: "Formación Cívica y Ética" },
-                    { id: "ingles", name: "Inglés III" }
+                    { id: "historia", name: "Historia Universal" }
                 ];
             }
         }
@@ -392,73 +386,72 @@
             renderAll();
         }
 
-        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU ---
+        // --- BANCO DE PREGUNTAS OFICIAL DE ESTUDIASECU (50 PREGUNTAS DE FÍSICA - 2º AÑO T1) ---
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 2º DE SECUNDARIA: FÍSICA (CIENCIAS II) - TRIMESTRE 1 ---
             if (grade === "2" && subject === "fisica" && term === "1") {
                 let physicsQuestions = [
-                    { q: "¿Cómo se define la rapidez media de un objeto en movimiento?", opts: ["Como la distancia total recorrida dividida entre el tiempo total transcurrido", "Multiplicando velocidad por aceleración", "Sumando la masa y el volumen", "Dividiendo el peso entre la gravedad"], exp: "La fórmula fundamental es v = d/t." },
-                    { q: "¿Qué diferencia principal existe entre rapidez y velocidad?", opts: ["La velocidad incluye la dirección y el sentido del movimiento, mientras que la rapidez es un escalar", "No hay ninguna diferencia", "La rapidez usa vectores y la velocidad no", "La velocidad solo se mide en reposo"], exp: "La velocidad es una magnitud vectorial." },
-                    { q: "¿Cómo se calcula la aceleración en un movimiento rectilíneo uniformemente variado?", opts: ["Restando la velocidad inicial a la final y dividiendo entre el tiempo transcurrido", "Multiplicando distancia por tiempo", "Sumando las velocidades finales", "Dividiendo masa entre fuerza"], exp: "Su fórmula es a = (v_f - v_i) / t." },
-                    { q: "Si un automóvil viaja a una velocidad constante de 60 km/h, ¿qué distancia recorre en 2 horas?", opts: ["120 km", "30 km", "60 km", "240 km"], exp: "Se multiplica velocidad por tiempo (60 × 2 = 120)." },
-                    { q: "¿Qué indica una gráfica de posición (distancia) contra tiempo con una línea recta ascendente?", opts: ["Que el objeto se mueve con velocidad constante (MRU)", "Que el objeto está detenido", "Que la aceleración es negativa", "Que no hay movimiento"], exp: "La pendiente de la recta representa la velocidad constante." },
-                    { q: "¿Qué representa el área bajo la curva en una gráfica de velocidad contra tiempo?", opts: ["La distancia total recorrida por el objeto", "El peso del objeto", "La temperatura final", "La fuerza de fricción"], exp: "Al multiplicar velocidad por tiempo (base por altura), se obtiene la distancia." },
-                    { q: "¿Cuál es el valor aproximado de la aceleración de la gravedad terrestre en caída libre?", opts: ["9.8 m/s²", "1.5 m/s²", "50 m/s²", "0 m/s²"], exp: "Es la aceleración con la que la Tierra atrae a los cuerpos hacia su centro en el vacío." },
-                    { q: "¿Qué le ocurre a la velocidad de un objeto que se lanza verticalmente hacia arriba al ir ascendiendo?", opts: ["Disminuye de forma uniforme hasta hacerse cero en su punto más alto", "Aumenta infinitamente", "Permanece constante", "Se vuelve negativa instantáneamente"], exp: "La gravedad actúa en contra del movimiento, frenando el objeto." },
-                    { q: "¿Cómo se le llama al movimiento en el cual la trayectoria es una línea recta y la velocidad varía uniformemente?", opts: ["Movimiento Rectilíneo Uniformemente Variado (MRUV)", "Movimiento Circular Uniforme", "Reposo absoluto", "Movimiento parabólico"], exp: "La aceleración permanece constante en todo el recorrido." },
-                    { q: "Si un cuerpo parte del reposo, ¿cuál es el valor inicial de su velocidad?", opts: ["Cero (0 m/s)", "10 m/s", "9.8 m/s", "Indeterminado"], exp: "Todo objeto que inicia su movimiento desde la quietud tiene velocidad inicial nula." },
-                    { q: "¿Qué unidad del Sistema Internacional (SI) se utiliza para medir la aceleración?", opts: ["Metros sobre segundo al cuadrado (m/s²)", "Kilómetros por hora", "Metros por segundo", "Newtons"], exp: "Mide el cambio de velocidad por cada segundo que transcurre." },
-                    { q: "Un ciclista recorre 100 metros en 20 segundos. ¿Cuál es su rapidez media?", opts: ["5 m/s", "20 m/s", "100 m/s", "2 m/s"], exp: "Se divide 100 ÷ 20 = 5." },
-                    { q: "¿Qué describe la trayectoria de un objeto en física?", opts: ["La línea geométrica que describe un cuerpo durante su movimiento", "El tiempo que dura una prueba", "La masa del objeto", "La fuerza aplicada"], exp: "Puede ser rectilínea, curvilínea, parabólica o circular." },
-                    { q: "En un movimiento rectilíneo uniforme (MRU), ¿cómo es la aceleración?", opts: ["Es igual a cero", "Es infinita", "Es siempre positiva", "Varía constantemente"], exp: "Al no cambiar la velocidad, no existe aceleración." },
-                    { q: "¿Qué magnitud física mide el cambio de posición de un objeto desde su punto de partida hasta su llegada en línea recta?", opts: ["El desplazamiento", "La rapidez", "La inercia", "El volumen"], exp: "A diferencia de la distancia recorrida, el desplazamiento es un vector que une el inicio con el fin." },
-                    { q: "¿Cuánto tiempo tarda un tren en recorrer 300 km si se desplaza a una rapidez constante de 100 km/h?", opts: ["3 horas", "30 horas", "0.3 horas", "13 horas"], exp: "Tiempo es igual a distancia entre velocidad (300 ÷ 100 = 3)." },
-                    { q: "¿Qué sucede con la pendiente de una gráfica de distancia contra tiempo si la velocidad del objeto aumenta?", opts: ["La pendiente se vuelve más inclinada (empinada)", "La línea se hace horizontal", "La pendiente desaparece", "El objeto retrocede"], exp: "Una mayor inclinación denota una mayor rapidez." },
-                    { q: "¿Qué establece la Primera Ley de Newton (Ley de la Inercia)?", opts: ["Todo cuerpo persevera en su estado de reposo o movimiento rectilíneo uniforme a menos que una fuerza externa actúe sobre él", "La fuerza es igual a masa por aceleración", "A toda acción corresponde una reacción", "La energía no se crea ni se destruye"], exp: "Mide la tendencia natural de los cuerpos a mantener su estado actual." },
-                    { q: "¿Cómo se enuncia matemáticamente la Segunda Ley de Newton?", opts: ["Fuerza es igual a masa por aceleración (F = m · a)", "Velocidad es distancia entre tiempo", "Trabajo es fuerza por distancia", "Peso es masa por gravedad"], exp: "La aceleración de un objeto es directamente proporcional a la fuerza e inversamente proporcional a su masa." },
-                    { q: "¿Qué postula la Tercera Ley de Newton (Acción y Reacción)?", opts: ["A toda acción corresponde una reacción igual en magnitud pero en sentido opuesto", "Los cuerpos caen a la misma velocidad", "La inercia depende del volumen", "El calor fluye espontáneamente"], exp: "Las fuerzas siempre se presentan en pares interactuando entre dos cuerpos distintos." },
-                    { q: "¿Qué es la inercia en la física?", opts: ["La propiedad de los cuerpos de oponerse a cualquier cambio en su estado de reposo o movimiento", "La fuerza de atracción de la Tierra", "La energía almacenada en un resorte", "La fricción del aire"], exp: "Depende directamente de la masa del objeto." },
-                    { q: "¿Cuál es la unidad de medida de la fuerza en el Sistema Internacional (SI)?", opts: ["El Newton (N)", "El Joule", "El Watt", "El Kilogramo"], exp: "Un Newton equivale a la fuerza necesaria para acelerar una masa de 1 kg a 1 m/s²." },
-                    { q: "¿Qué es la fuerza de fricción o rozamiento?", opts: ["Una fuerza de contacto que se opone al movimiento relativo entre dos superficies", "Una fuerza magnética a distancia", "La atracción gravitacional del Sol", "La energía cinética de un auto"], exp: "Actúa siempre en dirección contraria al desplazamiento del objeto." },
-                    { q: "¿Cuál es la diferencia principal entre masa y peso?", opts: ["La masa es la cantidad de materia (constante), mientras que el peso es la fuerza con la que la gravedad lo atrae", "Son exactamente lo mismo en cualquier planeta", "El peso se mide en kilogramos y la masa en Newtons", "La masa cambia según el lugar"], exp: "El peso varía según la gravedad del planeta (P = m · g)." },
-                    { q: "Si un objeto de 4 kg recibe una aceleración de 5 m/s², ¿qué fuerza neta se le aplica?", opts: ["20 N", "1.25 N", "9 N", "0.8 N"], exp: "Se multiplican masa y aceleración (4 × 5 = 20)." },
-                    { q: "¿Qué ocurre con la aceleración de un objeto si la masa aumenta manteniendo la fuerza constante?", opts: ["La aceleración disminuye", "La aceleración aumenta al doble", "La aceleración no cambia", "El objeto se detiene por completo"], exp: "Tienen una relación inversamente proporcional según la segunda ley de Newton." },
-                    { q: "¿Qué es una fuerza de contacto?", opts: ["Aquélla en la que los cuerpos interactúan estando físicamente unidos o tocándose", "La gravedad entre planetas", "El campo magnético de un imán", "La fuerza electrostática"], exp: "Ejemplos: empujar una caja, tirar de una cuerda." },
-                    { q: "¿Qué es una fuerza a distancia (o de campo)?", opts: ["Aquélla que ejerce su influencia sin necesidad de contacto físico directo", "Golpear una pelota con un bat", "Empujar un carro", "Frenar una bicicleta"], exp: "Ejemplos: la gravedad, el magnetismo y la fuerza electrostática." },
-                    { q: "Si un objeto está en equilibrio estático, ¿cuál es la suma de todas las fuerzas que actúan sobre él?", opts: ["Cero", "Infinita", "Igual a su peso", "Igual a su masa"], exp: "Las fuerzas se anulan mutuamente, impidiendo que el objeto se acelere." },
-                    { q: "¿Por qué un pasajero en un camión se va hacia adelante cuando este frena repentinamente?", opts: ["Por la inercia, ya que su cuerpo tiende a mantener el movimiento que llevaba", "Porque el camión lo empuja", "Por la fuerza del viento exterior", "Por gravedad artificial"], exp: "Al frenar el camión, los cuerpos dentro de él quieren seguir moviéndose a la velocidad anterior." },
-                    { q: "¿Qué instrumento se utiliza comúnmente en el laboratorio para medir fuerzas o pesos?", opts: ["El dinamómetro", "El termómetro", "El cronómetro", "La probeta"], exp: "Utiliza un resorte calibrado basado en la ley de Hooke." },
-                    { q: "¿Qué papel juega el aire sobre un objeto que cae libremente en la atmósfera real?", opts: ["Ejerce una resistencia opuesta llamada fricción o arrastre del aire", "Acelera la caída infinitamente", "No afecta en absoluto", "Aumenta la masa del objeto"], exp: "En el vacío no existe esta resistencia, pero en la Tierra afecta la velocidad final." },
-                    { q: "Si se duplica la fuerza aplicada a un objeto y su masa permanece constante, ¿qué le ocurre a su aceleración?", opts: ["Se duplica", "Se reduce a la mitad", "Se cuadruplica", "Permanece igual"], exp: "La fuerza y la aceleración son directamente proporcionales." },
-                    { q: "¿Cómo se define el peso de un cuerpo en términos de aceleración?", opts: ["Como el producto de su masa por la aceleración de la gravedad (P = m · g)", "Dividiendo fuerza entre tiempo", "Multiplicando velocidad por altura", "Sumando masa y distancia"], exp: "En la Tierra, se calcula multiplicando la masa por 9.8 m/s²." },
-                    { q: "¿Qué establece el principio de conservación de la energía mecánica?", opts: ["La energía total en un sistema aislado permanece constante, transformándose entre cinética y potencial", "La energía se destruye al frenar", "El calor se convierte en masa sólida", "La velocidad elimina la energía"], exp: "La energía no se crea ni se destruye, solo se transforma." },
-                    { q: "¿Cómo se define la energía cinética?", opts: ["Es la energía que posee un cuerpo debido a su movimiento", "La energía acumulada en una pila", "El calor que absorbe un metal", "La fuerza de un imán"], exp: "Depende de la masa del objeto y del cuadrado de su velocidad." },
-                    { q: "¿Qué es la energía potencial gravitacional?", opts: ["La energía que almacena un objeto en función de la altura a la que se encuentra", "La energía generada por el viento", "La velocidad de una corriente eléctrica", "El rozamiento de una llanta"], exp: "Se calcula multiplicando masa por gravedad y por altura (Ep = mgh)." },
-                    { q: "¿Qué unidad del Sistema Internacional se utiliza para medir el trabajo y la energía?", opts: ["El Joule (J)", "El Newton", "El Metro", "El Kilogramo"], exp: "Un Joule equivale al trabajo realizado por una fuerza de un Newton al desplazar un objeto un metro." },
-                    { q: "¿Cómo se define el trabajo mecánico en la física?", opts: ["Como la magnitud de la fuerza aplicada multiplicada por la distancia desplazada en la misma dirección", "Dividiendo velocidad entre tiempo", "Multiplicando masa por temperatura", "El tiempo que tarda un objeto en caer"], exp: "Su fórmula es W = F · d." },
-                    { q: "¿Qué es el calor en la termodinámica?", opts: ["La energía térmica en tránsito que se transfiere debido a una diferencia de temperatura", "Una sustancia sólida y pesada", "La temperatura absoluta de un gas", "La energía almacenada en reposo"], exp: "Siempre fluye de manera espontánea del cuerpo más caliente al más frío." },
-                    { q: "¿Qué es la temperatura?", opts: ["Una medida de la energía cinética promedio de las partículas que componen un cuerpo", "La cantidad total de calor en un objeto", "La fuerza con la que pesa un gas", "La velocidad de la luz"], exp: "A mayor movimiento molecular, mayor es la temperatura registrada." },
-                    { q: "¿Cuáles son las tres formas principales en que se transfiere el calor?", opts: ["Conducción, convección y radiación", "Inercia, fuerza y masa", "Cinética, potencial y mecánica", "Sólido, líquido y gas"], exp: "Conducción (sólidos), convección (fluidos) y radiación (ondas electromagnéticas)." },
-                    { q: "¿En qué consiste el método de transferencia de calor por conducción?", opts: ["En la propagación de calor a través de un sólido mediante choque molecular directo", "Mediante ondas en el vacío", "Por circulación de corrientes de aire caliente", "Por fricción mecánica"], exp: "Ejemplo: el mango metálico de una olla que se calienta al fuego." },
-                    { q: "¿Cómo se propaga el calor mediante la convección?", opts: ["A través del movimiento de fluidos debido a diferencias de densidad por temperatura", "Por contacto directo en metales", "Mediante rayos ultravioleta", "En el vacío absoluto del espacio"], exp: "El aire caliente asciende y el frío desciende, formando corrientes circulares." },
-                    { q: "¿Qué caracteriza a la transmisión de calor por radiación?", opts: ["Que no requiere de un medio material para propagarse, ya que viaja mediante ondas", "Que solo ocurre en el agua", "Que necesita superficies en contacto directo", "Que congela los objetos cercanos"], exp: "Es la forma en que el calor del Sol llega a la Tierra." },
-                    { q: "¿Qué es un material aislante térmico?", opts: ["Aquel que opone una gran resistencia al paso del calor a través de él", "Un metal que conduce electricidad rápidamente", "Una sustancia que produce calor por fricción", "Un líquido congelante"], exp: "Ejemplos: la madera, el unicel, la lana y el corcho." },
-                    { q: "¿Qué le ocurre à la energía cinética de un coche cuando frena y se detiene?", opts: ["Se transforma principalmente en energía térmica (calor) por la fricción", "Se destruye por completo", "Se convierte en electricidad estática", "Aumenta la masa del vehículo"], exp: "La energía se disipa en el ambiente en forma de calor." },
-                    { q: "¿Qué es una fuente de energía renovable?", opts: ["Aquélla que se obtiene de fuentes naturales inagotables o que se regeneran a corto plazo", "Un recurso fósil como el petróleo", "El carbón mineral extraído de minas", "El gas natural almacenado"], exp: "Ejemplos: energía solar, eólica, geotérmica e hidráulica." },
-                    { q: "¿Qué es una fuente de energía no renovable?", opts: ["Aquélla cuyos recursos se encuentran en cantidades limitadas y se agotan con su consumo", "La luz del Sol", "La fuerza del viento en la atmósfera", "El calor interno de los océanos"], exp: "Ejemplos: el petróleo, el carbón mineral y el gas natural." },
-                    { q: "¿Qué establece la Ley de la Conservación de la Materia y la Energía?", opts: ["Que la energía total permanece constante, transformándose de unas formas en otras sin perderse", "Que la energía se crea de la nada", "Que la materia desaparece al calentarse", "Que el peso disminuye con la velocidad"], exp: "Es la ley fundamental que rige todos los fenómenos de la naturaleza." }
+                    { q: "¿Cómo se define la rapidez media de un objeto en movimiento?", opts: ["Como la distancia total recorrida dividida entre el tiempo total transcurrido", "Multiplicando velocidad por aceleración", "Sumando la masa y el volumen", "Dividiendo el peso entre la gravedad"], correct: 0, exp: "La fórmula fundamental es v = d/t." },
+                    { q: "¿Qué diferencia principal existe entre rapidez y velocidad?", opts: ["La velocidad incluye la dirección y el sentido del movimiento, mientras que la rapidez es solo un valor numérico escalar", "No hay ninguna diferencia", "La rapidez usa vectores y la velocidad no", "La velocidad solo se mide en reposo"], correct: 0, exp: "La velocidad es una magnitud vectorial." },
+                    { q: "¿Cómo se calcula la aceleración en un movimiento rectilíneo uniformemente variado?", opts: ["Restando la velocidad inicial a la final y dividiendo entre el tiempo transcurrido", "Multiplicando distancia por tiempo", "Sumando las velocidades finales", "Dividiendo masa entre fuerza"], correct: 0, exp: "Su fórmula es a = (v_f - v_i) / t." },
+                    { q: "Si un automóvil viaja a una velocidad constante de 60 km/h, ¿qué distancia recorre en 2 horas?", opts: ["120 km", "30 km", "60 km", "240 km"], correct: 0, exp: "Se multiplica velocidad por tiempo (60 × 2 = 120)." },
+                    { q: "¿Qué indica una gráfica de posición (distancia) contra tiempo con una línea recta ascendente?", opts: ["Que el objeto se mueve con velocidad constante (MRU)", "Que el objeto está detenido", "Que la aceleración es negativa", "Que no hay movimiento"], correct: 0, exp: "La pendiente de la recta representa la velocidad constante." },
+                    { q: "¿Qué representa el área bajo la curva en una gráfica de velocidad contra tiempo?", opts: ["La distancia total recorrida por el objeto", "El peso del objeto", "La temperatura final", "La fuerza de fricción"], correct: 0, exp: "Al multiplicar velocidad por tiempo (base por altura), se obtiene la distancia." },
+                    { q: "¿Cuál es el valor aproximado de la aceleración de la gravedad terrestre en caída libre?", opts: ["9.8 m/s²", "1.5 m/s²", "50 m/s²", "0 m/s²"], correct: 0, exp: "Es la aceleración con la que la Tierra atrae a los cuerpos hacia su centro en el vacío." },
+                    { q: "¿Qué le ocurre a la velocidad de un objeto que se lanza verticalmente hacia arriba al ir ascendiendo?", opts: ["Disminuye de forma uniforme hasta hacerse cero en su punto más alto", "Aumenta infinitamente", "Permanece constante", "Se vuelve negativa instantáneamente"], correct: 0, exp: "La gravedad actúa en contra del movimiento, frenando el objeto." },
+                    { q: "¿Cómo se le llama al movimiento en el cual la trayectoria es una línea recta y la velocidad varía uniformemente?", opts: ["Movimiento Rectilíneo Uniformemente Variado (MRUV)", "Movimiento Circular Uniforme", "Reposo absoluto", "Movimiento parabólico"], correct: 0, exp: "La aceleración permanece constante en todo el recorrido." },
+                    { q: "Si un cuerpo parte del reposo, ¿cuál es el valor inicial de su velocidad?", opts: ["Cero (0 m/s)", "10 m/s", "9.8 m/s", "Indeterminado"], correct: 0, exp: "Todo objeto que inicia su movimiento desde la quietud tiene velocidad inicial nula." },
+                    { q: "¿Qué unidad del Sistema Internacional (SI) se utiliza para medir la aceleración?", opts: ["Metros sobre segundo al cuadrado (m/s²)", "Kilómetros por hora", "Metros por segundo", "Newtons"], correct: 0, exp: "Mide el cambio de velocidad por cada segundo que transcurre." },
+                    { q: "Un ciclista recorre 100 metros en 20 segundos. ¿Cuál es su rapidez media?", opts: ["5 m/s", "20 m/s", "100 m/s", "2 m/s"], correct: 0, exp: "Se divide 100 ÷ 20 = 5." },
+                    { q: "¿Qué describe la trayectoria de un objeto en física?", opts: ["La línea geométrica que describe un cuerpo durante su movimiento", "El tiempo que dura una prueba", "La masa del objeto", "La fuerza aplicada"], correct: 0, exp: "Puede ser rectilínea, curvilínea, parabólica o circular." },
+                    { q: "En un movimiento rectilíneo uniforme (MRU), ¿cómo es la aceleración?", opts: ["Es igual a cero", "Es infinita", "Es siempre positiva", "Varía constantemente"], correct: 0, exp: "Al no cambiar la velocidad, no existe aceleración." },
+                    { q: "¿Qué magnitud física mide el cambio de posición de un objeto desde su punto de partida hasta su llegada en línea recta?", opts: ["El desplazamiento", "La rapidez", "La inercia", "El volumen"], correct: 0, exp: "A diferencia de la distancia recorrida, el desplazamiento es un vector que une el inicio con el fin." },
+                    { q: "¿Cuánto tiempo tarda un tren en recorrer 300 km si se desplaza a una rapidez constante de 100 km/h?", opts: ["3 horas", "30 horas", "0.3 horas", "13 horas"], correct: 0, exp: "Tiempo es igual a distancia entre velocidad (300 ÷ 100 = 3)." },
+                    { q: "¿Qué sucede con la pendiente de una gráfica de distancia contra tiempo si la velocidad del objeto aumenta?", opts: ["La pendiente se vuelve más inclinada (empinada)", "La línea se hace horizontal", "La pendiente desaparece", "El objeto retrocede"], correct: 0, exp: "Una mayor inclinación denota una mayor rapidez." },
+                    { q: "¿Qué establece la Primera Ley de Newton (Ley de la Inercia)?", opts: ["Todo cuerpo persevera en su estado de reposo o movimiento rectilíneo uniforme a menos que una fuerza externa actúe sobre él", "La fuerza es igual a masa por aceleración", "A toda acción corresponde una reacción", "La energía no se crea ni se destruye"], correct: 0, exp: "Mide la tendencia natural de los cuerpos a mantener su estado actual." },
+                    { q: "¿Cómo se enuncia matemáticamente la Segunda Ley de Newton?", opts: ["Fuerza es igual a masa por aceleración (F = m · a)", "Velocidad es distancia entre tiempo", "Trabajo es fuerza por distancia", "Peso es masa por gravedad"], correct: 0, exp: "La aceleración de un objeto es directamente proporcional a la fuerza e inversamente proporcional a su masa." },
+                    { q: "¿Qué postula la Tercera Ley de Newton (Acción y Reacción)?", opts: ["A toda acción corresponde una reacción igual en magnitud pero en sentido opuesto", "Los cuerpos caen a la misma velocidad", "La inercia depende del volumen", "El calor fluye espontáneamente"], correct: 0, exp: "Las fuerzas siempre se presentan en pares interactuando entre dos cuerpos distintos." },
+                    { q: "¿Qué es la inercia en la física?", opts: ["La propiedad de los cuerpos de oponerse a cualquier cambio en su estado de reposo o movimiento", "La fuerza de atracción de la Tierra", "La energía almacenada en un resorte", "La fricción del aire"], correct: 0, exp: "Depende directamente de la masa del objeto." },
+                    { q: "¿Cuál es la unidad de medida de la fuerza en el Sistema Internacional (SI)?", opts: ["El Newton (N)", "El Joule", "El Watt", "El Kilogramo"], correct: 0, exp: "Un Newton equivale a la fuerza necesaria para acelerar una masa de 1 kg a 1 m/s²." },
+                    { q: "¿Qué es la fuerza de fricción o rozamiento?", opts: ["Una fuerza de contacto que se opone al movimiento relativo entre dos superficies en contacto", "Una fuerza magnética a distancia", "La atracción gravitacional del Sol", "La energía cinética de un auto"], correct: 0, exp: "Actúa siempre en dirección contraria al desplazamiento del objeto." },
+                    { q: "¿Cuál es la diferencia principal entre masa y peso?", opts: ["La masa es la cantidad de materia de un cuerpo (constante), mientras que el peso es la fuerza con la que la gravedad lo atrae", "Son exactamente lo mismo en cualquier planeta", "El peso se mide en kilogramos y la masa en Newtons", "La masa cambia según el lugar"], correct: 0, exp: "El peso varía según la gravedad del planeta (P = m · g)." },
+                    { q: "Si un objeto de 4 kg recibe una aceleración de 5 m/s², ¿qué fuerza neta se le aplica?", opts: ["20 N", "1.25 N", "9 N", "0.8 N"], correct: 0, exp: "Se multiplican masa y aceleración (4 × 5 = 20)." },
+                    { q: "¿Qué ocurre con la aceleración de un objeto si la masa aumenta manteniendo la fuerza constante?", opts: ["La aceleración disminuye", "La aceleración aumenta al doble", "La aceleración no cambia", "El objeto se detiene por completo"], correct: 0, exp: "Tienen una relación inversamente proporcional según la segunda ley de Newton." },
+                    { q: "¿Qué es una fuerza de contacto?", opts: ["Aquélla en la que los cuerpos interactúan estando físicamente unidos o tocándose", "La gravedad entre planetas", "El campo magnético de un imán", "La fuerza electrostática"], correct: 0, exp: "Ejemplos: empujar una caja, tirar de una cuerda." },
+                    { q: "¿Qué es una fuerza a distancia (o de campo)?", opts: ["Aquélla que ejerce su influencia sin necesidad de contacto físico directo", "Golpear una pelota con un bat", "Empujar un carro", "Frenar una bicicleta"], correct: 0, exp: "Ejemplos: la gravedad, el magnetismo y la fuerza electrostática." },
+                    { q: "Si un objeto está en equilibrio estático, ¿cuál es la suma de todas las fuerzas que actúan sobre él?", opts: ["Cero", "Infinita", "Igual a su peso", "Igual a su masa"], correct: 0, exp: "Las fuerzas se anulan mutuamente, impidiendo que el objeto se acelere." },
+                    { q: "¿Por qué un pasajero en un camión se va hacia adelante cuando este frena repentinamente?", opts: ["Por la inercia, ya que su cuerpo tiende a mantener el movimiento que llevaba", "Porque el camión lo empuja", "Por la fuerza del viento exterior", "Por gravedad artificial"], correct: 0, exp: "Al frenar el camión, los cuerpos dentro de él quieren seguir moviéndose a la velocidad anterior." },
+                    { q: "¿Qué instrumento se utiliza comúnmente en el laboratorio para medir fuerzas o pesos?", opts: ["El dinamómetro", "El termómetro", "El cronómetro", "La probeta"], correct: 0, exp: "Utiliza un resorte calibrado basado en la ley de Hooke." },
+                    { q: "¿Qué papel juega el aire sobre un objeto que cae libremente en la atmósfera real?", opts: ["Ejerce una resistencia opuesta llamada fricción o arrastre del aire", "Acelera la caída infinitamente", "No afecta en absoluto", "Aumenta la masa del objeto"], correct: 0, exp: "En el vacío no existe esta resistencia, pero en la Tierra afecta la velocidad final." },
+                    { q: "Si se duplica la fuerza aplicada a un objeto y su masa permanece constante, ¿qué le ocurre à su aceleración?", opts: ["Se duplica", "Se reduce a la mitad", "Se cuadruplica", "Permanece igual"], correct: 0, exp: "La fuerza y la aceleración son directamente proporcionales." },
+                    { q: "¿Cómo se define el peso de un cuerpo en términos de aceleración?", opts: ["Como el producto de su masa por la aceleración de la gravedad (P = m · g)", "Dividiendo fuerza entre tiempo", "Multiplicando velocidad por altura", "Sumando masa y distancia"], correct: 0, exp: "En la Tierra, se calcula multiplicando la masa por 9.8 m/s²." },
+                    { q: "¿Qué establece el principio de conservación de la energía mecánica?", opts: ["La energía total en un sistema aislado permanece constante, transformándose entre energía cinética y potencial", "La energía se destruye al frenar", "El calor se convierte en masa sólida", "La velocidad elimina la energía"], correct: 0, exp: "La energía no se crea ni se destruye, solo se transforma." },
+                    { q: "¿Cómo se define la energía cinética?", opts: ["Es la energía que posee un cuerpo debido a su movimiento", "La energía acumulada en una pila", "El calor que absorbe un metal", "La fuerza de un imán"], correct: 0, exp: "Depende de la masa del objeto y del cuadrado de su velocidad." },
+                    { q: "¿Qué es la energía potencial gravitacional?", opts: ["La energía que almacena un objeto en función de la altura a la que se encuentra respecto a un nivel de referencia", "La energía generada por el viento", "La velocidad de una corriente eléctrica", "El rozamiento de una llanta"], correct: 0, exp: "Se calcula multiplicando masa por gravedad y por altura (Ep = mgh)." },
+                    { q: "¿Qué unidad del Sistema Internacional se utiliza para medir el trabajo y la energía?", opts: ["El Joule (J)", "El Newton", "El Metro", "El Kilogramo"], correct: 0, exp: "Un Joule equivale al trabajo realizado por una fuerza de un Newton al desplazar un objeto un metro." },
+                    { q: "¿Cómo se define el trabajo mecánico en la física?", opts: ["Como la magnitud de la fuerza aplicada multiplicada por la distancia que se desplaza el objeto en la misma dirección", "Dividiendo velocidad entre tiempo", "Multiplicando masa por temperatura", "El tiempo que tarda un objeto en caer"], correct: 0, exp: "Su fórmula es W = F · d." },
+                    { q: "¿Qué es el calor en la termodinámica?", opts: ["La energía térmica en tránsito que se transfiere de un cuerpo a otro debido a una diferencia de temperatura", "Una sustancia sólida y pesada", "La temperatura absoluta de un gas", "La energía almacenada en reposo"], correct: 0, exp: "Siempre fluye de manera espontánea del cuerpo más caliente al más frío." },
+                    { q: "¿Qué es la temperatura?", opts: ["Una medida de la energía cinética promedio de las partículas que componen un cuerpo o sustancia", "La cantidad total de calor en un objeto", "La fuerza con la que pesa un gas", "La velocidad de la luz"], correct: 0, exp: "A mayor movimiento molecular, mayor es la temperatura registrada." },
+                    { q: "¿Cuáles son las tres formas principales en que se transfiere el calor?", opts: ["Conducción, convección y radiación", "Inercia, fuerza y masa", "Cinética, potencial y mecánica", "Sólido, líquido y gas"], correct: 0, exp: "Conducción (contacto directo en sólidos), convección (fluidos) y radiación (ondas electromagnéticas)." },
+                    { q: "¿En qué consiste el método de transferencia de calor por conducción?", opts: ["En la propagación de calor a través de un cuerpo sólido mediante el choque directo entre sus moléculas sin desplazamiento de materia", "Mediante ondas en el vacío", "Por circulación de corrientes de aire caliente", "Por fricción mecánica"], correct: 0, exp: "Ejemplo: el mango metálico de una olla que se calienta al fuego." },
+                    { q: "¿Cómo se propaga el calor mediante la convección?", opts: ["A través del movimiento de fluidos (líquidos y gases) debido a diferencias de densidad provocadas por la temperatura", "Por contacto directo en metales", "Mediante rayos ultravioleta", "En el vacío absoluto del espacio"], correct: 0, exp: "El aire caliente asciende y el frío desciende, formando corrientes circulares." },
+                    { q: "¿Qué caracteriza a la transmisión de calor por radiación?", opts: ["Que no requiere de un medio material para propagarse, ya que viaja a través del espacio mediante ondas electromagnéticas", "Que solo ocurre en el agua", "Que necesita superficies en contacto directo", "Que congela los objetos cercanos"], correct: 0, exp: "Es la forma en que el calor del Sol llega a la Tierra." },
+                    { q: "¿Qué es un material aislante térmico?", opts: ["Aquel que opone una gran resistencia al paso del calor a través de él", "Un metal que conduce electricidad rápidamente", "Una sustancia que produce calor por fricción", "Un líquido congelante"], correct: 0, exp: "Ejemplos: la madera, el unicel, la lana y el corcho." },
+                    { q: "¿Qué le ocurre à la energía cinética de un coche cuando frena y se detiene por completo?", opts: ["Se transforma principalmente en energía térmica (calor) debido a la fricción en las pastillas de freno y llantas", "Se destruye por completo", "Se convierte en electricidad estática", "Aumenta la masa del vehículo"], correct: 0, exp: "La energía se disipa en el ambiente, conservando el principio general." },
+                    { q: "¿Qué es una fuente de energía renovable?", opts: ["Aquella que se obtiene de fuentes naturales inagotables o que se regeneran de forma natural a corto plazo", "Un recurso fósil como el petróleo", "El carbón mineral extraído de minas", "El gas natural almacenado"], correct: 0, exp: "Ejemplos: energía solar, eólica, geotérmica e hidráulica." },
+                    { q: "¿Qué es una fuente de energía no renovable?", opts: ["Aquella cuyos recursos se encuentran en cantidades limitadas y se agotan con su consumo", "La luz del Sol", "La fuerza del viento en la atmósfera", "El calor interno de los océanos"], correct: 0, exp: "Ejemplos: el petróleo, el carbón mineral y el gas natural." },
+                    { q: "¿Qué establece la Ley de la Conservación de la Materia y la Energía en los procesos físicos?", opts: ["Que la energía total del universo permanece constante, transformándose de unas formas en otras sin perderse", "Que la energía se crea de la nada", "Que la materia desaparece al calentarse", "Que el peso disminuye con la velocidad"], correct: 0, exp: "Es la ley fundamental que rige todos los fenómenos mecánicos y térmicos." }
                 ];
 
                 for (let i = 1; i <= 50; i++) {
                     let item = physicsQuestions[(i - 1) % physicsQuestions.length];
                     pool.push({
                         id: i,
-                        expertNote: `Evaluación Académica Oficial — 2º Grado (FÍSICA / CIENCIAS II - Trimestre 1)`,
+                        expertNote: `Evaluación Académica Oficial — 2º Grado (FÍSICA - Trimestre 1)`,
                         question: `Pregunta ${i}: ${item.q}`,
                         options: item.opts,
-                        correct: 0,
+                        correct: item.correct,
                         explanation: `💡 Explicación paso a paso: ${item.exp}`
                     });
                 }
@@ -510,7 +503,7 @@
             const term = document.getElementById('term-select').value;
             const sampleQ = getFullBank(grade, subjectId, term)[0];
             
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el circulito y el bloque cambiarán a <strong>azul rey</strong>, o a verde/rojo tras calificar, bloqueándose de inmediato.`;
+            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, se mostrará de inmediato si fue correcta o incorrecta junto con su explicación detallada.`;
             
             const questions = getFullBank(grade, subjectId, term);
             const container = document.getElementById('quiz-container');
@@ -595,7 +588,7 @@
             const questions = getFullBank(grade, subjectId, term);
             let score = 0;
             questions.forEach((q, index) => {
-                const checked = document.querySelector(`input[name="q${index}]:checked`);
+                const checked = document.querySelector(`input[name="q${index}"]:checked`);
                 if (checked && parseInt(checked.value) === q.correct) {
                     score++;
                 }
