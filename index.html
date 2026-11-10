@@ -260,7 +260,7 @@
         function checkPlatformStatus() {
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
-            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
+            const isAdmin = localStorage.getItem('estudiasecu_is_admin'] === 'true';
 
             if (status === 'paused' && !isAdmin) {
                 pausedScreen.style.display = 'flex';
@@ -427,21 +427,26 @@
             // --- 1º DE SECUNDARIA ---
             if (grade === "1") {
                 for (let i = 1; i <= 50; i++) {
-                    let topics1 = [
-                        { q: `[1º Grado - T${term}] ¿Cuál es la función principal de la membrana celular en una célula eucariota?`, opts: ["Regular la entrada y salida de sustancias", "Sintetizar ADN exclusivamente", "Producir energía solar", "Almacenar almidón puro"], exp: "💡 Explicación experta: La membrana plasmática actúa como una barrera semipermeable selectiva que controla el intercambio de nutrientes y desechos." },
-                        { q: `[1º Grado - T${term}] ¿Cómo se denominan los organismos capaces de fabricar su propio alimento mediante fotosíntesis?`, opts: ["Autótrofos", "Heterótrofos", "Desintegradores", "Parásitos obligados"], exp: "💡 Explicación experta: Los organismos autótrofos (como plantas y algas) transforman materia inorgánica en orgánica usando energía lumínica." },
-                        { q: `[1º Grado - T${term}] ¿Qué elemento químico es la base fundamental de la materia orgánica y viva?`, opts: ["Carbono", "Oro", "Neón", "Platino"], exp: "💡 Explicación experta: El átomo de carbono posee una tetravalencia única que le permite formar enlaces estables y cadenas complejas esenciales para la vida." },
-                        { q: `[1º Grado - T${term}] En geografía, ¿cómo se le llama a las líneas imaginarias horizontales que miden la latitud?`, opts: ["Paralelos", "Meridianos", "Ejes magnéticos", "Polo norte geodésico"], exp: "💡 Explicación experta: Los paralelos son círculos concéntricos al ecuador que determinan la distancia angular en grados hacia el norte o sur." },
-                        { q: `[1º Grado - T${term}] ¿Qué ley de la física elemental describe la atracción gravitacional universal entre cuerpos con masa?`, opts: ["La ley de gravitación universal de Isaac Newton", "El principio de Arquímedes", "La teoría de la relatividad especial", "La ley de Ohm"], exp: "💡 Explicación experta: Newton estableció que toda partícula atrae a cualquier otra con una fuerza proporcional al producto de sus masas e inversamente proporcional al cuadrado de la distancia." }
+                    let bank1 = [
+                        { q: "¿Cuál es el resultado de la siguiente operación combinada: -8 + 15 - 3 + 4?", opts: ["8", "18", "4", "-8"], correct: 0, exp: "8 (-8 + 15 = 7; 7 - 3 = 4; 4 + 4 = 8)." },
+                        { q: "Si un termómetro marca 4 ºC bajo cero y la temperatura baja 7 ºC más, ¿qué temperatura marca ahora?", opts: ["-11 ºC", "3 ºC", "-3 ºC", "11 ºC"], correct: 0, exp: "-11 ºC (se suman las dos temperaturas bajo cero: -4 - 7 = -11)." },
+                        { q: "Convierte la fracción 3/4 a un número decimal.", opts: ["0.75", "0.34", "1.33", "0.43"], correct: 0, exp: "0.75 (al dividir 3 entre 4 se obtiene exactamente 0.75)." },
+                        { q: "Calcula el 15% de 400.", opts: ["60", "45", "75", "150"], correct: 0, exp: "60 (400 × 0.15 = 60)." },
+                        { q: "Simplifica la expresión algebraica: 2x + 3x + x.", opts: ["6x", "5x", "x³", "6x²"], correct: 0, exp: "6x (se suman los coeficientes de los términos semejantes: 2 + 3 + 1 = 6)." },
+                        { q: "¿Cuánto suman los ángulos internos de cualquier triángulo?", opts: ["180°", "360°", "90°", "270°"], correct: 0, exp: "180° (es la propiedad geométrica fundamental de todo triángulo plano)." },
+                        { q: "¿Cómo se llaman los ángulos que miden menos de 90°?", opts: ["Ángulos agudos", "Ángulos rectos", "Ángulos obtusos", "Ángulos llanos"], correct: 0, exp: "Ángulos agudos (miden estrictamente entre 0° y 90°)." },
+                        { q: "¿Cuál es el perímetro de un cuadrado que mide 5 cm por lado?", opts: ["20 cm", "25 cm", "10 cm", "15 cm"], correct: 0, exp: "20 cm (el perímetro es la suma de sus 4 lados iguales: 5 × 4 = 20)." },
+                        { q: "Encuentra el valor de x en la ecuación: x - 5 = 10.", opts: ["15", "5", "50", "2"], correct: 0, exp: "x = 15 (se despeja sumando 5 en ambos lados: 10 + 5 = 15)." },
+                        { q: "Si 3 paletas cuestan 18 pesos, ¿cuánto cuestan 7 paletas al mismo precio?", opts: ["42 pesos", "36 pesos", "49 pesos", "21 pesos"], correct: 0, exp: "42 pesos (cada paleta cuesta 6 pesos; 6 × 7 = 42)." }
                     ];
-                    let t = topics1[(i - 1) % topics1.length];
+                    let b = bank1[(i - 1) % bank1.length];
                     pool.push({
                         id: i,
                         expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `Pregunta ${i}: ${t.q} (Ref. Conceptual ${i})`,
-                        options: [t.opts[0], t.opts[1], t.opts[2], t.opts[3]],
-                        correct: 0,
-                        explanation: t.exp
+                        question: `Pregunta ${i}: ${b.q} (Ref. Oficial ${i})`,
+                        options: [b.opts[0], b.opts[1], b.opts[2], b.opts[3]],
+                        correct: b.correct,
+                        explanation: `💡 Explicación paso a paso: ${b.exp}`
                     });
                 }
                 return pool;
@@ -450,11 +455,11 @@
             else if (grade === "2") {
                 if (term === "1") {
                     let baseT1 = [
-                        { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
-                        { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
-                        { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Es el principio geométrico fundamental para triángulos rectángulos." },
-                        { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio numérico." },
-                        { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
+                        { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
+                        { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
+                        { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "Es el principio geométrico fundamental para triángulos rectángulos." },
+                        { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "Representa el promedio ponderado o punto de equilibrio numérico." },
+                        { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "4(6) - 3 = 24 - 3 = 21." }
                     ];
                     for (let i = 1; i <= 50; i++) {
                         let baseItem = baseT1[(i - 1) % baseT1.length];
@@ -464,25 +469,25 @@
                             question: `Pregunta ${i}: ${baseItem.q}`,
                             options: baseItem.opts,
                             correct: baseItem.correct,
-                            explanation: baseItem.exp
+                            explanation: `💡 Explicación paso a paso: ${baseItem.exp}`
                         });
                     }
                     return pool;
                 } else {
                     for (let i = 1; i <= 50; i++) {
-                        let topics2 = [
-                            { q: `[2º Grado - T${term}] ¿Qué describe la primera ley de Newton o ley de la inercia?`, opts: ["Todo cuerpo persevera en su estado de reposo o movimiento rectilíneo uniforme a menos que se aplique una fuerza externa", "La fuerza es igual a masa por aceleración", "A toda acción corresponde una reacción igual y opuesta", "La energía cinética se disipa como calor"], exp: "💡 Explicación experta: La inercia mide la resistencia de los cuerpos a cambiar su estado de movimiento." },
-                            { q: `[2º Grado - T${term}] ¿Cómo se define formalmente la aceleración en cinemática?`, opts: ["La variación de la velocidad respecto al tiempo transcurrido", "La distancia recorrida multiplicada por el peso", "La rapidez constante de un objeto", "El desplazamiento total en línea recta"], exp: "💡 Explicación experta: La aceleración cuantifica qué tan rápido cambia la velocidad de un objeto (a = Δv / t)." },
-                            { q: `[2º Grado - T${term}] ¿Qué establece el principio de conservación de la energía mecánica?`, opts: ["La energía total en un sistema aislado permanece constante, transformándose entre cinética y potencial", "La energía se destruye al frenar un objeto", "El calor no puede convertirse en trabajo mecánico", "La masa y la velocidad son independientes"], exp: "💡 Explicación experta: La energía ni se crea ni se destruye, solo se convierte de una forma a otra." }
+                        let bank2 = [
+                            { q: `[2º Grado - T${term}] ¿Cuál es el resultado de resolver el sistema por suma y resta: x + y = 10 y x - y = 2?`, opts: ["x = 6, y = 4", "x = 5, y = 5", "x = 8, y = 2", "x = 7, y = 3"], correct: 0, exp: "Sumando ambas ecuaciones se elimina y: 2x = 12 -> x = 6, y sustituyendo se obtiene y = 4." },
+                            { q: `[2º Grado - T${term}] ¿Qué representa la aceleración de un objeto en caída libre en la física?`, opts: ["Un cambio constante en su velocidad debido a la gravedad de la Tierra", "Una velocidad que nunca cambia", "La masa total dividida por el peso", "La distancia horizontal recorrida"], correct: 0, exp: "La gravedad acelera uniformemente a los cuerpos hacia el centro de la Tierra a aprox. 9.8 m/s²." },
+                            { q: `[2º Grado - T${term}] ¿Cómo se calcula el área de un círculo cuyo radio mide 4 cm?`, opts: ["16π cm²", "8π cm²", "4π cm²", "32π cm²"], correct: 0, exp: "La fórmula es A = πr². Sustituyendo r = 4 se tiene A = π(4)² = 16π cm²." }
                         ];
-                        let t2 = topics2[(i - 1) % topics2.length];
+                        let b2 = bank2[(i - 1) % bank2.length];
                         pool.push({
                             id: i,
                             expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                            question: `Pregunta ${i}: ${t2.q} (Bloque ${i})`,
-                            options: [t2.opts[0], t2.opts[1], t2.opts[2], t2.opts[3]],
+                            question: `Pregunta ${i}: ${b2.q} (Módulo ${i})`,
+                            options: [b2.opts[0], b2.opts[1], b2.opts[2], b2.opts[3]],
                             correct: 0,
-                            explanation: t2.exp
+                            explanation: `💡 Explicación paso a paso: ${b2.exp}`
                         });
                     }
                     return pool;
@@ -491,19 +496,19 @@
             // --- 3º DE SECUNDARIA ---
             else if (grade === "3") {
                 for (let i = 1; i <= 50; i++) {
-                    let topics3 = [
-                        { q: `[3º Grado - T${term}] Según el modelo atómico de Bohr, ¿cómo se desplazan los electrones alrededor del núcleo?`, opts: ["En órbitas circulares definidas con niveles de energía cuantizados", "En nubes difusas de probabilidad sin trayectoria", "En trayectorias elásticas totalmente libres", "Flotando inmóviles en el centro del átomo"], exp: "💡 Explicación experta: Niels Bohr postuló que los electrones giran en órbitas específicas y fijas sin perder energía radiante." },
-                        { q: `[3º Grado - T${term}] ¿Qué representa el número atómico (Z) de un elemento en la tabla periódica?`, opts: ["La cantidad exacta de protones presentes en el núcleo del átomo", "La suma total de neutrones y electrones", "El peso molecular en condiciones estándar", "La densidad física del elemento sólido"], exp: "💡 Explicación experta: El número atómico (Z) identifica de manera única a cada elemento químico y su identidad nuclear." },
-                        { q: `[3º Grado - T${term}] ¿Qué indica una pendiente positiva ('m' > 0) en una función lineal graficada en el plano cartesiano?`, opts: ["Que la variable dependiente aumenta conforme aumenta la variable independiente", "Que la recta es completamente horizontal", "Que la pendiente desciende de izquierda a derecha", "Que el valor es cero en todo el dominio"], exp: "💡 Explicación experta: Una pendiente positiva indica una relación de crecimiento directo entre las variables x y y." }
+                    let bank3 = [
+                        { q: `[3º Grado - T${term}] ¿Cuántos moles de átomos hay en 24 gramos de carbono puro (masa molar del C = 12 g/mol)?`, opts: ["2 moles", "12 moles", "24 moles", "0.5 moles"], correct: 0, exp: "Se divide la masa dada entre la masa molar: 24 g / 12 g/mol = 2 moles." },
+                        { q: `[3º Grado - T${term}] ¿Cuáles son las soluciones de la ecuación cuadrática x² - 9 = 0?`, opts: ["x = 3 y x = -3", "x = 9 y x = -9", "Solo x = 3", "No tiene solución real"], correct: 0, exp: "Despejando x² = 9, al aplicar raíz cuadrada se obtienen dos valores: x = 3 y x = -3." },
+                        { q: `[3º Grado - T${term}] Según el modelo atómico de Bohr, ¿cómo se organizan los electrones en torno al núcleo?`, opts: ["En órbitas circulares concéntricas con niveles de energía específicos", "En una nube completamente difusa sin orden", "En el núcleo junto con los protones", "Girando de forma completamente aleatoria"], correct: 0, exp: "Bohr demostró que los electrones ocupan capas o niveles de energía cuantizados bien definidos." }
                     ];
-                    let t3 = topics3[(i - 1) % topics3.length];
+                    let b3 = bank3[(i - 1) % bank3.length];
                     pool.push({
                         id: i,
                         expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `Pregunta ${i}: ${t3.q} (Módulo ${i})`,
-                        options: [t3.opts[0], t3.opts[1], t3.opts[2], t3.opts[3]],
+                        question: `Pregunta ${i}: ${b3.q} (Bloque Avanzado ${i})`,
+                        options: [b3.opts[0], b3.opts[1], b3.opts[2], b3.opts[3]],
                         correct: 0,
-                        explanation: t3.exp
+                        explanation: `💡 Explicación paso a paso: ${b3.exp}`
                     });
                 }
                 return pool;
@@ -574,7 +579,6 @@
 
         function handleAnswer(index, correctIndex) {
             const block = document.getElementById(`block-${index}`);
-            // Si ya fue respondido o bloqueado, no hacer nada
             if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
 
             const radios = document.querySelectorAll(`input[name="q${index}"]`);
@@ -583,7 +587,6 @@
 
             const userChoice = parseInt(checked.value);
 
-            // Marcar visualmente la opción seleccionada con azul rey y deshabilitar radios
             radios.forEach((r, rIdx) => {
                 r.disabled = true;
                 const lbl = document.getElementById(`label-${index}-${rIdx}`);
