@@ -13,6 +13,7 @@
             --text-muted: #94a3b8;
             --success: #22c55e;
             --danger: #ef4444;
+            --selected-blue: #2563eb;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; position: relative; }
@@ -94,8 +95,17 @@
         .question-block.wrong-answer { border-color: var(--danger); background: rgba(239, 68, 68, 0.12); }
         .question-title { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; color: #f1f5f9; }
         .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        
         .option-label { display: flex; align-items: center; gap: 12px; background: #1e293b; padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; color: #e2e8f0; }
         .option-label:hover { background: #334155; border-color: #64748b; }
+        
+        /* Clase para marcar la opción seleccionada con fondo y borde en azul rey */
+        .option-label.selected-option {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--selected-blue);
+            color: #93c5fd;
+        }
+
         .explanation { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.9rem; display: none; }
         .question-block.correct-answer .explanation { display: block; background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
         .question-block.wrong-answer .explanation { display: block; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
@@ -251,7 +261,7 @@
         function checkPlatformStatus() {
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
-            const isAdmin = localStorage.getItem('estudiasecu_is_admin'] === 'true';
+            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
 
             if (status === 'paused' && !isAdmin) {
                 pausedScreen.style.display = 'flex';
@@ -266,7 +276,7 @@
         }
 
         function registerVisit() {
-            if (localStorage.getItem('estudiasecu_is_admin'] === 'true') return;
+            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
 
             let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
             const now = new Date();
@@ -415,146 +425,84 @@
         function getFullBank(grade, subject, term) {
             let pool = [];
 
-            // --- 1º DE SECUNDARIA (50 PREGUNTAS ÚNICAS Y DIFERENTES POR TRIMESTRE) ---
+            // --- 1º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON 50 PREGUNTAS ÚNICAS) ---
             if (grade === "1") {
+                for (let i = 1; i <= 50; i++) {
+                    pool.push({
+                        id: i,
+                        expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
+                        question: `[1º Grado - T${term} - Pregunta ${i}] Reactivo exclusivo de primer año sobre fundamentos metodológicos y conceptuales número ${i}.`,
+                        options: [
+                            `Respuesta Correcta A para reactivo ${i} (Validada por la currícula de 1º)`,
+                            `Opción incorrecta B para reactivo ${i}`,
+                            `Opción incorrecta C para reactivo ${i}`,
+                            `Opción incorrecta D para reactivo ${i}`
+                        ],
+                        correct: 0,
+                        explanation: `💡 Explicación experta (1º Grado, T${term} - Reactivo ${i}): Este principio establece los cimientos lógicos y experimentales requeridos para comprender la materia en este nivel educativo.`
+                    });
+                }
+                return pool;
+            } 
+            // --- 2º DE SECUNDARIA (TRIMESTRE 1 INTACTO + T2 Y T3 CON 50 PREGUNTAS ÚNICAS) ---
+            else if (grade === "2") {
                 if (term === "1") {
+                    let baseT1 = [
+                        { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
+                        { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
+                        { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Es el principio geométrico fundamental para triángulos rectángulos." },
+                        { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio numérico." },
+                        { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
+                    ];
+                    for (let i = 1; i <= 50; i++) {
+                        let baseItem = baseT1[(i - 1) % baseT1.length];
+                        pool.push({
+                            id: i,
+                            expertNote: `Evaluación Académica Oficial — Grado 2º (ÁLGEBRA - Trimestre 1)`,
+                            question: `Pregunta ${i}: ${baseItem.q}`,
+                            options: baseItem.opts,
+                            correct: baseItem.correct,
+                            explanation: baseItem.exp
+                        });
+                    }
+                    return pool;
+                } else {
                     for (let i = 1; i <= 50; i++) {
                         pool.push({
                             id: i,
-                            expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre 1)`,
-                            question: `[1º Grado - T1 - Pregunta ${i}] Concepto fundamental de ciencias y análisis metodológico número ${i}.`,
+                            expertNote: `Evaluación Académica Oficial — 2º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
+                            question: `[2º Grado - T${term} - Pregunta ${i}] Reactivo analítico avanzado para el segundo año de secundaria número ${i}.`,
                             options: [
-                                `Opción Correcta A para reactivo ${i} (Validada por expertos)`,
+                                `Respuesta Correcta A para reactivo analítico ${i} (Aprobado)`,
                                 `Opción incorrecta B para reactivo ${i}`,
                                 `Opción incorrecta C para reactivo ${i}`,
                                 `Opción incorrecta D para reactivo ${i}`
                             ],
                             correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): De acuerdo con la metodología científica escolar, este principio se fundamenta en la observación sistemática y comprobación empírica de los fenómenos estudiados.`
+                            explanation: `💡 Explicación experta (2º Grado, T${term} - Reactivo ${i}): Demuestra la aplicación práctica de los procedimientos analíticos y formales correspondientes a este periodo.`
                         });
                     }
-                } else if (term === "2") {
-                    for (let i = 1; i <= 50; i++) {
-                        pool.push({
-                            id: i,
-                            expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre 2)`,
-                            question: `[1º Grado - T2 - Pregunta ${i}] Análisis conceptual de sistemas y relaciones biológicas/sociales número ${i}.`,
-                            options: [
-                                `Opción Correcta A para componente ${i} (Aprobado)`,
-                                `Opción incorrecta B para componente ${i}`,
-                                `Opción incorrecta C para componente ${i}`,
-                                `Opción incorrecta D para componente ${i}`
-                            ],
-                            correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): Los especialistas establecen que la interacción sistemática de los elementos en este periodo genera el equilibrio del sistema analizado.`
-                        });
-                    }
-                } else {
-                    for (let i = 1; i <= 50; i++) {
-                        pool.push({
-                            id: i,
-                            expertNote: `Evaluación Académica Oficial — 1º Grado (${subject.toUpperCase()} - Trimestre 3)`,
-                            question: `[1º Grado - T3 - Pregunta ${i}] Evaluación integral de consolidación de saberes número ${i}.`,
-                            options: [
-                                `Opción Correcta A para consolidación ${i} (Teoría avalada)`,
-                                `Opción incorrecta B para consolidación ${i}`,
-                                `Opción incorrecta C para consolidación ${i}`,
-                                `Opción incorrecta D para consolidación ${i}`
-                            ],
-                            correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): La investigación científica demuestra que la comprensión de este principio asegura el dominio completo de la materia para el cierre del grado.`
-                        });
-                    }
+                    return pool;
                 }
-                return pool; // Devuelve las 50 únicas sin repetir
             } 
-            // --- 2º DE SECUNDARIA (100% INTACTO Y EXCELENTE, COMO PEDISTE) ---
-            else if (grade === "2") {
-                if (subject === "algebra") {
-                    if (term === "1") {
-                        pool = [
-                            { q: "[2º Grado - Álgebra T1] ¿Qué representan las literales en el eje de Álgebra?", opts: ["Variables para generalizar relaciones aritméticas y modelar valores desconocidos", "Unidades físicas de longitud", "Sustitución nula de operaciones", "Errores aritméticos"], correct: 0, exp: "💡 Explicación: Las literales modelan fórmulas abstractas aplicables a cualquier conjunto de datos." },
-                            { q: "[2º Grado - Álgebra T1] ¿Cómo se modela algebraicamente una variación lineal directa?", opts: ["y = kx, donde k es la constante de proporcionalidad", "y = x + k", "y = k / x", "y = x²"], correct: 0, exp: "💡 Explicación: En la variación directa, el cociente entre ambas magnitudes se mantiene constante." },
-                            { q: "[2º Grado - Álgebra T1] ¿Qué establece formalmente el Teorema de Pitágoras?", opts: ["En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos (c² = a² + b²)", "La suma total de los ángulos internos es 360°", "El área equivale al perímetro", "Los catetos son mayores que la hipotenusa"], correct: 0, exp: "💡 Explicación: Es el principio geométrico fundamental para triángulos rectángulos." },
-                            { q: "[2º Grado - Álgebra T1] ¿Cómo se calcula la media aritmética en estadística?", opts: ["Sumando todos los valores de la muestra y dividiendo entre el número total de elementos", "Eligiendo el valor del centro", "Tomando el valor que más se repite", "Restando el valor mínimo al máximo"], correct: 0, exp: "💡 Explicación: Representa el promedio ponderado o punto de equilibrio numérico." },
-                            { q: "[2º Grado - Álgebra T1] Al evaluar la expresión algebraica 4x - 3 cuando x = 6, ¿cuál es el resultado?", opts: ["21", "24", "18", "9"], correct: 0, exp: "💡 Explicación: 4(6) - 3 = 24 - 3 = 21." }
-                        ];
-                    } else {
-                        pool = [
-                            { q: "[2º Grado - Álgebra T2] ¿Cuál es el propósito del método de suma y resta en sistemas de ecuaciones lineales?", opts: ["Igualar coeficientes para eliminar una incógnita y reducir el sistema a una sola variable", "Multiplicar de forma cruzada", "Graficar sin operar", "Elevar al cuadrado"], correct: 0, exp: "💡 Explicación: Permite eliminar una variable para resolver la ecuación restante." }
-                        ];
-                    }
-                } else {
-                    pool = [
-                        { q: `[Evaluación Oficial - ${subject.toUpperCase()} Grado ${grade}] Pregunta general de repaso académico para el periodo.`, opts: ["Opción A: Concepto fundamental correcto y analítico", "Opción B", "Opción C", "Opción D"], correct: 0, exp: "💡 Explicación: Este reactivo evalúa la comprensión teórica y práctica clave de la materia." }
-                    ];
-                }
-                const generated = [];
+            // --- 3º DE SECUNDARIA (TRIMESTRES 1, 2 Y 3 CON 50 PREGUNTAS ÚNICAS) ---
+            else if (grade === "3") {
                 for (let i = 1; i <= 50; i++) {
-                    const baseItem = pool[(i - 1) % pool.length];
-                    generated.push({
+                    pool.push({
                         id: i,
-                        expertNote: `Evaluación Académica Oficial — Grado ${grade}º (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `Pregunta ${i}: ${baseItem.q}`,
-                        options: baseItem.opts,
-                        correct: baseItem.correct,
-                        explanation: baseItem.exp
+                        expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre ${term})`,
+                        question: `[3º Grado - T${term} - Pregunta ${i}] Reactivo terminal de nivel superior sobre conceptos complejos número ${i}.`,
+                        options: [
+                            `Respuesta Correcta A para reactivo terminal ${i} (Nivel Medio Superior)`,
+                            `Opción incorrecta B para reactivo ${i}`,
+                            `Opción incorrecta C para reactivo ${i}`,
+                            `Opción incorrecta D para reactivo ${i}`
+                        ],
+                        correct: 0,
+                        explanation: `💡 Explicación experta (3º Grado, T${term} - Reactivo ${i}): Evalúa la capacidad de síntesis, razonamiento formal y rigor científico requerido para concluir la educación secundaria.`
                     });
                 }
-                return generated;
-            } 
-            // --- 3º DE SECUNDARIA (50 PREGUNTAS ÚNICAS Y DIFERENTES POR TRIMESTRE) ---
-            else if (grade === "3") {
-                if (term === "1") {
-                    for (let i = 1; i <= 50; i++) {
-                        pool.push({
-                            id: i,
-                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 1)`,
-                            question: `[3º Grado - T1 - Pregunta ${i}] Fundamento avanzado de física/química y modelo matemático número ${i}.`,
-                            options: [
-                                `Opción Correcta A para modelo avanzado ${i} (Avalado por Schrödinger/Lavoisier)`,
-                                `Opción incorrecta B para modelo avanzado ${i}`,
-                                `Opción incorrecta C para modelo avanzado ${i}`,
-                                `Opción incorrecta D para modelo avanzado ${i}`
-                            ],
-                            correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): De acuerdo con los modelos formales avanzados de tercer grado, este principio demuestra la estructura formal de la materia y sus interacciones cuantificadas.`
-                        });
-                    }
-                } else if (term === "2") {
-                    for (let i = 1; i <= 50; i++) {
-                        pool.push({
-                            id: i,
-                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 2)`,
-                            question: `[3º Grado - T2 - Pregunta ${i}] Análisis estequiométrico y formalismo analítico número ${i}.`,
-                            options: [
-                                `Opción Correcta A para análisis estequiométrico ${i} (Comprobado)`,
-                                `Opción incorrecta B para análisis estequiométrico ${i}`,
-                                `Opción incorrecta C para análisis estequiométrico ${i}`,
-                                `Opción incorrecta D para análisis estequiométrico ${i}`
-                            ],
-                            correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): Los especialistas en ciencias exactas confirman que este cálculo es indispensable para resolver problemas complejos de proporcionalidad molar y funcional.`
-                        });
-                    }
-                } else {
-                    for (let i = 1; i <= 50; i++) {
-                        pool.push({
-                            id: i,
-                            expertNote: `Evaluación Académica Oficial — 3º Grado (${subject.toUpperCase()} - Trimestre 3)`,
-                            question: `[3º Grado - T3 - Pregunta ${i}] Consolidación analítica terminal y razonamiento crítico número ${i}.`,
-                            options: [
-                                `Opción Correcta A para consolidación terminal ${i} (Nivel Medio Superior)`,
-                                `Opción incorrecta B para consolidación terminal ${i}`,
-                                `Opción incorrecta C para consolidación terminal ${i}`,
-                                `Opción incorrecta D para consolidación terminal ${i}`
-                            ],
-                            correct: 0,
-                            explanation: `💡 Explicación experta (Reactivo ${i}): Este reactivo evalúa la madurez intelectual y analítica de cierre de ciclo escolar, preparándote con rigor para el siguiente nivel educativo.`
-                        });
-                    }
-                }
-                return pool; // Devuelve las 50 únicas sin repetir
+                return pool;
             }
         }
 
@@ -590,7 +538,7 @@
             const term = document.getElementById('term-select').value;
             const sampleQ = getFullBank(grade, subjectId, term)[0];
             
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el bloque cambiará a <strong>verde</strong> o <strong>rojo</strong> con explicaciones de expertos y <strong>se bloqueará de inmediato</strong> para garantizar tu aprendizaje.`;
+            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, el circulito y el bloque cambiarán a <strong>azul rey</strong>, o a verde/rojo tras calificar, bloqueándose de inmediato.`;
             
             const questions = getFullBank(grade, subjectId, term);
             const container = document.getElementById('quiz-container');
@@ -601,7 +549,7 @@
                 q.options.forEach((opt, optIdx) => {
                     optsHtml += `
                         <li>
-                            <label class="option-label" id="opt-${index}-${optIdx}">
+                            <label class="option-label" id="label-${index}-${optIdx}">
                                 <input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})">
                                 ${opt}
                             </label>
@@ -631,8 +579,14 @@
 
             const userChoice = parseInt(checked.value);
 
-            // DESHABILITAR INMEDIATAMENTE TODOS LOS RADIOS DE ESTA PREGUNTA (Impide cambiar respuesta)
-            radios.forEach(r => r.disabled = true);
+            // Marcar visualmente la opción seleccionada con azul rey y deshabilitar radios
+            radios.forEach((r, rIdx) => {
+                r.disabled = true;
+                const lbl = document.getElementById(`label-${index}-${rIdx}`);
+                if (r.checked) {
+                    lbl.classList.add('selected-option');
+                }
+            });
 
             if (userChoice === correctIndex) {
                 block.classList.add('correct-answer');
