@@ -262,12 +262,16 @@
 
         const summariesData = {
             1: {
-                biologia: {
-                    1: [
-                        { topic: "1. La Célula como Unidad de la Vida", text: "Estudio de la célula, componentes procariotas y eucariotas, organelos y teoría celular." },
-                        { topic: "2. Biodiversidad y Adaptaciones", text: "Riqueza biológica, ecosistemas, cadenas tróficas y evolución por selección natural." }
-                    ]
-                }
+                biologia: { 1: [{ topic: "La Célula y Biodiversidad", text: "Estudio celular, organelos y cadenas tróficas." }] },
+                formacion: { 1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, adolescencia, autonomía y derechos fundamentales." }] },
+                integracion: { 1: [{ topic: "Trabajo Transversal", text: "Resolución comunitaria de problemas y pensamiento crítico." }] },
+                educacion_fisica: { 1: [{ topic: "Corporeidad y Motricidad", text: "Capacidades perceptivo-motrices y juego limpio." }] },
+                espanol: { 1: [{ topic: "Comprensión y Textos", text: "Textos informativos, narración y ortografía." }] },
+                artes: { 1: [{ topic: "Lenguaje Artístico", text: "Círculo cromático, elementos visuales y expresión dramática." }] },
+                geografia: { 1: [{ topic: "Espacio Geográfico", text: "Coordenadas, placas tectónicas y regiones naturales." }] },
+                historia: { 1: [{ topic: "Primeras Civilizaciones", text: "Prehistoria, hominización y civilizaciones agrícolas fluviales." }] },
+                tutoria: { 1: [{ topic: "Autoconocimiento y Convivencia", text: "Regulación emocional, asertividad y proyecto de vida." }] },
+                ingles: { 1: [{ topic: "Basic English I", text: "Verb to be, greetings, numbers and everyday expressions." }] }
             }
         };
 
@@ -275,17 +279,16 @@
             if (grade === "1") {
                 return [
                     { id: "biologia", name: "Biología (Ciencias I)" },
-                    { id: "matematicas", name: "Matemáticas I" },
-                    { id: "espanol", name: "Español I" },
-                    { id: "historia", name: "Historia I" },
-                    { id: "geografia", name: "Geografía" },
                     { id: "formacion", name: "Formación Cívica y Ética I" },
-                    { id: "artes", name: "Artes I" },
+                    { id: "integracion", name: "Integración Curricular I" },
                     { id: "educacion_fisica", name: "Educación Física I" },
+                    { id: "espanol", name: "Español I" },
+                    { id: "artes", name: "Artes I" },
+                    { id: "geografia", name: "Geografía" },
+                    { id: "historia", name: "Historia I" },
                     { id: "tutoria", name: "Tutoría I" },
-                    { id: "tecnologia", name: "Tecnología I" },
                     { id: "ingles", name: "Inglés I" },
-                    { id: "integracion", name: "Integración Curricular I" }
+                    { id: "matematicas", name: "Matemáticas I" }
                 ];
             } else if (grade === "2") {
                 return [
@@ -316,202 +319,13 @@
             renderAll();
         }
 
-        // --- BANCO DE 50 PREGUNTAS OFICIALES DE BIOLOGÍA (1º SECUNDARIA - TRIMESTRE 1) ---
+        // --- BANCOS DE 50 PREGUNTAS OFICIALES ---
         function getFullBank(grade, subject, term) {
             let pool = [];
-            if (grade === "1" && subject === "biologia" && term === "1") {
-                let bioQuestions = [
-                    { q: "¿Cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido", "El órgano", "El átomo"], correct: 0, exp: "Todo organismo vivo está compuesto por células." },
-                    { q: "¿Qué nombre reciben las células que carecen de un núcleo definido y tienen su material genético disperso?", opts: ["Procariotas", "Eucariotas", "Pluricelulares", "Orgánulos"], correct: 0, exp: "Las bacterias son células procariotas." },
-                    { q: "¿Cuál es la característica principal de las células eucariotas?", opts: ["Tienen un núcleo bien definido delimitado por una membrana", "Carecen de membrana celular", "Solo existen en organismos unicelulares", "No contienen ADN"], correct: 0, exp: "El ADN se encuentra protegido dentro del núcleo." },
-                    { q: "¿Qué orgánulo celular realiza la fotosíntesis en las células vegetales?", opts: ["Cloroplasto", "Mitocondria", "Ribosoma", "Lisosoma"], correct: 0, exp: "Contiene clorofila para captar la luz solar." },
-                    { q: "¿Qué orgánulo celular produce la mayor parte de la energía (ATP) mediante la respiración celular?", opts: ["Mitocondria", "Vacuola", "Aparato de Golgi", "Citoplasma"], correct: 0, exp: "Es considerada la central energética celular." },
-                    { q: "¿Cómo se denomina a la variedad de especies de plantas, animales, hongos y microorganismos en el planeta?", opts: ["Biodiversidad", "Ecosistema", "Biomasa", "Cadena trófica"], correct: 0, exp: "Representa la riqueza biológica global." },
-                    { q: "¿Qué es una adaptación biológica?", opts: ["Un cambio físico o de conducta que ayuda a un organismo a sobrevivir en su entorno", "La destrucción de un hábitat", "El proceso de extinción", "La reproducción en laboratorio"], correct: 0, exp: "Surgidas a lo largo de la evolución." },
-                    { q: "¿Qué nivel de organización sigue inmediatamente después de un conjunto de células con la misma función?", opts: ["Tejido", "Órgano", "Sistema", "Organismo"], correct: 0, exp: "Las células forman tejidos especializados." },
-                    { q: "¿Cuál es la función principal de la membrana celular?", opts: ["Controlar la entrada y salida de sustancias", "Producir proteínas", "Almacenar agua", "Controlar la herencia"], correct: 0, exp: "Actúa como barrera semipermeable." },
-                    { q: "¿Qué nombre recibe el medio acuoso gelatinoso dentro de la célula?", opts: ["Citoplasma", "Núcleo", "Pared celular", "Cromosoma"], correct: 0, exp: "Soporta los orgánulos internos." },
-                    { q: "¿Qué postula la teoría celular moderna?", opts: ["Todos los seres vivos están formados por células y toda célula proviene de otra preexistente", "Las células se crean espontáneamente", "Solo los animales tienen células", "Los virus son células vivas"], correct: 0, exp: "Es uno de los principios fundamentales de la biología." },
-                    { q: "¿Qué estructura protege y da rigidez exclusivamente a las células vegetales?", opts: ["Pared celular", "Membrana plasmática", "Citoplasma", "Ribosoma"], correct: 0, exp: "Está compuesta principalmente de celulosa." },
-                    { q: "¿Qué son los organismos unicelulares?", opts: ["Aquellos formados por una sola célula que realiza todas las funciones vitales", "Animales complejos", "Plantas con flores", "Organismos multicelulares"], correct: 0, exp: "Ejemplo: las amibas y bacterias." },
-                    { q: "¿Qué son los organismos pluricelulares?", opts: ["Aquellos formados por dos o más células organizadas en tejidos y órganos", "Bacterias solitarias", "Virus", "Células aisladas sin función"], correct: 0, exp: "Ejemplo: animales, plantas y seres humanos." },
-                    { q: "¿Qué orgánulo almacena agua, nutrientes y desechos, siendo especialmente grande en células vegetales?", opts: ["Vacuola", "Mitocondria", "Ribosoma", "Centriolo"], correct: 0, exp: "Mantiene la turgencia celular." },
-                    { q: "¿Qué orgánulo se encarga de sintetizar proteínas?", opts: ["Ribosoma", "Cloroplasto", "Lisosoma", "Pared celular"], correct: 0, exp: "Traducen el código genético." },
-                    { q: "¿Cuál es la función del aparato de Golgi?", opts: ["Modificar, empaquetar y distribuir proteínas y lípidos", "Producir energía", "Hacer fotosíntesis", "Digestión celular"], correct: 0, exp: "Funciona como el centro de distribución de la célula." },
-                    { q: "¿Qué contienen los cromosomas en el núcleo celular?", opts: ["La información genética (ADN)", "Agua pura", "Grasas acumuladas", "Sales minerales"], correct: 0, exp: "Guardan los caracteres hereditarios." },
-                    { q: "¿Qué es un ecosistema?", opts: ["El conjunto de factores bióticos (seres vivos) y abióticos (medio físico) que interactúan en un área", "Solo los animales de una selva", "El clima de un desierto", "Un grupo de bacterias"], correct: 0, exp: "Integra comunidad y entorno físico." },
-                    { q: "¿Qué es una cadena trófica?", opts: ["La secuencia lineal de organismos que se alimentan unos de otros en un ecosistema", "La migración de aves", "La reproducción celular", "La fotosíntesis nocturna"], correct: 0, exp: "Muestra el flujo de energía y nutrientes." },
-                    { q: "¿Qué rol cumplen los organismos productores en una cadena alimentaria?", opts: ["Fabrican su propio alimento mediante la fotosíntesis (plantas y algas)", "Se comen a otros animales", "Descomponen materia muerta", "Son parásitos"], correct: 0, exp: "Base de la pirámide alimentaria." },
-                    { q: "¿Qué rol cumplen los organismos consumidores primarios?", opts: ["Se alimentan directamente de los productores (herbívoros)", "Comen carne", "Descomponen cadáveres", "Fabrican su alimento"], correct: 0, exp: "Ejemplo: conejos, vacas y orugas." },
-                    { q: "¿Qué rol cumplen los descomponedores (como hongos y bacterias)?", opts: ["Transforman la materia orgánica muerta en nutrientes inorgánicos para el suelo", "Cazan presas vivas", "Realizan fotosíntesis", "Contaminan el agua"], correct: 0, exp: "Cierran el ciclo de la materia." },
-                    { q: "¿Qué es la selección natural propuesta por Charles Darwin?", opts: ["El proceso por el cual los organismos mejor adaptados sobreviven y se reproducen con mayor éxito", "La creación espontánea de especies", "La desaparición de todos los animales", "Un cambio artificial en laboratorio"], correct: 0, exp: "Motor principal de la evolución biológica." },
-                    { q: "¿Qué es el dimorfismo sexual?", opts: ["Diferencias físicas externas entre machos y hembras de una misma especie", "La capacidad de cambiar de color", "Tener dos núcleos celulares", "Vivir en dos hábitats distintos"], correct: 0, exp: "Común en aves y mamíferos." },
-                    { q: "¿Qué es la biodiversidad genética?", opts: ["La variedad de genes dentro de una misma especie", "El número de ecosistemas en un continente", "La cantidad de plantas acuáticas", "La edad de un bosque"], correct: 0, exp: "Permite la adaptabilidad ante enfermedades." },
-                    { q: "¿Qué es una especie endémica?", opts: ["Aquella que es nativa de una región geográfica específica y no se encuentra de forma natural en ningún otro lugar", "Cualquier animal doméstico", "Una bacteria común", "Una especie extinta"], correct: 0, exp: "Ejemplo: el ajolote en Xochimilco." },
-                    { q: "¿Qué es la extinción de una especie?", opts: ["La desaparición total de todos los individuos de una especie en el planeta", "La migración temporal a otro país", "La hibernación invernal", "La clonación exitosa"], correct: 0, exp: "Proceso irreversible cuando no hay sobrevivientes." },
-                    { q: "¿Qué factor principal provoca la pérdida de biodiversidad en la actualidad?", opts: ["La destrucción y alteración de hábitats por actividades humanas", "La lluvia natural", "El ciclo lunar", "La rotación terrestre"], correct: 0, exp: "Incluye deforestación, urbanización y contaminación." },
-                    { q: "¿Qué es un área natural protegida (ANP)?", opts: ["Zonas terrestres o acuáticas donde se conservan la biodiversidad y los ecosistemas representativos", "Un parque de diversiones", "Una zona industrial", "Un terreno agrícola cultivado"], correct: 0, exp: "Buscan frenar el deterioro ambiental." },
-                    { q: "¿Qué gas absorben las plantas durante el proceso de fotosíntesis?", opts: ["Dióxido de carbono (CO2)", "Oxígeno puro", "Nitrógeno", "Hidrógeno"], correct: 0, exp: "Es vital para fabricar sus nutrientes." },
-                    { q: "¿Qué gas liberan las plantas como subproducto de la fotosíntesis?", opts: ["Oxígeno (O2)", "Monóxido de carbono", "Helio", "Metano"], correct: 0, exp: "Es aprovechado por los animales para respirar." },
-                    { q: "¿Qué es la respiración aerobia celular?", opts: ["Proceso donde las células utilizan oxígeno para liberar energía a partir de la glucosa", "Fabricar alimentos con luz solar", "Fermentar azúcares sin oxígeno", "Digerir alimentos en el estómago"], correct: 0, exp: "Ocurre principalmente en las mitocondrias." },
-                    { q: "¿Qué es la mitosis?", opts: ["El proceso de división celular que produce dos células hijas idénticas con el mismo número de cromosomas", "La creación de células sexuales", "La muerte de una célula", "La fusión de óvulo y espermatozoide"], correct: 0, exp: "Sirve para el crecimiento y reparación de tejidos." },
-                    { q: "¿Qué es la meiosis?", opts: ["El tipo de división celular que genera células sexuales (gametos) con la mitad de cromosomas", "La división de bacterias", "La duplicación del ADN sin división", "La fotosíntesis celular"], correct: 0, exp: "Produce espermatozoides y óvulos." },
-                    { q: "¿Qué es un fósil?", opts: ["Restos o señales impresas de organismos que vivieron en épocas geológicas pasadas", "Una roca volcánica reciente", "Una planta viva actual", "Un hueso de animal doméstico moderno"], correct: 0, exp: "Evidencia clave para estudiar la evolución." },
-                    { q: "¿Qué rama de la ciencia estudia los fósiles?", opts: ["La paleontología", "La botánica", "La astronomía", "La química orgánica"], correct: 0, exp: "Analiza la vida antigua en la Tierra." },
-                    { q: "¿Qué es el mutualismo en las relaciones ecológicas?", opts: ["Una interacción donde ambas especies obtienen beneficios mutuos", "Cuando un organismo se alimenta de otro vivo", "Una competencia por el alimento", "Cuando uno vive a expensas de otro sin dañarlo"], correct: 0, exp: "Ejemplo: las abejas y las flores." },
-                    { q: "¿Qué es el parasitismo?", opts: ["Una relación donde un organismo (parásito) se beneficia viviendo a costa de otro (huésped) perjudicándolo", "Ayuda mutua", "Independencia total", "Competencia neutral"], correct: 0, exp: "Ejemplo: las garrapatas en un perro." },
-                    { q: "¿Qué es el comensalismo?", opts: ["Una relación donde una especie se beneficia y la otra no se ve afectada ni perjudicada", "Daño mutuo", "Beneficio para ambos", "Extinción"], correct: 0, exp: "Ejemplo: peces rémora con los tiburones." },
-                    { q: "¿Qué es la competencia interespecífica?", opts: ["La rivalidad entre individuos de diferentes especies por recursos limitados como alimento o espacio", "Pelea entre miembros de la misma familia", "Colaboración pacífica", "Mutualismo"], correct: 0, exp: "Ocurre en comunidades biológicas diversas." },
-                    { q: "¿Qué es la biomasa?", opts: ["La cantidad total de materia viva en un área o ecosistema determinado", "El peso de las rocas", "La energía eléctrica acumulada", "El volumen de agua de un río"], correct: 0, exp: "Mide la masa orgánica disponible." },
-                    { q: "¿Qué son los recursos naturales renovables?", opts: ["Aquellos que pueden regenerarse naturalmente a un ritmo mayor o igual al de su consumo", "Petróleo y carbón mineral", "Gas natural", "Minerales metálicos"], correct: 0, exp: "Ejemplo: la energía solar, el agua y la madera bien manejada." },
-                    { q: "¿Qué son los recursos naturales no renovables?", opts: ["Aquellos que existen en cantidades finitas y tardan millones de años en formarse", "La luz del viento", "La energía de las mareas", "Las plantas verdes"], correct: 0, exp: "Ejemplo: petróleo, carbón y minerales." },
-                    { q: "¿Qué es la huella ecológica?", opts: ["Un indicador para evaluar el impacto de la actividad humana sobre la superficie terrestre", "Las pisadas de un animal en el lodo", "La contaminación acústica", "La cantidad de basura en el mar"], correct: 0, exp: "Mide cuántos recursos consumimos." },
-                    { q: "¿Qué significa desarrollo sustentable?", opts: ["Satisfacer las necesidades de las generaciones presentes sin comprometer los recursos de las futuras generaciones", "Explotar todos los bosques", "Detener toda actividad humana", "Consumir sin importar el mañana"], correct: 0, exp: "Equilibrio ecológico, social y económico." },
-                    { q: "¿Qué es la biotecnología?", opts: ["El uso de organismos vivos o sus componentes para crear productos útiles para el humano", "La fabricación de computadoras", "La física cuántica", "La construcción de edificios"], correct: 0, exp: "Aplicada en medicina, agricultura e industria." },
-                    { q: "¿Qué es un organismo transgénico (OGM)?", opts: ["Aquel cuyo material genético ha sido modificado mediante técnicas de ingeniería genética", "Una planta silvestre natural", "Un animal en peligro de extinción", "Un fósil prehistórico"], correct: 0, exp: "Posee genes de otra especie." },
-                    { q: "¿Cuál es la importancia biológica de los manglares en las costas?", opts: ["Funcionan como barreras naturales contra huracanes y zonas de crianza para peces", "Contaminan el mar", "No tienen utilidad", "Producen salinidad alta"], correct: 0, exp: "Ecosistemas costeros altamente productivos." },
-                    { q: "¿Qué estudia la ecología?", opts: ["Las interacciones entre los seres vivos y su entorno físico o ambiente", "Únicamente las rocas terrestres", "Las estrellas del universo", "La estructura interna del átomo"], correct: 0, exp: "Ciencia central para la conservación ambiental." }
-                ];
-                for (let i = 1; i <= 50; i++) {
-                    let item = bioQuestions[(i - 1) % bioQuestions.length];
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — 1º Grado (BIOLOGÍA - Trimestre 1)`,
-                        question: `Pregunta ${i}: ${item.q}`,
-                        options: item.opts,
-                        correct: item.correct,
-                        explanation: `💡 Explicación paso a paso: ${item.exp}`
-                    });
-                }
-                return pool;
-            } else {
-                for (let i = 1; i <= 50; i++) {
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — Grado ${grade} (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `[Reactivo Grado ${grade} - T${term} # ${i}] Cuestión oficial basada en puntos clave.`,
-                        options: [`Respuesta Correcta A para reactivo ${i}`, `Opción incorrecta B`, `Opción incorrecta C`, `Opción incorrecta D`],
-                        correct: 0,
-                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Principio fundamental de estudio.`
-                    });
-                }
-                return pool;
-            }
-        }
+            if (grade === "1" && term === "1") {
+                let dataPool = [];
 
-        function renderStudyContent() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectSelect = document.getElementById('subject-select');
-            const subjectId = subjectSelect.value;
-            const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
-            const term = document.getElementById('term-select').value;
-            document.getElementById('study-title').innerText = `Puntos Clave Académicos: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
-            const container = document.getElementById('study-content');
-            container.innerHTML = '';
-            let items = summariesData[grade]?.[subjectId]?.[term] || [
-                { topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave evaluados en este periodo para asegurar el éxito escolar.` }
-            ];
-            items.forEach(item => {
-                container.innerHTML += `<div class="summary-card"><h3>📌 ${item.topic}</h3><p>${item.text}</p></div>`;
-            });
-        }
-
-        function renderQuiz() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
-            const term = document.getElementById('term-select').value;
-            const questions = getFullBank(grade, subjectId, term);
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${questions[0].expertNote}</strong><br>Al seleccionar tu respuesta, se bloquearán las opciones y se mostrará de inmediato la explicación detallada.`;
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = '';
-            
-            questions.forEach((q, index) => {
-                let optsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    optsHtml += `<li><label class="option-label" id="label-${index}-${optIdx}"><input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})"> ${opt}</label></li>`;
-                });
-                container.innerHTML += `<div class="question-block" id="block-${index}"><p class="question-title">${q.question}</p><ul class="options-list">${optsHtml}</ul><div class="explanation" id="exp-${index}">${q.explanation}</div></div>`;
-            });
-        }
-
-        function handleAnswer(index, correctIndex) {
-            const block = document.getElementById(`block-${index}`);
-            if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
-            const radios = document.querySelectorAll(`input[name="q${index}"]`);
-            const checked = document.querySelector(`input[name="q${index}"]:checked`);
-            if (!checked) return;
-            const userChoice = parseInt(checked.value);
-
-            radios.forEach((r, rIdx) => {
-                r.disabled = true;
-                if (r.checked) document.getElementById(`label-${index}-${rIdx}`).classList.add('selected-option');
-            });
-            block.classList.add(userChoice === correctIndex ? 'correct-answer' : 'wrong-answer');
-        }
-
-        let totalSeconds = 35 * 60;
-        const timerInterval = setInterval(() => {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-                let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
-                document.getElementById('time-display').innerText = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-            } else {
-                clearInterval(timerInterval);
-                document.getElementById('timer-modal').style.display = 'flex';
-            }
-        }, 1000);
-
-        function handleTimerDecision(action) {
-            if (action === 'leave') {
-                alert("¡Buen trabajo estudiando hoy!");
-                window.location.href = "about:blank";
-            } else {
-                document.getElementById('timer-modal').style.display = 'none';
-                totalSeconds = 15 * 60;
-            }
-        }
-
-        function evaluateQuiz() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
-            const term = document.getElementById('term-select').value;
-            const questions = getFullBank(grade, subjectId, term);
-            let score = 0;
-            questions.forEach((q, index) => {
-                const checked = document.querySelector(`input[name="q${index}"]:checked`);
-                if (checked && parseInt(checked.value) === q.correct) score++;
-            });
-            const resDiv = document.getElementById('score-result');
-            resDiv.style.display = 'block';
-            let pct = (score / 50) * 100;
-            if (pct >= 60) {
-                resDiv.style.background = 'rgba(34, 197, 94, 0.2)'; resDiv.style.color = '#86efac'; resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-                resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%).`;
-            } else {
-                resDiv.style.background = 'rgba(239, 68, 68, 0.2)'; resDiv.style.color = '#fca5a5'; resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-                resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). ¡Repasa los Puntos Clave!`;
-            }
-        }
-
-        function renderAll() {
-            renderStudyContent();
-            renderQuiz();
-            document.getElementById('score-result').style.display = 'none';
-        }
-
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            if (tab === 'study') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('study-section').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('quiz-section').classList.add('active');
-            }
-        }
-
-        updateSubjectsAndContent();
-    </script>
-</body>
-</html>
+                if (subject === "biologia") {
+                    dataPool = [
+                        { q: "¿Cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido", "El órgano", "El átomo"], correct: 0, exp: "Todo organismo vivo está compuesto por células." },
+                        { q: "¿Qué nombre reciben las células que carecen de un núcleo definido y tienen su material genético disperso?", opts: ["Procariotas", "Eucariotas", "Pluric
