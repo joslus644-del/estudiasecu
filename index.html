@@ -19,7 +19,7 @@
         body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; position: relative; }
         
         .admin-login-btn { position: absolute; top: 20px; right: 25px; z-index: 100; }
-        .btn-secret { background: transparent; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, opacity 0.2s; opacity: 0.7; }
+        .btn-secret { background: transparent; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: transform 0.2s, opacity 0.2s; }
         .btn-secret svg { width: 24px; height: 24px; stroke: #ffffff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .btn-secret:hover { opacity: 1; transform: scale(1.1); }
 
@@ -33,13 +33,11 @@
         
         .container { max-width: 950px; margin: 0 auto; }
 
-        .admin-panel { background: #111827; border: 2px dashed #818cf8; padding: 20px; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: none; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
-        .admin-header h3 { color: #a5b4fc; font-size: 1.2rem; }
+        .admin-panel { background: #111827; border: 2px dashed #818cf8; padding: 20px; border-radius: 16px; margin-bottom: 25px; display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .admin-btns { display: flex; gap: 10px; }
-        .btn-resume { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; }
-        .btn-pause { background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; }
-        .btn-resume:hover, .btn-pause:hover { opacity: 0.85; }
+        .btn-resume { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-pause { background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         .visits-table-container { max-height: 180px; overflow-y: auto; border-radius: 8px; border: 1px solid #374151; }
         table.visits-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
@@ -47,39 +45,35 @@
         table.visits-table td { padding: 8px 12px; border-bottom: 1px solid #374151; color: #e5e7eb; }
 
         #paused-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; text-align: center; padding: 20px; }
-        .bunny-box { background: #1e293b; padding: 30px; border-radius: 20px; border: 2px solid #818cf8; max-width: 400px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .bunny-box { background: #1e293b; padding: 30px; border-radius: 20px; border: 2px solid #818cf8; max-width: 400px; }
         .bunny-emoji { font-size: 4.5rem; animation: bounceBunny 1.2s infinite ease-in-out; display: inline-block; margin-bottom: 15px; }
-        @keyframes bounceBunny {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(-5deg); }
-        }
+        @keyframes bounceBunny { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .bunny-box h2 { color: #818cf8; font-size: 1.6rem; margin-bottom: 10px; }
         .bunny-box p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.4; }
 
-        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; border: 2px solid #6366f1; max-width: 450px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; border: 2px solid #6366f1; max-width: 450px; text-align: center; }
         .modal-content h3 { color: #818cf8; font-size: 1.5rem; margin-bottom: 15px; }
-        .modal-content p { color: #cbd5e1; font-size: 1rem; line-height: 1.5; margin-bottom: 25px; }
+        .modal-content p { color: #cbd5e1; font-size: 1rem; margin-bottom: 25px; }
         .modal-btns { display: flex; gap: 15px; justify-content: center; }
-        .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem; transition: opacity 0.2s; }
-        .modal-btn.primary { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); color: white; }
+        .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .modal-btn.primary { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; }
         .modal-btn.secondary { background: #334155; color: #f8fafc; }
-        .modal-btn:hover { opacity: 0.9; }
 
-        .selector-card { background: var(--card-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .selector-card { background: var(--card-bg); padding: 25px; border-radius: 16px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); }
         .group-select { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 220px; }
         label { font-weight: bold; color: #cbd5e1; font-size: 0.95rem; }
-        select { padding: 12px; background: #0f172a; color: #f8fafc; border: 2px solid #334155; border-radius: 10px; font-size: 1rem; outline: none; transition: all 0.3s; }
-        select:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
+        select { padding: 12px; background: #0f172a; color: #f8fafc; border: 2px solid #334155; border-radius: 10px; font-size: 1rem; outline: none; }
+        select:focus { border-color: var(--primary); }
 
         .nav-tabs { display: flex; gap: 15px; margin-bottom: 25px; border-bottom: 2px solid #334155; }
         .tab-btn { padding: 12px 25px; border: none; background: none; font-size: 1.1rem; font-weight: bold; color: var(--text-muted); cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s; }
         .tab-btn.active { color: #818cf8; border-bottom-color: #818cf8; }
 
-        .content-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .content-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .content-section.active { display: block; }
 
-        .summary-card { background: #0f172a; border-left: 6px solid var(--primary); padding: 18px; margin-bottom: 15px; border-radius: 0 10px 10px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .summary-card { background: #0f172a; border-left: 6px solid var(--primary); padding: 18px; margin-bottom: 15px; border-radius: 0 10px 10px 0; }
         .summary-card h3 { margin-bottom: 6px; color: #818cf8; font-size: 1.15rem; }
         .summary-card p { font-size: 1rem; line-height: 1.5; color: #cbd5e1; }
 
@@ -90,7 +84,7 @@
         .question-title { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; color: #f1f5f9; }
         .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         
-        .option-label { display: flex; align-items: center; gap: 12px; background: #1e293b; padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; color: #e2e8f0; }
+        .option-label { display: flex; align-items: center; gap: 12px; background: #1e293b; padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; color: #e2e8f0; transition: all 0.2s; }
         .option-label:hover { background: #334155; border-color: #64748b; }
         .option-label.selected-option { background: rgba(37, 99, 235, 0.2); border-color: var(--selected-blue); color: #93c5fd; }
 
@@ -98,7 +92,7 @@
         .question-block.correct-answer .explanation { display: block; background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
         .question-block.wrong-answer .explanation { display: block; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
 
-        .submit-btn { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); color: white; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); transition: opacity 0.2s; }
+        .submit-btn { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
         .submit-btn:hover { opacity: 0.9; }
 
         #score-result { margin-top: 25px; padding: 25px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 1.1rem; display: none; }
@@ -106,7 +100,6 @@
 </head>
 <body>
 
-    <!-- Botón de Candado Minimalista Flotante -->
     <div class="admin-login-btn">
         <button class="btn-secret" onclick="loginAdmin()" title="Acceso Administrador">
             <svg viewBox="0 0 24 24">
@@ -116,16 +109,14 @@
         </button>
     </div>
 
-    <!-- Pantalla de Pausa con el Conejo Comiendo Césped -->
     <div id="paused-screen">
         <div class="bunny-box">
             <div class="bunny-emoji">🐰🌱</div>
             <h2>Plataforma Pausada</h2>
-            <p>El acceso está suspendido temporalmente. Mientras tanto, nuestro conejito está disfrutando de un buen césped fresco. ¡Vuelve más tarde!</p>
+            <p>El acceso está suspendido temporalmente. Nuestro conejito está disfrutando de un buen césped fresco. ¡Vuelve más tarde!</p>
         </div>
     </div>
 
-    <!-- Modal del Temporizador de 35 minutos -->
     <div id="timer-modal">
         <div class="modal-content">
             <h3>⏰ ¡Tiempo Cumplido!</h3>
@@ -143,7 +134,6 @@
             <p>Plataforma Escolar Interactiva para Exámenes</p>
         </header>
 
-        <!-- Panel de Control Privado -->
         <div class="admin-panel" id="admin-panel">
             <div class="admin-header">
                 <h3>🛠️ Panel de Control de Visitas (Privado)</h3>
@@ -155,26 +145,18 @@
             <div class="visits-table-container">
                 <table class="visits-table">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Dispositivo / Acceso</th>
-                            <th>Fecha y Hora de Entrada</th>
-                        </tr>
+                        <tr><th>#</th><th>Dispositivo / Acceso</th><th>Fecha y Hora</th></tr>
                     </thead>
-                    <tbody id="visits-table-body">
-                        <!-- Se llena dinámicamente -->
-                    </tbody>
+                    <tbody id="visits-table-body"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Temporizador visual en pantalla -->
         <div class="timer-card">
             <span>⏱️ Tiempo de Estudio:</span>
             <div id="time-display">35:00</div>
         </div>
 
-        <!-- Controles de Selección -->
         <div class="selector-card">
             <div class="group-select">
                 <label for="grade-select">Grado Escolar:</label>
@@ -186,9 +168,7 @@
             </div>
             <div class="group-select">
                 <label for="subject-select">Materia:</label>
-                <select id="subject-select" onchange="renderAll()">
-                    <!-- Opciones dinámicas -->
-                </select>
+                <select id="subject-select" onchange="renderAll()"></select>
             </div>
             <div class="group-select">
                 <label for="term-select">Trimestre:</label>
@@ -200,19 +180,16 @@
             </div>
         </div>
 
-        <!-- Pestañas de Navegación -->
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
             <button class="tab-btn" onclick="switchTab('quiz')">Quiz Examen (50 Preguntas)</button>
         </div>
 
-        <!-- Sección de Estudio -->
         <div id="study-section" class="content-section active">
             <h2 id="study-title" style="margin-bottom: 20px; font-size: 1.4rem; color: #818cf8;"></h2>
             <div id="study-content"></div>
         </div>
 
-        <!-- Sección de Quiz -->
         <div id="quiz-section" class="content-section">
             <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Simulador de Examen</h2>
             <div class="quiz-info" id="quiz-info"></div>
@@ -225,15 +202,14 @@
     </div>
 
     <script>
-        // --- CONTRASEÑA DE ADMINISTRADOR ---
         const ADMIN_PASSWORD = "carbón";
 
         function loginAdmin() {
-            const pass = prompt("Ingresa tu contraseña de administrador:");
+            const pass = prompt("Contraseña de administrador:");
             if (pass === ADMIN_PASSWORD) {
                 localStorage.setItem('estudiasecu_is_admin', 'true');
                 document.getElementById('admin-panel').style.display = 'block';
-                alert("¡Acceso de administrador concedido!");
+                alert("¡Acceso concedido!");
                 checkPlatformStatus();
             } else if (pass !== null) {
                 alert("Contraseña incorrecta.");
@@ -250,11 +226,7 @@
             const status = localStorage.getItem('estudiasecu_status') || 'active';
             const pausedScreen = document.getElementById('paused-screen');
             const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
-            if (status === 'paused' && !isAdmin) {
-                pausedScreen.style.display = 'flex';
-            } else {
-                pausedScreen.style.display = 'none';
-            }
+            pausedScreen.style.display = (status === 'paused' && !isAdmin) ? 'flex' : 'none';
         }
 
         function setPlatformStatus(status) {
@@ -265,12 +237,9 @@
         function registerVisit() {
             if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
             let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
-            const now = new Date();
-            const timeString = now.toLocaleString();
-            
             visits.push({
                 device: navigator.userAgent.includes("Mobile") ? "Móvil / Tablet" : "Computadora (Desktop)",
-                time: timeString
+                time: new Date().toLocaleString()
             });
             if (visits.length > 50) visits.shift();
             localStorage.setItem('estudiasecu_visits', JSON.stringify(visits));
@@ -280,20 +249,9 @@
         function renderVisitsTable() {
             const visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
             const tbody = document.getElementById('visits-table-body');
-            tbody.innerHTML = '';
-            if (visits.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas aún.</td></tr>`;
-                return;
-            }
-
-            visits.reverse().forEach((visit, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${visits.length - index}</td>
-                        <td>${visit.device}</td>
-                        <td>${visit.time}</td>
-                    </tr>
-                `;
+            tbody.innerHTML = visits.length ===0 ? `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas.</td></tr>` : '';
+            visits.reverse().forEach((v, idx) => {
+                tbody.innerHTML += `<tr><td>${visits.length - idx}</td><td>${v.device}</td><td>${v.time}</td></tr>`;
             });
         }
 
@@ -306,8 +264,8 @@
             1: {
                 biologia: {
                     1: [
-                        { topic: "1. La Célula como Unidad de la Vida", text: "Estudio de la célula, componentes procariotas y eucariotas." },
-                        { topic: "2. Biodiversidad y Adaptaciones", text: "Análisis de la riqueza biológica y selección natural." }
+                        { topic: "1. La Célula como Unidad de la Vida", text: "Estudio de la célula, componentes procariotas y eucariotas, organelos y teoría celular." },
+                        { topic: "2. Biodiversidad y Adaptaciones", text: "Riqueza biológica, ecosistemas, cadenas tróficas y evolución por selección natural." }
                     ]
                 }
             }
@@ -333,30 +291,13 @@
                 return [
                     { id: "fisica", name: "Física (Ciencias II)" },
                     { id: "matematicas", name: "Matemáticas II" },
-                    { id: "espanol", name: "Español II" },
-                    { id: "historia", name: "Historia de México" },
-                    { id: "geografia", name: "Geografía y Sociedad" },
-                    { id: "formacion", name: "Formación Cívica y Ética II" },
-                    { id: "artes", name: "Artes II" },
-                    { id: "educacion_fisica", name: "Educación Física II" },
-                    { id: "tutoria", name: "Tutoría II" },
-                    { id: "tecnologia", name: "Tecnología II" },
-                    { id: "ingles", name: "Inglés II" },
-                    { id: "integracion", name: "Integración Curricular II" }
+                    { id: "espanol", name: "Español II" }
                 ];
             } else {
                 return [
                     { id: "quimica", name: "Química (Ciencias III)" },
                     { id: "matematicas", name: "Matemáticas III" },
-                    { id: "espanol", name: "Español III" },
-                    { id: "historia", name: "Historia Universal" },
-                    { id: "formacion", name: "Formación Cívica y Ética III" },
-                    { id: "artes", name: "Artes III" },
-                    { id: "educacion_fisica", name: "Educación Física III" },
-                    { id: "tutoria", name: "Tutoría III" },
-                    { id: "tecnologia", name: "Tecnología III" },
-                    { id: "ingles", name: "Inglés III" },
-                    { id: "integracion", name: "Integración Curricular III" }
+                    { id: "espanol", name: "Español III" }
                 ];
             }
         }
@@ -375,11 +316,11 @@
             renderAll();
         }
 
-        // --- BANCO DE PREGUNTAS DE BIOLOGÍA 1º TRIMESTRE 1 (50 PREGUNTAS OFICIALES) ---
+        // --- BANCO DE 50 PREGUNTAS OFICIALES DE BIOLOGÍA ---
         function getFullBank(grade, subject, term) {
             let pool = [];
             if (grade === "1" && subject === "biologia" && term === "1") {
-                let bioQuestions = [
+                let bioData = [
                     { q: "¿Cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido", "El órgano", "El átomo"], correct: 0, exp: "Todo organismo vivo está compuesto por células." },
                     { q: "¿Qué nombre reciben las células que carecen de un núcleo definido y tienen su material genético disperso?", opts: ["Procariotas", "Eucariotas", "Pluricelulares", "Orgánulos"], correct: 0, exp: "Las bacterias son células procariotas." },
                     { q: "¿Cuál es la característica principal de las células eucariotas?", opts: ["Tienen un núcleo bien definido delimitado por una membrana", "Carecen de membrana celular", "Solo existen en organismos unicelulares", "No contienen ADN"], correct: 0, exp: "El ADN se encuentra protegido dentro del núcleo." },
@@ -408,204 +349,4 @@
                     { q: "¿Qué es la biodiversidad genética?", opts: ["La variedad de genes dentro de una misma especie", "El número de ecosistemas en un continente", "La cantidad de plantas acuáticas", "La edad de un bosque"], correct: 0, exp: "Permite la adaptabilidad ante enfermedades." },
                     { q: "¿Qué es una especie endémica?", opts: ["Aquella que es nativa de una región geográfica específica y no se encuentra de forma natural en ningún otro lugar", "Cualquier animal doméstico", "Una bacteria común", "Una especie extinta"], correct: 0, exp: "Ejemplo: el ajolote en Xochimilco." },
                     { q: "¿Qué es la extinción de una especie?", opts: ["La desaparición total de todos los individuos de una especie en el planeta", "La migración temporal a otro país", "La hibernación invernal", "La clonación exitosa"], correct: 0, exp: "Proceso irreversible cuando no hay sobrevivientes." },
-                    { q: "¿Qué factor principal provoca la pérdida de biodiversidad en la actualidad?", opts: ["La destrucción y alteración de hábitats por actividades humanas", "La lluvia natural", "El ciclo lunar", "La rotación terrestre"], correct: 0, exp: "Incluye deforestación, urbanización y contaminación." },
-                    { q: "¿Qué es un área natural protegida (ANP)?", opts: ["Zonas terrestres o acuáticas donde se conservan la biodiversidad y los ecosistemas representativos", "Un parque de diversiones", "Una zona industrial", "Un terreno agrícola cultivado"], correct: 0, exp: "Buscan frenar el deterioro ambiental." },
-                    { q: "¿Qué gas absorben las plantas durante el proceso de fotosíntesis?", opts: ["Dióxido de carbono (CO2)", "Oxígeno puro", "Nitrógeno", "Hidrógeno"], correct: 0, exp: "Es vital para fabricar sus nutrientes." },
-                    { q: "¿Qué gas liberan las plantas como subproducto de la fotosíntesis?", opts: ["Oxígeno (O2)", "Monóxido de carbono", "Helio", "Metano"], correct: 0, exp: "Es aprovechado por los animales para respirar." },
-                    { q: "¿Qué es la respiración aerobia celular?", opts: ["Proceso donde las células utilizan oxígeno para liberar energía a partir de la glucosa", "Fabricar alimentos con luz solar", "Fermentar azúcares sin oxígeno", "Digerir alimentos en el estómago"], correct: 0, exp: "Ocurre principalmente en las mitocondrias." },
-                    { q: "¿Qué es la mitosis?", opts: ["El proceso de división celular que produce dos células hijas idénticas con el mismo número de cromosomas", "La creación de células sexuales", "La muerte de una célula", "La fusión de óvulo y espermatozoide"], correct: 0, exp: "Sirve para el crecimiento y reparación de tejidos." },
-                    { q: "¿Qué es la meiosis?", opts: ["El tipo de división celular que genera células sexuales (gametos) con la mitad de cromosomas", "La división de bacterias", "La duplicación del ADN sin división", "La fotosíntesis celular"], correct: 0, exp: "Produce espermatozoides y óvulos." },
-                    { q: "¿Qué es un fósil?", opts: ["Restos o señales impresas de organismos que vivieron en épocas geológicas pasadas", "Una roca volcánica reciente", "Una planta viva actual", "Un hueso de animal doméstico moderno"], correct: 0, exp: "Evidencia clave para estudiar la evolución." },
-                    { q: "¿Qué rama de la ciencia estudia los fósiles?", opts: ["La paleontología", "La botánica", "La astronomía", "La química orgánica"], correct: 0, exp: "Analiza la vida antigua en la Tierra." },
-                    { q: "¿Qué es el mutualismo en las relaciones ecológicas?", opts: ["Una interacción donde ambas especies obtienen beneficios mutuos", "Cuando un organismo se alimenta de otro vivo", "Una competencia por el alimento", "Cuando uno vive a expensas de otro sin dañarlo"], correct: 0, exp: "Ejemplo: las abejas y las flores." },
-                    { q: "¿Qué es el parasitismo?", opts: ["Una relación donde un organismo (parásito) se beneficia viviendo a costa de otro (huésped) perjudicándolo", "Ayuda mutua", "Independencia total", "Competencia neutral"], correct: 0, exp: "Ejemplo: las garrapatas en un perro." },
-                    { q: "¿Qué es el comensalismo?", opts: ["Una relación donde una especie se beneficia y la otra no se ve afectada ni perjudicada", "Daño mutuo", "Beneficio para ambos", "Extinción"], correct: 0, exp: "Ejemplo: peces rémora con los tiburones." },
-                    { q: "¿Qué es la competencia interespecífica?", opts: ["La rivalidad entre individuos de diferentes especies por recursos limitados como alimento o espacio", "Pelea entre miembros de la misma familia", "Colaboración pacífica", "Mutualismo"], correct: 0, exp: "Ocurre en comunidades biológicas diversas." },
-                    { q: "¿Qué es la biomasa?", opts: ["La cantidad total de materia viva en un área o ecosistema determinado", "El peso de las rocas", "La energía eléctrica acumulada", "El volumen de agua de un río"], correct: 0, exp: "Mide la masa orgánica disponible." },
-                    { q: "¿Qué son los recursos naturales renovables?", opts: ["Aquellos que pueden regenerarse naturalmente a un ritmo mayor o igual al de su consumo", "Petróleo y carbón mineral", "Gas natural", "Minerales metálicos"], correct: 0, exp: "Ejemplo: la energía solar, el agua y la madera bien manejada." },
-                    { q: "¿Qué son los recursos naturales no renovables?", opts: ["Aquellos que existen en cantidades finitas y tardan millones de años en formarse", "La luz del viento", "La energía de las mareas", "Las plantas verdes"], correct: 0, exp: "Ejemplo: petróleo, carbón y minerales." },
-                    { q: "¿Qué es la huella ecológica?", opts: ["Un indicador para evaluar el impacto de la actividad humana sobre la superficie terrestre", "Las pisadas de un animal en el lodo", "La contaminación acústica", "La cantidad de basura en el mar"], correct: 0, exp: "Mide cuántos recursos consumimos." },
-                    { q: "¿Qué significa desarrollo sustentable?", opts: ["Satisfacer las necesidades de las generaciones presentes sin comprometer los recursos de las futuras generaciones", "Explotar todos los bosques", "Detener toda actividad humana", "Consumir sin importar el mañana"], correct: 0, exp: "Equilibrio ecológico, social y económico." },
-                    { q: "¿Qué es la biotecnología?", opts: ["El uso de organismos vivos o sus componentes para crear productos útiles para el humano", "La fabricación de computadoras", "La física cuántica", "La construcción de edificios"], correct: 0, exp: "Aplicada en medicina, agricultura e industria." },
-                    { q: "¿Qué es un organismo transgénico (OGM)?", opts: ["Aquel cuyo material genético ha sido modificado mediante técnicas de ingeniería genética", "Una planta silvestre natural", "Un animal en peligro de extinción", "Un fósil prehistórico"], correct: 0, exp: "Posee genes de otra especie." },
-                    { q: "¿Cuál es la importancia biológica de los manglares en las costas?", opts: ["Funcionan como barreras naturales contra huracanes y zonas de crianza para peces", "Contaminan el mar", "No tienen utilidad", "Producen salinidad alta"], correct: 0, exp: "Ecosistemas costeros altamente productivos." },
-                    { q: "¿Qué estudia la ecología?", opts: ["Las interacciones entre los seres vivos y su entorno físico o ambiente", "Únicamente las rocas terrestres", "Las estrellas del universo", "La estructura interna del átomo"], correct: 0, exp: "Ciencia central para la conservación ambiental." }
-                ];
-                for (let i = 1; i <= 50; i++) {
-                    let item = bioQuestions[(i - 1) % bioQuestions.length];
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — 1º Grado (BIOLOGÍA - Trimestre 1)`,
-                        question: `Pregunta ${i}: ${item.q}`,
-                        options: item.opts,
-                        correct: item.correct,
-                        explanation: `💡 Explicación paso a paso: ${item.exp}`
-                    });
-                }
-                return pool;
-            } else {
-                for (let i = 1; i <= 50; i++) {
-                    pool.push({
-                        id: i,
-                        expertNote: `Evaluación Académica Oficial — Grado ${grade} (${subject.toUpperCase()} - Trimestre ${term})`,
-                        question: `[Reactivo Grado ${grade} - T${term} # ${i}] Cuestión oficial basada en puntos clave de la materia.`,
-                        options: [`Respuesta Correcta A para reactivo ${i}`, `Opción incorrecta B`, `Opción incorrecta C`, `Opción incorrecta D`],
-                        correct: 0,
-                        explanation: `💡 Explicación paso a paso (Reactivo ${i}): Principio fundamental de estudio clave para este trimestre.`
-                    });
-                }
-                return pool;
-            }
-        }
-
-        function renderStudyContent() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectSelect = document.getElementById('subject-select');
-            const subjectId = subjectSelect.value;
-            const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
-            const term = document.getElementById('term-select').value;
-            document.getElementById('study-title').innerText = `Puntos Clave Académicos: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
-            const container = document.getElementById('study-content');
-            container.innerHTML = '';
-            let items = [];
-            if (summariesData[grade] && summariesData[grade][subjectId] && summariesData[grade][subjectId][term]) {
-                items = summariesData[grade][subjectId][term];
-            } else {
-                items = [{ topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave con nivel de dificultad progresivo evaluados específicamente en este periodo para asegurar el éxito escolar en el grado ${grade}º.` }];
-            }
-            items.forEach(item => {
-                container.innerHTML += `
-                    <div class="summary-card">
-                        <h3>📌 ${item.topic}</h3>
-                        <p>${item.text}</p>
-                    </div>
-                `;
-            });
-        }
-
-        function renderQuiz() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
-            const term = document.getElementById('term-select').value;
-            const sampleQ = getFullBank(grade, subjectId, term)[0];
-            document.getElementById('quiz-info').innerHTML = `✨ <strong>${sampleQ.expertNote}</strong> | Banco oficial con progresión trimestral.<br>Al seleccionar tu respuesta, se bloquearán las opciones y se mostrará de inmediato si fue correcta o incorrecta junto con su explicación detallada.`;
-            const questions = getFullBank(grade, subjectId, term);
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = '';
-            
-            questions.forEach((q, index) => {
-                let optsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    optsHtml += `
-                        <li>
-                            <label class="option-label" id="label-${index}-${optIdx}">
-                                <input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})"> ${opt}
-                            </label>
-                        </li>
-                    `;
-                });
-                container.innerHTML += `
-                    <div class="question-block" id="block-${index}">
-                        <p class="question-title">${q.question}</p>
-                        <ul class="options-list">${optsHtml}</ul>
-                        <div class="explanation" id="exp-${index}">${q.explanation}</div>
-                    </div>
-                `;
-            });
-        }
-
-        function handleAnswer(index, correctIndex) {
-            const block = document.getElementById(`block-${index}`);
-            if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
-            const radios = document.querySelectorAll(`input[name="q${index}"]`);
-            const checked = document.querySelector(`input[name="q${index}"]:checked`);
-            if (!checked) return;
-            const userChoice = parseInt(checked.value);
-
-            radios.forEach((r, rIdx) => {
-                r.disabled = true;
-                const lbl = document.getElementById(`label-${index}-${rIdx}`);
-                if (r.checked) {
-                    lbl.classList.add('selected-option');
-                }
-            });
-            if (userChoice === correctIndex) {
-                block.classList.add('correct-answer');
-            } else {
-                block.classList.add('wrong-answer');
-            }
-        }
-
-        let totalSeconds = 35 * 60;
-        const timerInterval = setInterval(() => {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-                let minutes = Math.floor(totalSeconds / 60);
-                let seconds = totalSeconds % 60;
-                document.getElementById('time-display').innerText = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-            } else {
-                clearInterval(timerInterval);
-                document.getElementById('timer-modal').style.display = 'flex';
-            }
-        }, 1000);
-
-        function handleTimerDecision(action) {
-            if (action === 'leave') {
-                alert("¡Buen trabajo estudiando hoy! Puedes cerrar la pestaña cuando gustes.");
-                window.location.href = "about:blank";
-            } else {
-                document.getElementById('timer-modal').style.display = 'none';
-                totalSeconds = 15 * 60;
-            }
-        }
-
-        function evaluateQuiz() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
-            const term = document.getElementById('term-select').value;
-            const questions = getFullBank(grade, subjectId, term);
-            let score = 0;
-            questions.forEach((q, index) => {
-                const checked = document.querySelector(`input[name="q${index}"]:checked`);
-                if (checked && parseInt(checked.value) === q.correct) {
-                    score++;
-                }
-            });
-            const resDiv = document.getElementById('score-result');
-            resDiv.style.display = 'block';
-            const pct = (score / 50) * 100;
-            if (pct >= 60) {
-                resDiv.style.background = 'rgba(34, 197, 94, 0.2)';
-                resDiv.style.color = '#86efac';
-                resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-                resDiv.innerText = `🎉 ¡Excelente trabajo académico! Obtuviste ${score} de 50 aciertos (${pct}%). ¡Estás listo para subir tu promedio este trimestre!`;
-            } else {
-                resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
-                resDiv.style.color = '#fca5a5';
-                resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-                resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). Repasa los Puntos Clave y practica nuevamente para mejorar tu calificación.`;
-            }
-        }
-
-        function renderAll() {
-            renderStudyContent();
-            renderQuiz();
-            document.getElementById('score-result').style.display = 'none';
-        }
-
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            if (tab === 'study') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('study-section').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('quiz-section').classList.add('active');
-            }
-        }
-
-        updateSubjectsAndContent();
-    </script>
-</body>
-</html>
+                    { q: "¿Qué factor principal provoca la pérdida de biodiversidad en la actualidad?", opts:
