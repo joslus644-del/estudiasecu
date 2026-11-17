@@ -433,4 +433,435 @@
             text-align: center;
             margin-top: 20px;
             font-size: 1.2rem;
-            color:
+            color: #f8fafc;
+        }
+        .exam-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #818cf8;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón de administrador (candado) -->
+    <button class="btn-secret admin-login-btn" id="lockBtn">
+        <svg class="lock-icon" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <circle cx="12" cy="16" r="1"></circle>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+    </button>
+
+    <header>
+        <h1>EstudiaSecu</h1>
+        <p>Tu plataforma escolar para secundaria técnica</p>
+        <div class="timer-card">
+            <span>Tiempo restante:</span>
+            <span id="time-display">35:00</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Selector de grado -->
+        <div class="selector-card">
+            <div class="group-select">
+                <label for="grado">Selecciona tu grado:</label>
+                <select id="grado" name="grado">
+                    <option value="">-- Selecciona --</option>
+                    <option value="1">Primer grado</option>
+                    <option value="2">Segundo grado</option>
+                    <option value="3">Tercer grado</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Selector de materias (se mostrará según el grado) -->
+        <div class="selector-card" id="materiasSelector" style="display: none;">
+            <div class="matter-select">
+                <label for="materia">Selecciona una materia:</label>
+                <select id="materia" name="materia">
+                    <option value="">-- Selecciona una materia --</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Pestañas de contenido -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="inicio">Inicio</button>
+            <button class="tab-btn" data-tab="temas">Temas</button>
+            <button class="tab-btn" data-tab="examen">Examen</button>
+        </div>
+
+        <!-- Contenido de las pestañas -->
+        <div class="content-section active" id="inicio">
+            <h2>Bienvenido a EstudiaSecu</h2>
+            <p>Aquí encontrarás los temas y recursos para tus materias de secundaria técnica.</p>
+        </div>
+
+        <div class="content-section" id="temas">
+            <h2>Temas por materia</h2>
+            <div id="temas-container">
+                <!-- Los temas se cargarán dinámicamente según la selección -->
+            </div>
+        </div>
+
+        <div class="content-section" id="examen">
+            <h2>Examen por tema</h2>
+            <p>Selecciona un tema para realizar un examen con preguntas relacionadas.</p>
+            <div id="examen-container">
+                <!-- El examen se cargará dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Panel de administrador -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <h2>Panel de Administrador</h2>
+                <div class="admin-btns">
+                    <button class="btn-resume" id="resumeBtn">Reanudar</button>
+                    <button class="btn-pause" id="pauseBtn">Pausar</button>
+                </div>
+            </div>
+            <div class="visits-table-container">
+                <table class="visits-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Grado seleccionado</th>
+                            <th>Materia seleccionada</th>
+                        </tr>
+                    </thead>
+                    <tbody id="visitsTableBody">
+                        <!-- Las visitas se cargarán dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de carga (conejo) -->
+    <div id="paused-screen">
+        <div class="bunny-box">
+            <div class="bunny-emoji">🐰</div>
+            <h2>¡Pausa activa!</h2>
+            <p>El sitio está en modo pausa. Vuelve pronto para seguir estudiando.</p>
+        </div>
+    </div>
+
+    <!-- Modal para contraseña -->
+    <div id="timer-modal">
+        <div class="modal-content">
+            <h3>Acceso Administrador</h3>
+            <p>Por favor, ingresa la contraseña para acceder al panel de administrador.</p>
+            <input type="password" id="adminPassword" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #f8fafc;">
+            <div class="modal-btns">
+                <button class="modal-btn primary" id="confirmPassword">Aceptar</button>
+                <button class="modal-btn secondary" id="cancelPassword">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para el examen -->
+    <div id="exam-modal">
+        <div class="exam-content">
+            <div class="exam-header">
+                <h2 class="exam-title" id="exam-title">Examen: [Tema]</h2>
+                <button class="close-exam" id="closeExam">Cerrar</button>
+            </div>
+            <div id="exam-questions-container">
+                <!-- Las preguntas se cargarán dinámicamente -->
+            </div>
+            <div class="exam-footer">
+                <div class="exam-nav">
+                    <button id="prevQuestion" disabled>Anterior</button>
+                    <span id="question-counter">1 / 5</span>
+                    <button id="nextQuestion">Siguiente</button>
+                </div>
+                <button class="exam-submit" id="submitExam" style="display: none;">Finalizar Examen</button>
+            </div>
+            <div class="exam-result" id="exam-result" style="display: none;">
+                <p>Tu calificación es:</p>
+                <div class="exam-score" id="exam-score">0</div>
+                <button class="exam-submit" id="retakeExam">Volver a intentar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de materias y temas por grado (basado en escuelas técnicas en México)
+        const materiasPorGrado = {
+            1: {
+                nombre: "Primer grado",
+                materias: {
+                    biologia: "Biología",
+                    matematicas: "Matemáticas",
+                    tecnologia: "Tecnología",
+                    civica: "Formación Cívica y Ética"
+                },
+                temas: {
+                    biologia: {
+                        trimestre1: ["Introducción a la biología", "Características de los seres vivos", "La célula"],
+                        trimestre2: ["Sistemas del cuerpo humano", "Nutrición", "Respiración"],
+                        trimestre3: ["Ecosistemas", "Cadena alimenticia", "Conservación del medio ambiente"]
+                    },
+                    matematicas: {
+                        trimestre1: ["Jerarquía de operaciones", "Operaciones con paréntesis", "Operaciones básicas (suma, resta, multiplicación, división)"],
+                        trimestre2: ["Números fraccionarios", "Números decimales", "Proporcionalidad"],
+                        trimestre3: ["Geometría básica", "Áreas y perímetros", "Ecuaciones simples"]
+                    },
+                    tecnologia: {
+                        trimestre1: ["Introducción a la tecnología", "Herramientas básicas", "Normas de seguridad"],
+                        trimestre2: ["Materiales y sus propiedades", "Procesos de fabricación", "Diseño técnico"],
+                        trimestre3: ["Energías renovables", "Impacto ambiental de la tecnología", "Proyectos tecnológicos"]
+                    },
+                    civica: {
+                        trimestre1: ["La familia y la escuela", "Derechos y obligaciones", "Valores cívicos"],
+                        trimestre2: ["La comunidad", "Participación ciudadana", "Democracia"],
+                        trimestre3: ["México y su gobierno", "Leyes y normas", "Cultura de la legalidad"]
+                    }
+                }
+            },
+            2: {
+                nombre: "Segundo grado",
+                materias: {
+                    fisica: "Física",
+                    matematicas: "Matemáticas",
+                    quimica: "Química",
+                    historia: "Historia"
+                },
+                temas: {
+                    fisica: {
+                        trimestre1: ["Magnitudes y unidades", "Movimiento rectilíneo uniforme", "Fuerza y movimiento"],
+                        trimestre2: ["Energía y trabajo", "Energía cinética y potencial", "Conservación de la energía"],
+                        trimestre3: ["Electricidad básica", "Circuitos eléctricos", "Magnetismo"]
+                    },
+                    matematicas: {
+                        trimestre1: ["Álgebra básica", "Ecuaciones lineales", "Sistemas de ecuaciones"],
+                        trimestre2: ["Funciones lineales", "Gráficas", "Problemas de aplicación"],
+                        trimestre3: ["Estadística básica", "Medidas de tendencia central", "Gráficos estadísticos"]
+                    },
+                    quimica: {
+                        trimestre1: ["La materia y sus estados", "Propiedades de la materia", "Modelos atómicos"],
+                        trimestre2: ["Tabla periódica", "Enlaces químicos", "Reacciones químicas"],
+                        trimestre3: ["Química del carbono", "Compuestos orgánicos", "Aplicaciones de la química"]
+                    },
+                    historia: {
+                        trimestre1: ["México prehispánico", "Conquista de México", "Colonia"],
+                        trimestre2: ["Independencia de México", "México independiente", "Revolución Mexicana"],
+                        trimestre3: ["México contemporáneo", "Globalización", "Desafíos actuales"]
+                    }
+                }
+            },
+            3: {
+                nombre: "Tercer grado",
+                materias: {
+                    quimica: "Química",
+                    matematicas: "Matemáticas",
+                    biologia: "Biología",
+                    administracion: "Administración"
+                },
+                temas: {
+                    quimica: {
+                        trimestre1: ["Química del carbono avanzada", "Bioquímica", "Polímeros"],
+                        trimestre2: ["Equilibrio químico", "Cinética química", "Termoquímica"],
+                        trimestre3: ["Química ambiental", "Contaminación", "Sostenibilidad"]
+                    },
+                    matematicas: {
+                        trimestre1: ["Funciones cuadráticas", "Ecuaciones cuadráticas", "Gráficas de funciones"],
+                        trimestre2: ["Geometría analítica", "Rectas y cónicas", "Problemas de geometría"],
+                        trimestre3: ["Probabilidad", "Distribuciones de probabilidad", "Aplicaciones"]
+                    },
+                    biologia: {
+                        trimestre1: ["Genética", "ADN y ARN", "Herencia"],
+                        trimestre2: ["Evolución", "Teorías evolutivas", "Evidencias"],
+                        trimestre3: ["Biología humana", "Sistema inmunológico", "Enfermedades"]
+                    },
+                    administracion: {
+                        trimestre1: ["Introducción a la administración", "Empresas y organizaciones", "Procesos administrativos"],
+                        trimestre2: ["Recursos humanos", "Marketing básico", "Contabilidad básica"],
+                        trimestre3: ["Administración de proyectos", "Liderazgo", "Ética en los negocios"]
+                    }
+                }
+            }
+        };
+
+        // Variables globales
+        let isPaused = false;
+        let visitas = [];
+        let tiempoRestante = 35 * 60; // 35 minutos en segundos
+        let temporizador;
+        let preguntasExamen = [];
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+
+        // Elementos del DOM
+        const gradoSelect = document.getElementById("grado");
+        const materiasSelector = document.getElementById("materiasSelector");
+        const materiaSelect = document.getElementById("materia");
+        const temasContainer = document.getElementById("temas-container");
+        const examenContainer = document.getElementById("examen-container");
+        const adminPanel = document.getElementById("adminPanel");
+        const lockBtn = document.getElementById("lockBtn");
+        const timerModal = document.getElementById("timer-modal");
+        const adminPassword = document.getElementById("adminPassword");
+        const confirmPassword = document.getElementById("confirmPassword");
+        const cancelPassword = document.getElementById("cancelPassword");
+        const resumeBtn = document.getElementById("resumeBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const visitsTableBody = document.getElementById("visitsTableBody");
+        const pausedScreen = document.getElementById("paused-screen");
+        const timeDisplay = document.getElementById("time-display");
+        const examModal = document.getElementById("exam-modal");
+        const examTitle = document.getElementById("exam-title");
+        const examQuestionsContainer = document.getElementById("exam-questions-container");
+        const prevQuestion = document.getElementById("prevQuestion");
+        const nextQuestion = document.getElementById("nextQuestion");
+        const questionCounter = document.getElementById("question-counter");
+        const submitExam = document.getElementById("submitExam");
+        const examResult = document.getElementById("exam-result");
+        const examScore = document.getElementById("exam-score");
+        const retakeExam = document.getElementById("retakeExam");
+        const closeExam = document.getElementById("closeExam");
+
+        // Event listeners
+        gradoSelect.addEventListener("change", actualizarMaterias);
+        materiaSelect.addEventListener("change", mostrarTemas);
+        lockBtn.addEventListener("click", mostrarModalContraseña);
+        confirmPassword.addEventListener("click", verificarContraseña);
+        cancelPassword.addEventListener("click", cerrarModalContraseña);
+        resumeBtn.addEventListener("click", reanudarSitio);
+        pauseBtn.addEventListener("click", pausarSitio);
+        document.getElementById("exam").addEventListener("click", mostrarExamen);
+        prevQuestion.addEventListener("click", mostrarPreguntaAnterior);
+        nextQuestion.addEventListener("click", mostrarSiguientePregunta);
+        submitExam.addEventListener("click", finalizarExamen);
+        retakeExam.addEventListener("click", reiniciarExamen);
+        closeExam.addEventListener("click", cerrarExamen);
+
+        // Iniciar temporizador
+        function iniciarTemporizador() {
+            temporizador = setInterval(() => {
+                tiempoRestante--;
+                const minutos = Math.floor(tiempoRestante / 60);
+                const segundos = tiempoRestante % 60;
+                timeDisplay.textContent = `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    alert("¡Tiempo terminado! ¿Quieres seguir estudiando?");
+                }
+            }, 1000);
+        }
+
+        // Función para actualizar las materias según el grado seleccionado
+        function actualizarMaterias() {
+            const grado = gradoSelect.value;
+            materiaSelect.innerHTML = '<option value="">-- Selecciona una materia --</option>';
+            materiasSelector.style.display = grado ? "flex" : "none";
+
+            if (grado) {
+                const materias = materiasPorGrado[grado].materias;
+                for (const [key, nombre] of Object.entries(materias)) {
+                    const option = document.createElement("option");
+                    option.value = key;
+                    option.textContent = nombre;
+                    materiaSelect.appendChild(option);
+                }
+            }
+        }
+
+        // Función para mostrar los temas según la materia seleccionada
+        function mostrarTemas() {
+            const grado = gradoSelect.value;
+            const materia = materiaSelect.value;
+
+            if (!grado || !materia) return;
+
+            temasContainer.innerHTML = "";
+            const temasPorTrimestre = materiasPorGrado[grado].temas[materia];
+
+            for (const [trimestre, temas] of Object.entries(temasPorTrimestre)) {
+                const trimestreDiv = document.createElement("div");
+                trimestreDiv.style.marginBottom = "20px";
+                trimestreDiv.innerHTML = `<h3>${trimestre.charAt(0).toUpperCase() + trimestre.slice(1)}</h3>`;
+
+                const listaTemas = document.createElement("ul");
+                listaTemas.style.listStyleType = "none";
+                listaTemas.style.paddingLeft = "0";
+
+                temas.forEach(tema => {
+                    const item = document.createElement("li");
+                    item.textContent = `• ${tema}`;
+                    item.style.marginBottom = "8px";
+                    listaTemas.appendChild(item);
+                });
+
+                trimestreDiv.appendChild(listaTemas);
+                temasContainer.appendChild(trimestreDiv);
+            }
+
+            // Registrar la visita
+            registrarVisita(grado, materia);
+        }
+
+        // Función para registrar la visita
+        function registrarVisita(grado, materia) {
+            const fecha = new Date();
+            const visita = {
+                fecha: fecha.toLocaleDateString(),
+                hora: fecha.toLocaleTimeString(),
+                grado: materiasPorGrado[grado].nombre,
+                materia: materiaSelect.options[materiaSelect.selectedIndex].text
+            };
+            visitas.push(visita);
+            actualizarTablaVisitas();
+        }
+
+        // Función para actualizar la tabla de visitas
+        function actualizarTablaVisitas() {
+            visitsTableBody.innerHTML = "";
+            visitas.forEach(visita => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${visita.fecha}</td>
+                    <td>${visita.hora}</td>
+                    <td>${visita.grado}</td>
+                    <td>${visita.materia}</td>
+                `;
+                visitsTableBody.appendChild(row);
+            });
+        }
+
+        // Función para mostrar el modal de contraseña
+        function mostrarModalContraseña() {
+            timerModal.style.display = "flex";
+        }
+
+        // Función para cerrar el modal de contraseña
+        function cerrarModalContraseña() {
+            timerModal.style.display = "none";
+            adminPassword.value = "";
+        }
+
+        // Función para verificar la contraseña
+        function verificarContraseña() {
+            if (adminPassword.value === "carbón") {
+                adminPanel.style.display = "block";
+                timerModal.style.display = "none";
+                adminPassword.value = "";
+            } else {
+                alert("Contraseña incorrecta. Intenta de nuevo.");
+            }
+        }
+
+        // Función para pausar el sitio
+        function pausarSitio() {
+            isPaused = true;
+            pausedScreen.style.display = "flex";
+            clearInterval(temporizador);
+            alert("El sitio ha sido pausado. Los usuarios verán la pantalla de carga.");
+        }
+
+        // Func
