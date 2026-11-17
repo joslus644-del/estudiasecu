@@ -15,317 +15,422 @@
             --danger: #ef4444;
             --selected-blue: #2563eb;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; position: relative; }
-        
-        .admin-login-btn { position: absolute; top: 20px; right: 25px; z-index: 100; }
-        .btn-secret { background: transparent; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: transform 0.2s, opacity 0.2s; }
-        .btn-secret svg { width: 24px; height: 24px; stroke: #ffffff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .btn-secret:hover { opacity: 1; transform: scale(1.1); }
-
-        header { text-align: center; margin-bottom: 25px; margin-top: 15px; }
-        header h1 { background: linear-gradient(90deg, #818cf8, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.8rem; margin-bottom: 8px; font-weight: 800; }
-        header p { color: var(--text-muted); font-size: 1.1rem; }
-        
-        .timer-card { background: var(--card-bg); border: 2px solid var(--primary); padding: 12px 20px; border-radius: 12px; text-align: center; max-width: 350px; margin: 0 auto 20px auto; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); display: flex; justify-content: space-between; align-items: center; }
-        .timer-card span { font-size: 1.1rem; color: #cbd5e1; font-weight: bold; }
-        #time-display { font-size: 1.3rem; color: #38bdf8; font-family: monospace; font-weight: bold; }
-        
-        .container { max-width: 950px; margin: 0 auto; }
-
-        .admin-panel { background: #111827; border: 2px dashed #818cf8; padding: 20px; border-radius: 16px; margin-bottom: 25px; display: none; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .admin-btns { display: flex; gap: 10px; }
-        .btn-resume { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-pause { background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        .visits-table-container { max-height: 180px; overflow-y: auto; border-radius: 8px; border: 1px solid #374151; }
-        table.visits-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-        table.visits-table th { background: #1f2937; color: #9ca3af; padding: 8px 12px; position: sticky; top: 0; }
-        table.visits-table td { padding: 8px 12px; border-bottom: 1px solid #374151; color: #e5e7eb; }
-
-        #paused-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; text-align: center; padding: 20px; }
-        .bunny-box { background: #1e293b; padding: 30px; border-radius: 20px; border: 2px solid #818cf8; max-width: 400px; }
-        .bunny-emoji { font-size: 4.5rem; animation: bounceBunny 1.2s infinite ease-in-out; display: inline-block; margin-bottom: 15px; }
-        @keyframes bounceBunny { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .bunny-box h2 { color: #818cf8; font-size: 1.6rem; margin-bottom: 10px; }
-        .bunny-box p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.4; }
-
-        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; border: 2px solid #6366f1; max-width: 450px; text-align: center; }
-        .modal-content h3 { color: #818cf8; font-size: 1.5rem; margin-bottom: 15px; }
-        .modal-content p { color: #cbd5e1; font-size: 1rem; margin-bottom: 25px; }
-        .modal-btns { display: flex; gap: 15px; justify-content: center; }
-        .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .modal-btn.primary { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; }
-        .modal-btn.secondary { background: #334155; color: #f8fafc; }
-
-        .selector-card { background: var(--card-bg); padding: 25px; border-radius: 16px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .group-select { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 220px; }
-        label { font-weight: bold; color: #cbd5e1; font-size: 0.95rem; }
-        select { padding: 12px; background: #0f172a; color: #f8fafc; border: 2px solid #334155; border-radius: 10px; font-size: 1rem; outline: none; }
-        select:focus { border-color: var(--primary); }
-
-        .nav-tabs { display: flex; gap: 15px; margin-bottom: 25px; border-bottom: 2px solid #334155; }
-        .tab-btn { padding: 12px 25px; border: none; background: none; font-size: 1.1rem; font-weight: bold; color: var(--text-muted); cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s; }
-        .tab-btn.active { color: #818cf8; border-bottom-color: #818cf8; }
-
-        .content-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .content-section.active { display: block; }
-
-        .summary-card { background: #0f172a; border-left: 6px solid var(--primary); padding: 18px; margin-bottom: 15px; border-radius: 0 10px 10px 0; }
-        .summary-card h3 { margin-bottom: 6px; color: #818cf8; font-size: 1.15rem; }
-        .summary-card p { font-size: 1rem; line-height: 1.5; color: #cbd5e1; }
-
-        .quiz-info { background: rgba(99, 102, 241, 0.15); color: #c7d2fe; padding: 15px; border-radius: 10px; margin-bottom: 25px; font-size: 0.95rem; border: 1px solid rgba(99, 102, 241, 0.3); }
-        .question-block { margin-bottom: 25px; padding: 20px; border-radius: 12px; border: 2px solid #334155; background: #0f172a; transition: all 0.3s ease; }
-        .question-block.correct-answer { border-color: var(--success); background: rgba(34, 197, 94, 0.12); }
-        .question-block.wrong-answer { border-color: var(--danger); background: rgba(239, 68, 68, 0.12); }
-        .question-title { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; color: #f1f5f9; }
-        .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        
-        .option-label { display: flex; align-items: center; gap: 12px; background: #1e293b; padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; color: #e2e8f0; transition: all 0.2s; }
-        .option-label:hover { background: #334155; border-color: #64748b; }
-        .option-label.selected-option { background: rgba(37, 99, 235, 0.2); border-color: var(--selected-blue); color: #93c5fd; }
-
-        .explanation { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.9rem; display: none; }
-        .question-block.correct-answer .explanation { display: block; background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
-        .question-block.wrong-answer .explanation { display: block; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
-
-        .submit-btn { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
-        .submit-btn:hover { opacity: 0.9; }
-
-        #score-result { margin-top: 25px; padding: 25px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 1.1rem; display: none; }
-    </style>
-</head>
-<body>
-
-    <div class="admin-login-btn">
-        <button class="btn-secret" onclick="loginAdmin()" title="Acceso Administrador">
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-        </button>
-    </div>
-
-    <div id="paused-screen">
-        <div class="bunny-box">
-            <div class="bunny-emoji">🐰🌱</div>
-            <h2>Plataforma Pausada</h2>
-            <p>El acceso está suspendido temporalmente. Nuestro conejito está disfrutando de un buen césped fresco. ¡Vuelve más tarde!</p>
-        </div>
-    </div>
-
-    <div id="timer-modal">
-        <div class="modal-content">
-            <h3>⏰ ¡Tiempo Cumplido!</h3>
-            <p>Ya han pasado 35 minutos de estudio continuo. ¿Deseas seguir estudiando o quieres irte?</p>
-            <div class="modal-btns">
-                <button class="modal-btn secondary" onclick="handleTimerDecision('leave')">Me quiero ir</button>
-                <button class="modal-btn primary" onclick="handleTimerDecision('continue')">Seguir estudiando</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <header>
-            <h1>EstudiaSecu</h1>
-            <p>Plataforma Escolar Interactiva para Exámenes</p>
-        </header>
-
-        <div class="admin-panel" id="admin-panel">
-            <div class="admin-header">
-                <h3>🛠️ Panel de Control de Visitas (Privado)</h3>
-                <div class="admin-btns">
-                    <button class="btn-resume" onclick="setPlatformStatus('active')">Reanudar</button>
-                    <button class="btn-pause" onclick="setPlatformStatus('paused')">Pausar</button>
-                </div>
-            </div>
-            <div class="visits-table-container">
-                <table class="visits-table">
-                    <thead>
-                        <tr><th>#</th><th>Dispositivo / Acceso</th><th>Fecha y Hora</th></tr>
-                    </thead>
-                    <tbody id="visits-table-body"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="timer-card">
-            <span>⏱️ Tiempo de Estudio:</span>
-            <div id="time-display">35:00</div>
-        </div>
-
-        <div class="selector-card">
-            <div class="group-select">
-                <label for="grade-select">Grado Escolar:</label>
-                <select id="grade-select" onchange="updateSubjectsAndContent()">
-                    <option value="1" selected>1º de Secundaria</option>
-                    <option value="2">2º de Secundaria</option>
-                    <option value="3">3º de Secundaria</option>
-                </select>
-            </div>
-            <div class="group-select">
-                <label for="subject-select">Materia:</label>
-                <select id="subject-select" onchange="renderAll()"></select>
-            </div>
-            <div class="group-select">
-                <label for="term-select">Trimestre:</label>
-                <select id="term-select" onchange="renderAll()">
-                    <option value="1">1er Trimestre</option>
-                    <option value="2">2do Trimestre</option>
-                    <option value="3">3er Trimestre</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
-            <button class="tab-btn" onclick="switchTab('quiz')">Quiz Examen (50 Preguntas)</button>
-        </div>
-
-        <div id="study-section" class="content-section active">
-            <h2 id="study-title" style="margin-bottom: 20px; font-size: 1.4rem; color: #818cf8;"></h2>
-            <div id="study-content"></div>
-        </div>
-
-        <div id="quiz-section" class="content-section">
-            <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Simulador de Examen</h2>
-            <div class="quiz-info" id="quiz-info"></div>
-            <form id="quiz-form">
-                <div id="quiz-container"></div>
-                <button type="button" class="submit-btn" onclick="evaluateQuiz()">Calificar Examen Completo</button>
-            </form>
-            <div id="score-result"></div>
-        </div>
-    </div>
-
-    <script>
-        const ADMIN_PASSWORD = "carbón";
-
-        function loginAdmin() {
-            const pass = prompt("Contraseña de administrador:");
-            if (pass === ADMIN_PASSWORD) {
-                localStorage.setItem('estudiasecu_is_admin', 'true');
-                document.getElementById('admin-panel').style.display = 'block';
-                alert("¡Acceso concedido!");
-                checkPlatformStatus();
-            } else if (pass !== null) {
-                alert("Contraseña incorrecta.");
-            }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-color);
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
         }
 
-        function checkAdminSession() {
-            if (localStorage.getItem('estudiasecu_is_admin') === 'true') {
-                document.getElementById('admin-panel').style.display = 'block';
-            }
+        .admin-login-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            z-index: 100;
+        }
+        .btn-secret {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn-secret svg {
+            width: 24px;
+            height: 24px;
+            stroke: #ffffff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .btn-secret:hover {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
-        function checkPlatformStatus() {
-            const status = localStorage.getItem('estudiasecu_status') || 'active';
-            const pausedScreen = document.getElementById('paused-screen');
-            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
-            pausedScreen.style.display = (status === 'paused' && !isAdmin) ? 'flex' : 'none';
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: 15px;
+        }
+        header h1 {
+            background: linear-gradient(90deg, #818cf8, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
-        function setPlatformStatus(status) {
-            localStorage.setItem('estudiasecu_status', status);
-            checkPlatformStatus();
+        .timer-card {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 350px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timer-card span {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: bold;
+        }
+        #time-display {
+            font-size: 1.3rem;
+            color: #38bdf8;
+            font-family: monospace;
+            font-weight: bold;
         }
 
-        function registerVisit() {
-            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
-            let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
-            visits.push({
-                device: navigator.userAgent.includes("Mobile") ? "Móvil / Tablet" : "Computadora (Desktop)",
-                time: new Date().toLocaleString()
-            });
-            if (visits.length > 50) visits.shift();
-            localStorage.setItem('estudiasecu_visits', JSON.stringify(visits));
-            renderVisitsTable();
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
         }
 
-        function renderVisitsTable() {
-            const visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
-            const tbody = document.getElementById('visits-table-body');
-            tbody.innerHTML = visits.length === 0 ? `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas.</td></tr>` : '';
-            visits.reverse().forEach((v, idx) => {
-                tbody.innerHTML += `<tr><td>${visits.length - idx}</td><td>${v.device}</td><td>${v.time}</td></tr>`;
-            });
+        .admin-panel {
+            background: #111827;
+            border: 2px dashed #818cf8;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            display: none;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .admin-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-resume, .btn-pause {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-pause {
+            background: #8b5cf6;
         }
 
-        checkAdminSession();
-        checkPlatformStatus();
-        registerVisit();
-        renderVisitsTable();
-
-        const summariesData = {
-            1: {
-                biologia: { 1: [{ topic: "La Célula y Biodiversidad", text: "Estudio celular, organelos y cadenas tróficas." }] },
-                formacion: { 1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, adolescencia, autonomía y derechos fundamentales." }] },
-                integracion: { 1: [{ topic: "Trabajo Transversal", text: "Resolución comunitaria de problemas y pensamiento crítico." }] },
-                educacion_fisica: { 1: [{ topic: "Corporeidad y Motricidad", text: "Capacidades perceptivo-motrices y juego limpio." }] },
-                espanol: { 1: [{ topic: "Comprensión y Textos", text: "Textos informativos, narración y ortografía." }] },
-                artes: { 1: [{ topic: "Lenguaje Artístico", text: "Círculo cromático, elementos visuales y expresión dramática." }] },
-                geografia: { 1: [{ topic: "Espacio Geográfico", text: "Coordenadas, placas tectónicas y regiones naturales." }] },
-                historia: { 1: [{ topic: "Primeras Civilizaciones", text: "Prehistoria, hominización y civilizaciones agrícolas fluviales." }] },
-                tutoria: { 1: [{ topic: "Autoconocimiento y Convivencia", text: "Regulación emocional, asertividad y proyecto de vida." }] },
-                ingles: { 1: [{ topic: "Basic English I", text: "Verb to be, greetings, numbers and everyday expressions." }] }
-            }
-        };
-
-        function getSubjectsByGrade(grade) {
-            if (grade === "1") {
-                return [
-                    { id: "biologia", name: "Biología (Ciencias I)" },
-                    { id: "formacion", name: "Formación Cívica y Ética I" },
-                    { id: "integracion", name: "Integración Curricular I" },
-                    { id: "educacion_fisica", name: "Educación Física I" },
-                    { id: "espanol", name: "Español I" },
-                    { id: "artes", name: "Artes I" },
-                    { id: "geografia", name: "Geografía" },
-                    { id: "historia", name: "Historia I" },
-                    { id: "tutoria", name: "Tutoría I" },
-                    { id: "ingles", name: "Inglés I" },
-                    { id: "matematicas", name: "Matemáticas I" }
-                ];
-            } else if (grade === "2") {
-                return [
-                    { id: "fisica", name: "Física (Ciencias II)" },
-                    { id: "matematicas", name: "Matemáticas II" },
-                    { id: "espanol", name: "Español II" }
-                ];
-            } else {
-                return [
-                    { id: "quimica", name: "Química (Ciencias III)" },
-                    { id: "matematicas", name: "Matemáticas III" },
-                    { id: "espanol", name: "Español III" }
-                ];
-            }
+        .visits-table-container {
+            max-height: 180px;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+        table.visits-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        table.visits-table th {
+            background: #1f2937;
+            color: #9ca3af;
+            padding: 8px 12px;
+            position: sticky;
+            top: 0;
+        }
+        table.visits-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #374151;
+            color: #e5e7eb;
         }
 
-        function updateSubjectsAndContent() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectSelect = document.getElementById('subject-select');
-            const subjects = getSubjectsByGrade(grade);
-            subjectSelect.innerHTML = '';
-            subjects.forEach(sub => {
-                const opt = document.createElement('option');
-                opt.value = sub.id;
-                opt.textContent = sub.name;
-                subjectSelect.appendChild(opt);
-            });
-            renderAll();
+        #paused-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            text-align: center;
+            padding: 20px;
+        }
+        .bunny-box {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #818cf8;
+            max-width: 400px;
+        }
+        .bunny-emoji {
+            font-size: 4.5rem;
+            animation: bounceBunny 1.2s infinite ease-in-out;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        @keyframes bounceBunny {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .bunny-box h2 {
+            color: #818cf8;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+        .bunny-box p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
-        // --- BANCOS DE 50 PREGUNTAS OFICIALES ---
-        function getFullBank(grade, subject, term) {
-            let pool = [];
-            if (grade === "1" && term === "1") {
-                let dataPool = [];
+        #timer-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            border: 2px solid #6366f1;
+            max-width: 450px;
+            text-align: center;
+        }
+        .modal-content h3 {
+            color: #818cf8;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .modal-content p {
+            color: #cbd5e1;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+        .modal-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            color: white;
+        }
+        .modal-btn.secondary {
+            background: #334155;
+            color: #f8fafc;
+        }
 
-                if (subject === "biologia") {
-                    dataPool = [
-                        { q: "¿Cuál es la unidad estructural y funcional básica de todos los seres vivos?", opts: ["La célula", "El tejido", "El órgano", "El átomo"], correct: 0, exp: "Todo organismo vivo está compuesto por células." },
-                        { q: "¿Qué nombre reciben las células que carecen de un núcleo definido y tienen su material genético disperso?", opts: ["Procariotas", "Eucariotas", "Pluric
+        .selector-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .group-select, .matter-select {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 220px;
+        }
+        label {
+            font-weight: bold;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        select {
+            padding: 12px;
+            background: #0f172a;
+            color: #f8fafc;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+        select:focus {
+            border-color: var(--primary);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #334155;
+        }
+        .tab-btn {
+            padding: 12px 25px;
+            border: none;
+            background: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: #818cf8;
+            border-bottom-color: #818cf8;
+        }
+
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+
+        /* Estilos para el examen */
+        #exam-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .exam-content {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            border: 2px solid #6366f1;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .exam-title {
+            color: #818cf8;
+            font-size: 1.5rem;
+        }
+        .close-exam {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .exam-question {
+            margin-bottom: 20px;
+            color: #f8fafc;
+        }
+        .exam-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .exam-option {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #334155;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .exam-option:hover, .exam-option.selected {
+            border-color: #818cf8;
+            background: #2563eb;
+        }
+        .exam-option.correct {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+        .exam-option.incorrect {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+        .exam-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .exam-nav {
+            display: flex;
+            gap: 10px;
+        }
+        .exam-nav button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #334155;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .exam-nav button:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+        }
+        .exam-submit {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .exam-result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color:
