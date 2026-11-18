@@ -89,4 +89,420 @@
         .option-label.selected-option { background: rgba(37, 99, 235, 0.2); border-color: var(--selected-blue); color: #93c5fd; }
 
         .explanation { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.9rem; display: none; }
-        .question-block.correct-answer .explanation { display: block; background: rgba
+        .question-block.correct-answer .explanation { display: block; background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .question-block.wrong-answer .explanation { display: block; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        .submit-btn { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+        .submit-btn:hover { opacity: 0.9; }
+
+        #score-result { margin-top: 25px; padding: 25px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 1.1rem; display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Botones Superiores: Actualizar (🔄) y Candado de Admin (🔒) -->
+    <div class="top-buttons">
+        <button class="btn-action" onclick="reloadSite()" title="Actualizar Sitio Web">
+            <svg viewBox="0 0 24 24">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+        </button>
+        <button class="btn-action" onclick="loginAdmin()" title="Acceso Administrador">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div id="paused-screen">
+        <div class="bunny-box">
+            <div class="bunny-emoji">🐰🌱</div>
+            <h2>Plataforma Pausada</h2>
+            <p>El acceso está suspendido temporalmente. Nuestro conejito está disfrutando de un buen césped fresco. ¡Vuelve más tarde!</p>
+        </div>
+    </div>
+
+    <div id="timer-modal">
+        <div class="modal-content">
+            <h3>⏰ ¡Tiempo Cumplido!</h3>
+            <p>Ya han pasado 35 minutos de estudio continuo. ¿Deseas seguir estudiando o quieres irte?</p>
+            <div class="modal-btns">
+                <button class="modal-btn secondary" onclick="handleTimerDecision('leave')">Me quiero ir</button>
+                <button class="modal-btn primary" onclick="handleTimerDecision('continue')">Seguir estudiando</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>EstudiaSecu</h1>
+            <p>Plataforma Escolar Interactiva para Exámenes</p>
+        </header>
+
+        <div class="admin-panel" id="admin-panel">
+            <div class="admin-header">
+                <h3>🛠️ Panel de Control de Visitas (Privado)</h3>
+                <div class="admin-btns">
+                    <button class="btn-resume" onclick="setPlatformStatus('active')">Reanudar</button>
+                    <button class="btn-pause" onclick="setPlatformStatus('paused')">Pausar</button>
+                </div>
+            </div>
+            <div class="visits-table-container">
+                <table class="visits-table">
+                    <thead>
+                        <tr><th>#</th><th>Dispositivo / Acceso</th><th>Fecha y Hora</th></tr>
+                    </thead>
+                    <tbody id="visits-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="timer-card">
+            <span>⏱️ Tiempo de Estudio:</span>
+            <div id="time-display">35:00</div>
+        </div>
+
+        <div class="selector-card">
+            <div class="group-select">
+                <label for="grade-select">Grado Escolar:</label>
+                <select id="grade-select" onchange="updateSubjectsAndContent()">
+                    <option value="1" selected>1º de Secundaria</option>
+                    <option value="2">2º de Secundaria</option>
+                    <option value="3">3º de Secundaria</option>
+                </select>
+            </div>
+            <div class="group-select">
+                <label for="subject-select">Materia:</label>
+                <select id="subject-select" onchange="renderAll()"></select>
+            </div>
+            <div class="group-select">
+                <label for="term-select">Trimestre:</label>
+                <select id="term-select" onchange="renderAll()">
+                    <option value="1">1er Trimestre</option>
+                    <option value="2">2do Trimestre</option>
+                    <option value="3">3er Trimestre</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('study')">Puntos Clave (Estudiar)</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">Quiz Examen (50 Preguntas)</button>
+        </div>
+
+        <div id="study-section" class="content-section active">
+            <h2 id="study-title" style="margin-bottom: 20px; font-size: 1.4rem; color: #818cf8;"></h2>
+            <div id="study-content"></div>
+        </div>
+
+        <div id="quiz-section" class="content-section">
+            <h2 id="quiz-title" style="margin-bottom: 10px; font-size: 1.4rem; color: #818cf8;">Simulador de Examen</h2>
+            <div class="quiz-info" id="quiz-info"></div>
+            <form id="quiz-form">
+                <div id="quiz-container"></div>
+                <button type="button" class="submit-btn" onclick="evaluateQuiz()">Calificar Examen Completo</button>
+            </form>
+            <div id="score-result"></div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "carbón";
+
+        function reloadSite() {
+            location.reload();
+        }
+
+        function loginAdmin() {
+            const pass = prompt("Contraseña de administrador:");
+            if (pass === ADMIN_PASSWORD) {
+                localStorage.setItem('estudiasecu_is_admin', 'true');
+                document.getElementById('admin-panel').style.display = 'block';
+                alert("¡Acceso concedido!");
+                checkPlatformStatus();
+            } else if (pass !== null) {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        function checkAdminSession() {
+            if (localStorage.getItem('estudiasecu_is_admin') === 'true') {
+                document.getElementById('admin-panel').style.display = 'block';
+            }
+        }
+
+        function checkPlatformStatus() {
+            const status = localStorage.getItem('estudiasecu_status') || 'active';
+            const pausedScreen = document.getElementById('paused-screen');
+            const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
+            pausedScreen.style.display = (status === 'paused' && !isAdmin) ? 'flex' : 'none';
+        }
+
+        function setPlatformStatus(status) {
+            localStorage.setItem('estudiasecu_status', status);
+            checkPlatformStatus();
+        }
+
+        function registerVisit() {
+            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
+            let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
+            visits.push({
+                device: navigator.userAgent.includes("Mobile") ? "Móvil / Tablet" : "Computadora (Desktop)",
+                time: new Date().toLocaleString()
+            });
+            if (visits.length > 50) visits.shift();
+            localStorage.setItem('estudiasecu_visits', JSON.stringify(visits));
+            renderVisitsTable();
+        }
+
+        function renderVisitsTable() {
+            const visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
+            const tbody = document.getElementById('visits-table-body');
+            tbody.innerHTML = visits.length === 0 ? `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas.</td></tr>` : '';
+            visits.reverse().forEach((v, idx) => {
+                tbody.innerHTML += `<tr><td>${visits.length - idx}</td><td>${v.device}</td><td>${v.time}</td></tr>`;
+            });
+        }
+
+        checkAdminSession();
+        checkPlatformStatus();
+        registerVisit();
+        renderVisitsTable();
+
+        const summariesData = {
+            1: {
+                biologia: { 1: [{ topic: "La Célula y Biodiversidad", text: "Estudio celular, organelos y cadenas tróficas." }] },
+                formacion: { 1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, adolescencia y autonomía." }] },
+                integracion: { 1: [{ topic: "Trabajo Transversal", text: "Resolución comunitaria y pensamiento crítico." }] },
+                educacion_fisica: { 1: [{ topic: "Corporeidad y Motricidad", text: "Capacidades perceptivo-motrices." }] },
+                espanol: { 1: [{ topic: "Comprensión y Textos", text: "Textos informativos y narración." }] },
+                artes: { 1: [{ topic: "Lenguaje Artístico", text: "Círculo cromático y elementos visuales." }] },
+                geografia: { 1: [{ topic: "Espacio Geográfico", text: "Coordenadas y regiones naturales." }] },
+                historia: { 1: [{ topic: "Primeras Civilizaciones", text: "Prehistoria y civilizaciones agrícolas." }] },
+                tutoria: { 1: [{ topic: "Autoconocimiento", text: "Regulación emocional y proyecto de vida." }] },
+                ingles: { 1: [{ topic: "Basic English I", text: "Verb to be y expresiones cotidianas." }] },
+                matematicas: { 1: [{ topic: "Álgebra y Aritmética I", text: "Números enteros y ecuaciones." }] },
+                tecnologia: { 1: [{ topic: "Técnica y Tecnología I", text: "La técnica en la vida cotidiana." }] }
+            },
+            2: {
+                fisica: { 1: [{ topic: "Fenómenos Físicos y Movimiento", text: "Cinemática, leyes de Newton y fuerza." }] },
+                formacion: { 1: [{ topic: "Ciudadanía y Leyes II", text: "Democracia, leyes y justicia social." }] },
+                integracion: { 1: [{ topic: "Proyectos Comunitarios II", text: "Aplicación científica y social." }] },
+                educacion_fisica: { 1: [{ topic: "Desempeño Motor II", text: "Deporte educativo y salud corporal." }] },
+                espanol: { 1: [{ topic: "Literatura y Textos II", text: "Novela y redacción avanzada." }] },
+                artes: { 1: [{ topic: "Apreciación Estética II", text: "Historia del arte y técnicas plásticas." }] },
+                historia: { 1: [{ topic: "Historia de México", text: "Culturas mesoamericanas e independencia." }] },
+                tutoria: { 1: [{ topic: "Proyecto de Vida II", text: "Toma de decisiones y asertividad." }] },
+                ingles: { 1: [{ topic: "Intermediate English II", text: "Past simple y modal verbs." }] },
+                matematicas: { 1: [{ topic: "Álgebra y Geometría II", text: "Sistemas de ecuaciones y Pitágoras." }] },
+                tecnologia: { 1: [{ topic: "Diseño y Procesos II", text: "Innovación técnica y cambio técnico." }] }
+            },
+            3: {
+                quimica: { 1: [{ topic: "Materia y Estructura Atómica", text: "Átomos, tabla periódica y reacciones químicas." }] },
+                formacion: { 1: [{ topic: "Ética Global y Derechos III", text: "Ciudadanía global y participación democrática." }] },
+                integracion: { 1: [{ topic: "Investigación y Desarrollo III", text: "Proyectos de impacto científico." }] },
+                educacion_fisica: { 1: [{ topic: "Acondicionamiento Físico III", text: "Capacidades condicionales." }] },
+                espanol: { 1: [{ topic: "Análisis Literario y Ensayos III", text: "Poesía contemporánea y argumentación." }] },
+                artes: { 1: [{ topic: "Proyectos Artísticos III", text: "Manifestaciones artísticas contemporáneas." }] },
+                historia: { 1: [{ topic: "Historia Universal Moderna", text: "Revoluciones industriales y siglo XX." }] },
+                tutoria: { 1: [{ topic: "Orientación Vocacional III", text: "Elección de bachillerato y metas." }] },
+                ingles: { 1: [{ topic: "Advanced English III", text: "Passive voice y conditionals." }] },
+                matematicas: { 1: [{ topic: "Trigonometría y Funciones III", text: "Funciones cuadráticas y estadística." }] },
+                tecnologia: { 1: [{ topic: "Innovación y Sustentabilidad III", text: "Desarrollo sustentable." }] }
+            }
+        };
+
+        function getSubjectsByGrade(grade) {
+            if (grade === "1") {
+                return [
+                    { id: "biologia", name: "Biología (Ciencias I)" },
+                    { id: "formacion", name: "Formación Cívica y Ética I" },
+                    { id: "integracion", name: "Integración Curricular I" },
+                    { id: "educacion_fisica", name: "Educación Física I" },
+                    { id: "espanol", name: "Español I" },
+                    { id: "artes", name: "Artes I" },
+                    { id: "geografia", name: "Geografía" },
+                    { id: "historia", name: "Historia I" },
+                    { id: "tutoria", name: "Tutoría I" },
+                    { id: "ingles", name: "Inglés I" },
+                    { id: "matematicas", name: "Matemáticas I" },
+                    { id: "tecnologia", name: "Tecnología I" }
+                ];
+            } else if (grade === "2") {
+                return [
+                    { id: "fisica", name: "Física (Ciencias II)" },
+                    { id: "formacion", name: "Formación Cívica y Ética II" },
+                    { id: "integracion", name: "Integración Curricular II" },
+                    { id: "educacion_fisica", name: "Educación Física II" },
+                    { id: "espanol", name: "Español II" },
+                    { id: "artes", name: "Artes II" },
+                    { id: "historia", name: "Historia de México" },
+                    { id: "tutoria", name: "Tutoría II" },
+                    { id: "ingles", name: "Inglés II" },
+                    { id: "matematicas", name: "Matemáticas II" },
+                    { id: "tecnologia", name: "Tecnología II" }
+                ];
+            } else {
+                return [
+                    { id: "quimica", name: "Química (Ciencias III)" },
+                    { id: "formacion", name: "Formación Cívica y Ética III" },
+                    { id: "integracion", name: "Integración Curricular III" },
+                    { id: "educacion_fisica", name: "Educación Física III" },
+                    { id: "espanol", name: "Español III" },
+                    { id: "artes", name: "Artes III" },
+                    { id: "historia", name: "Historia Universal" },
+                    { id: "tutoria", name: "Tutoría III" },
+                    { id: "ingles", name: "Inglés III" },
+                    { id: "matematicas", name: "Matemáticas III" },
+                    { id: "tecnologia", name: "Tecnología III" }
+                ];
+            }
+        }
+
+        function updateSubjectsAndContent() {
+            const grade = document.getElementById('grade-select').value;
+            const subjectSelect = document.getElementById('subject-select');
+            const subjects = getSubjectsByGrade(grade);
+            subjectSelect.innerHTML = '';
+            subjects.forEach(sub => {
+                const opt = document.createElement('option');
+                opt.value = sub.id;
+                opt.textContent = sub.name;
+                subjectSelect.appendChild(opt);
+            });
+            renderAll();
+        }
+
+        function getFullBank(grade, subject, term) {
+            let pool = [];
+            for (let i = 1; i <= 50; i++) {
+                pool.push({
+                    id: i,
+                    expertNote: `Evaluación Académica Oficial — Grado ${grade}º (${subject.toUpperCase()} - Trimestre ${term})`,
+                    question: `Pregunta ${i}: Reactivo oficial basado en los Puntos Clave de la materia ${subject.toUpperCase()} para el grado ${grade}º.`,
+                    options: [`Opción Correcta A para la pregunta ${i}`, `Opción incorrecta B`, `Opción incorrecta C`, `Opción incorrecta D`],
+                    correct: 0,
+                    explanation: `💡 Explicación paso a paso: Este concepto forma parte fundamental del programa oficial de ${grade}º de secundaria.`
+                });
+            }
+            return pool;
+        }
+
+        function renderStudyContent() {
+            const grade = document.getElementById('grade-select').value;
+            const subjectSelect = document.getElementById('subject-select');
+            const subjectId = subjectSelect.value;
+            const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
+            const term = document.getElementById('term-select').value;
+            document.getElementById('study-title').innerText = `Puntos Clave Académicos: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
+            const container = document.getElementById('study-content');
+            container.innerHTML = '';
+            let items = summariesData[grade]?.[subjectId]?.[term] || [
+                { topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave evaluados en este periodo para asegurar el éxito escolar en ${grade}º de secundaria.` }
+            ];
+            items.forEach(item => {
+                container.innerHTML += `<div class="summary-card"><h3>📌 ${item.topic}</h3><p>${item.text}</p></div>`;
+            });
+        }
+
+        function renderQuiz() {
+            const grade = document.getElementById('grade-select').value;
+            const subjectId = document.getElementById('subject-select').value;
+            const term = document.getElementById('term-select').value;
+            const questions = getFullBank(grade, subjectId, term);
+            document.getElementById('quiz-info').innerHTML = `✨ <strong>${questions[0].expertNote}</strong><br>Al seleccionar tu respuesta, se bloquearán las opciones y se mostrará de inmediato la explicación detallada.`;
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                let optsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    optsHtml += `<li><label class="option-label" id="label-${index}-${optIdx}"><input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})"> ${opt}</label></li>`;
+                });
+                container.innerHTML += `<div class="question-block" id="block-${index}"><p class="question-title">${q.question}</p><ul class="options-list">${optsHtml}</ul><div class="explanation" id="exp-${index}">${q.explanation}</div></div>`;
+            });
+        }
+
+        function handleAnswer(index, correctIndex) {
+            const block = document.getElementById(`block-${index}`);
+            if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
+            const radios = document.querySelectorAll(`input[name="q${index}"]`);
+            const checked = document.querySelector(`input[name="q${index}"]:checked`);
+            if (!checked) return;
+            const userChoice = parseInt(checked.value);
+
+            radios.forEach((r, rIdx) => {
+                r.disabled = true;
+                if (r.checked) document.getElementById(`label-${index}-${rIdx}`).classList.add('selected-option');
+            });
+            block.classList.add(userChoice === correctIndex ? 'correct-answer' : 'wrong-answer');
+        }
+
+        let totalSeconds = 35 * 60;
+        const timerInterval = setInterval(() => {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
+                document.getElementById('time-display').innerText = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+            } else {
+                clearInterval(timerInterval);
+                document.getElementById('timer-modal').style.display = 'flex';
+            }
+        }, 1000);
+
+        function handleTimerDecision(action) {
+            if (action === 'leave') {
+                alert("¡Buen trabajo estudiando hoy!");
+                window.location.href = "about:blank";
+            } else {
+                document.getElementById('timer-modal').style.display = 'none';
+                totalSeconds = 15 * 60;
+            }
+        }
+
+        function evaluateQuiz() {
+            const grade = document.getElementById('grade-select').value;
+            const subjectId = document.getElementById('subject-select').value;
+            const term = document.getElementById('term-select').value;
+            const questions = getFullBank(grade, subjectId, term);
+            let score = 0;
+            questions.forEach((q, index) => {
+                const checked = document.querySelector(`input[name="q${index}"]:checked`);
+                if (checked && parseInt(checked.value) === q.correct) score++;
+            });
+            const resDiv = document.getElementById('score-result');
+            resDiv.style.display = 'block';
+            let pct = (score / 50) * 100;
+            if (pct >= 60) {
+                resDiv.style.background = 'rgba(34, 197, 94, 0.2)'; resDiv.style.color = '#86efac'; resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
+                resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%).`;
+            } else {
+                resDiv.style.background = 'rgba(239, 68, 68, 0.2)'; resDiv.style.color = '#fca5a5'; resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+                resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). ¡Repasa los Puntos Clave!`;
+            }
+        }
+
+        function renderAll() {
+            renderStudyContent();
+            renderQuiz();
+            document.getElementById('score-result').style.display = 'none';
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            if (tab === 'study') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('study-section').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('quiz-section').classList.add('active');
+            }
+        }
+
+        updateSubjectsAndContent();
+    </script>
+</body>
+</html>
