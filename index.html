@@ -1,420 +1,354 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstudiaSecu</title>
+    <title>EstudiaSecu - Plataforma Escolar</title>
     <style>
-        :root{--p:#6366f1;--b:#0f172a;--c:#1e293b;--t:#f8fafc;--m:#94a3b8}
-        *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-        body{background:linear-gradient(135deg,#0f172a,#1e1b4b);color:#f8fafc;padding:20px}
-        .c{display:flex;flex-direction:column;gap:10px}
-        .r{display:flex;gap:10px}
-        .s{background:#1e293b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;margin-bottom:20px}
-        .s select{padding:10px;background:#0f172a;color:#f8fafc;border:2px solid #334155;border-radius:8px;width:100%}
-        .h{text-align:center;margin-bottom:20px}
-        .h h1{background:linear-gradient(90deg,#818cf8,#ec4899);background-clip:text;-webkit-background-clip:text;color:transparent;font-size:2.5rem;font-weight:800;margin-bottom:5px}
-        .t{background:#1e293b;border:2px solid #6366f1;padding:10px 15px;border-radius:8px;display:flex;justify-content:space-between;max-width:250px;margin:10px auto}
-        .t span{font-weight:bold}
-        .b{position:fixed;top:20px;right:20px;display:flex;gap:10px;z-index:100}
-        .btn{background:#1e293b;border:2px solid #6366f1;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-        .btn:hover{background:#6366f1}
-        .btn svg{stroke:#fff;fill:none}
-        .tab{display:flex;gap:10px;margin-bottom:20px;border-bottom:2px solid #334155}
-        .tab button{padding:10px 20px;border:none;background:none;color:#94a3b8;font-weight:bold;border-bottom:3px solid transparent}
-        .tab button.active{color:#818cf8;border-bottom-color:#818cf8}
-        .sec{display:none}
-        .sec.active{display:block}
-        #paused{position:fixed;inset:0;background:#0f172a;display:none;flex-direction:column;justify-content:center;align-items:center;z-index:3000}
-        .bunny{background:#1e293b;padding:30px;border-radius:20px;border:2px solid #818cf8;text-align:center}
-        .bunny span{font-size:4rem;animation:bounce 1.2s infinite}
-        @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        #modal{position:fixed;inset:0;background:rgba(15,23,42,.9);display:none;justify-content:center;align-items:center;z-index:2000}
-        .modal{background:#1e293b;padding:25px;border-radius:12px;border:2px solid #6366f1;max-width:400px;width:90%}
-        .modal input{width:100%;padding:8px;margin:10px 0;border-radius:6px;border:1px solid #334155;background:#0f172a}
-        .modal button{padding:8px 15px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
-        .modal .p{background:linear-gradient(135deg,#6366f1,#ec4899);color:#fff}
-        .modal .s{background:#334155}
-        table{width:100%;border-collapse:collapse;font-size:.85rem}
-        th{background:#1f2937;color:#9ca3af;padding:8px;text-align:left}
-        td{padding:8px;border-bottom:1px solid #374151}
-        .admin{display:none}
+        :root {
+            --primary: #6366f1;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e1b4b 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            background: linear-gradient(90deg, #818cf8, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .timer {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .header-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .control-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .control-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        .control-btn svg {
+            stroke: var(--text-light);
+            fill: none;
+            stroke-width: 2;
+        }
+        .selector-group {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .selector-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+        .selector-group select {
+            width: 100%;
+            padding: 10px;
+            background: #0f172a;
+            color: var(--text-light);
+            border: 2px solid #334155;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .selector-group select:focus {
+            border-color: var(--primary);
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #334155;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .topics-container, .exam-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .topic-item {
+            margin-bottom: 15px;
+        }
+        .topic-item h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .topic-item ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .topic-item li {
+            padding: 5px 0;
+            border-bottom: 1px solid #334155;
+        }
+        .exam-question {
+            margin-bottom: 20px;
+        }
+        .exam-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .exam-option {
+            padding: 12px;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .exam-option:hover, .exam-option.selected {
+            border-color: var(--primary);
+            background: #2563eb;
+        }
+        .exam-option.correct {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+        .exam-option.incorrect {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+        .exam-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .exam-nav button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            background: #334155;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        .exam-nav button:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+        }
+        .exam-submit {
+            padding: 10px 20px;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .exam-result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .exam-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+        #paused-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            text-align: center;
+        }
+        .bunny-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            max-width: 400px;
+        }
+        .bunny-emoji {
+            font-size: 4rem;
+            animation: bounce 1.2s infinite ease-in-out;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #admin-panel {
+            background: #111827;
+            border: 2px dashed var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+        }
+        #admin-panel h2 {
+            margin-bottom: 15px;
+        }
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-admin {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-resume {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-pause {
+            background: #8b5cf6;
+            color: white;
+        }
+        .visits-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .visits-table th {
+            background: #1f2937;
+            color: var(--text-muted);
+            padding: 10px;
+            text-align: left;
+        }
+        .visits-table td {
+            padding: 10px;
+            border-bottom: 1px solid #374151;
+        }
+        #modal-password {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-content h3 {
+            margin-bottom: 15px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: var(--text-light);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--primary), #ec4899);
+            color: white;
+        }
+        .modal-btn.secondary {
+            background: #334155;
+            color: var(--text-light);
+        }
     </style>
 </head>
 <body>
-    <div class="b">
-        <button class="btn" onclick="location.reload()" title="Actualizar">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M2.5 22v-6h6M21.5 18a6 6 0 0 0-6-6 6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6zM2.5 6a6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6 6 6 0 0 1-6-6z"/></svg>
-        </button>
-        <button class="btn" id="lock" title="Admin">
-            <svg width="18" height="18" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><circle cx="12" cy="16" r="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </button>
-    </div>
-
-    <header class="h">
-        <h1>EstudiaSecu</h1>
-        <p>Plataforma escolar</p>
-        <div class="t"><span>Tiempo:</span><span id="time">35:00</span></div>
-    </header>
-
-    <div class="container">
-        <div class="s">
-            <label>Grado:</label>
-            <select id="grado" onchange="updateMaterias()">
-                <option value="">-- Selecciona --</option>
-                <option value="1">1° Secundaria</option>
-                <option value="2">2° Secundaria</option>
-                <option value="3">3° Secundaria</option>
-            </select>
-        </div>
-
-        <div class="s" id="materias" style="display:none">
-            <label>Materia:</label>
-            <select id="materia" onchange="showTopics()">
-                <option value="">-- Selecciona --</option>
-            </select>
-        </div>
-
-        <div class="tab">
-            <button class="active" onclick="showTab('inicio')">Inicio</button>
-            <button onclick="showTab('topics')">Temas</button>
-            <button onclick="showTab('exam')">Examen</button>
-        </div>
-
-        <section id="inicio" class="sec active">
-            <h2>Bienvenido</h2>
-            <p>Selecciona tu grado y materia</p>
-        </section>
-
-        <section id="topics" class="sec">
-            <div id="topics-container"></div>
-        </section>
-
-        <section id="exam" class="sec">
-            <div id="exam-container"></div>
-        </section>
-
-        <div class="admin" id="admin">
-            <h2>Panel Admin</h2>
-            <div class="r">
-                <button onclick="resume()">Reanudar</button>
-                <button onclick="pause()">Pausar</button>
-            </div>
-            <div style="max-height:200px;overflow:auto;border:1px solid #374151;border-radius:8px;margin-top:15px">
-                <table>
-                    <thead><tr><th>Fecha</th><th>Hora</th><th>Grado</th><th>Materia</th></tr></thead>
-                    <tbody id="visits"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div id="paused">
-        <div class="bunny">
-            <span>🐰</span>
-            <h2>¡Pausa activa!</h2>
-            <p>El sitio está en modo pausa</p>
-        </div>
-    </div>
-
-    <div id="modal">
-        <div class="modal">
-            <h3>Contraseña Admin</h3>
-            <input type="password" id="pass" placeholder="Contraseña">
-            <div class="r">
-                <button class="p" onclick="checkPass()">Aceptar</button>
-                <button class="s" onclick="closeModal()">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Datos
-        const data = {
-            1: {
-                name: "1° Secundaria",
-                subjects: {
-                    biologia: "Biología",
-                    matematicas: "Matemáticas",
-                    tecnologia: "Tecnología",
-                    civica: "Formación Cívica"
-                },
-                topics: {
-                    biologia: {t1: ["Introducción", "Seres vivos", "La célula"], t2: ["Sistemas", "Nutrición", "Respiración"], t3: ["Ecosistemas", "Cadena alimenticia", "Conservación"]},
-                    matematicas: {t1: ["Jerarquía", "Paréntesis", "Operaciones"], t2: ["Fracciones", "Decimales", "Proporcionalidad"], t3: ["Geometría", "Áreas", "Ecuaciones"]},
-                    tecnologia: {t1: ["Introducción", "Herramientas", "Seguridad"], t2: ["Materiales", "Fabricación", "Diseño"], t3: ["Energías", "Impacto", "Proyectos"]},
-                    civica: {t1: ["Familia", "Derechos", "Valores"], t2: ["Comunidad", "Participación", "Democracia"], t3: ["Gobierno", "Leyes", "Legalidad"]}
-                }
-            },
-            2: {
-                name: "2° Secundaria",
-                subjects: {
-                    fisica: "Física",
-                    matematicas: "Matemáticas",
-                    quimica: "Química",
-                    historia: "Historia"
-                },
-                topics: {
-                    fisica: {t1: ["Magnitudes", "Movimiento", "Fuerza"], t2: ["Energía", "Trabajo", "Conservación"], t3: ["Electricidad", "Circuitos", "Magnetismo"]},
-                    matematicas: {t1: ["Álgebra", "Ecuaciones", "Sistemas"], t2: ["Funciones", "Gráficas", "Aplicación"], t3: ["Estadística", "Medidas", "Gráficos"]},
-                    quimica: {t1: ["Materia", "Propiedades", "Átomos"], t2: ["Tabla periódica", "Enlaces", "Reacciones"], t3: ["Carbono", "Compuestos", "Aplicaciones"]},
-                    historia: {t1: ["Prehispánico", "Conquista", "Colonia"], t2: ["Independencia", "Revolución", "México"], t3: ["Contemporáneo", "Globalización", "Desafíos"]}
-                }
-            },
-            3: {
-                name: "3° Secundaria",
-                subjects: {
-                    quimica: "Química",
-                    matematicas: "Matemáticas",
-                    biologia: "Biología",
-                    administracion: "Administración"
-                },
-                topics: {
-                    quimica: {t1: ["Carbono avanzado", "Bioquímica", "Polímeros"], t2: ["Equilibrio", "Cinética", "Termoquímica"], t3: ["Ambiental", "Contaminación", "Sostenibilidad"]},
-                    matematicas: {t1: ["Funciones", "Ecuaciones", "Gráficas"], t2: ["Geometría analítica", "Rectas", "Problemas"], t3: ["Probabilidad", "Distribuciones", "Aplicaciones"]},
-                    biologia: {t1: ["Genética", "ADN", "Herencia"], t2: ["Evolución", "Teorías", "Evidencias"], t3: ["Humana", "Inmunológico", "Enfermedades"]},
-                    administracion: {t1: ["Introducción", "Empresas", "Procesos"], t2: ["Recursos humanos", "Marketing", "Contabilidad"], t3: ["Proyectos", "Liderazgo", "Ética"]}
-                }
-            }
-        };
-
-        // Variables
-        let isPaused = false;
-        let visits = [];
-        let timeLeft = 35 * 60;
-        let timer;
-        let questions = [];
-        let currentQuestion = 0;
-        let correctAnswers = 0;
-
-        // Elementos
-        const timeDisplay = document.getElementById('time');
-        const topicsContainer = document.getElementById('topics-container');
-        const examContainer = document.getElementById('exam-container');
-        const visitsTable = document.getElementById('visits');
-        const pausedScreen = document.getElementById('paused');
-        const modal = document.getElementById('modal');
-        const adminPanel = document.getElementById('admin');
-
-        // Funciones
-        function startTimer() {
-            timer = setInterval(() => {
-                timeLeft--;
-                const m = Math.floor(timeLeft / 60);
-                const s = timeLeft % 60;
-                timeDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    if (confirm("Tiempo terminado. ¿Continuar?")) {
-                        timeLeft = 35 * 60;
-                        timeDisplay.textContent = "35:00";
-                        startTimer();
-                    }
-                }
-            }, 1000);
-        }
-
-        function updateMaterias() {
-            const grade = document.getElementById('grado').value;
-            const subjectSelect = document.getElementById('materia');
-            subjectSelect.innerHTML = '<option value="">-- Selecciona --</option>';
-            document.getElementById('materias').style.display = grade ? 'block' : 'none';
-
-            if (grade) {
-                const subjects = data[grade].subjects;
-                for (const [key, name] of Object.entries(subjects)) {
-                    const option = document.createElement('option');
-                    option.value = key;
-                    option.textContent = name;
-                    subjectSelect.appendChild(option);
-                }
-            }
-        }
-
-        function showTopics() {
-            const grade = document.getElementById('grado').value;
-            const subject = document.getElementById('materia').value;
-
-            if (!grade || !subject) return;
-
-            topicsContainer.innerHTML = '';
-            const topics = data[grade].topics[subject];
-
-            for (const [trimester, list] of Object.entries(topics)) {
-                const div = document.createElement('div');
-                div.innerHTML = `<h3>Trimestre ${trimester.slice(1)}</h3><ul style="list-style:none;padding-left:0">`;
-                list.forEach(topic => {
-                    div.innerHTML += `<li>• ${topic}</li>`;
-                });
-                div.innerHTML += '</ul>';
-                topicsContainer.appendChild(div);
-            }
-
-            recordVisit(grade, subject);
-        }
-
-        function recordVisit(grade, subject) {
-            const now = new Date();
-            visits.push({
-                date: now.toLocaleDateString(),
-                time: now.toLocaleTimeString(),
-                grade: data[grade].name,
-                subject: document.getElementById('materia').options[document.getElementById('materia').selectedIndex].text
-            });
-            updateVisitsTable();
-        }
-
-        function updateVisitsTable() {
-            visitsTable.innerHTML = '';
-            visits.forEach(visit => {
-                visitsTable.innerHTML += `
-                    <tr>
-                        <td>${visit.date}</td>
-                        <td>${visit.time}</td>
-                        <td>${visit.grade}</td>
-                        <td>${visit.subject}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        function showTab(tab) {
-            document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        function showExam() {
-            const grade = document.getElementById('grado').value;
-            const subject = document.getElementById('materia').value;
-
-            if (!grade || !subject) {
-                alert("Selecciona grado y materia");
-                return;
-            }
-
-            const topics = data[grade].topics[subject];
-            const allTopics = Object.values(topics).flat();
-            questions = [];
-
-            // Generar 5 preguntas únicas
-            while (questions.length < 5) {
-                const randomIndex = Math.floor(Math.random() * allTopics.length);
-                const topic = allTopics[randomIndex];
-
-                if (!questions.some(q => q.correctAnswer === topic)) {
-                    questions.push({
-                        question: `¿Qué tema se relaciona con "${topic}"?`,
-                        options: [
-                            topic,
-                            allTopics[(randomIndex + 1) % allTopics.length],
-                            allTopics[(randomIndex + 2) % allTopics.length],
-                            allTopics[(randomIndex + 3) % allTopics.length]
-                        ].sort(() => Math.random() - 0.5),
-                        correctAnswer: topic
-                    });
-                }
-            }
-
-            currentQuestion = 0;
-            correctAnswers = 0;
-            showQuestion();
-            examContainer.innerHTML = '';
-            examContainer.style.display = 'block';
-        }
-
-        function showQuestion() {
-            const q = questions[currentQuestion];
-            examContainer.innerHTML = `
-                <div style="margin-bottom:15px;color:#f8fafc">${q.question}</div>
-                <div style="display:flex;flex-direction:column;gap:10px">
-                    ${q.options.map((option, i) => `
-                        <div onclick="selectOption(${i})" style="padding:10px;border:2px solid #334155;border-radius:6px;cursor:pointer">${option}</div>
-                    `).join('')}
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px">
-                    <div>
-                        <button onclick="prevQuestion()" style="padding:6px 12px;border:none;border-radius:6px;background:#334155;color:#fff" ${currentQuestion === 0 ? 'disabled' : ''}>Anterior</button>
-                        <span style="margin:0 10px">${currentQuestion + 1}/5</span>
-                        <button onclick="nextQuestion()" style="padding:6px 12px;border:none;border-radius:6px;background:#334155;color:#fff" ${currentQuestion === 4 ? 'disabled' : ''}>Siguiente</button>
-                    </div>
-                    <button id="submit" onclick="finishExam()" style="padding:8px 15px;border:none;border-radius:6px;background:#22c55e;color:#fff;display:none">Finalizar</button>
-                </div>
-            `;
-        }
-
-        function selectOption(index) {
-            document.querySelectorAll('[onclick^="selectOption"]').forEach(opt => {
-                opt.style.borderColor = '#334155';
-                opt.style.background = '#0f172a';
-            });
-            const selected = document.querySelectorAll('[onclick^="selectOption"]')[index];
-            selected.style.borderColor = '#6366f1';
-            selected.style.background = '#2563eb';
-        }
-
-        function prevQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < 4) {
-                currentQuestion++;
-                showQuestion();
-            } else {
-                document.getElementById('submit').style.display = 'inline-block';
-                examContainer.innerHTML = '<p>Preguntas completadas</p>';
-            }
-        }
-
-        function finishExam() {
-            const selected = document.querySelector('[style*="border-color: rgb(99, 102, 241)"]');
-            if (selected && selected.textContent === questions[currentQuestion].correctAnswer) {
-                selected.style.background = '#22c55e';
-                correctAnswers++;
-            } else {
-                selected.style.background = '#ef4444';
-            }
-
-            examContainer.innerHTML = `
-                <div style="text-align:center">
-                    <p>Calificación:</p>
-                    <div style="font-size:1.8rem;font-weight:bold;color:#818cf8;margin:10px 0">${Math.round((correctAnswers / 5) * 100)}%</div>
-                    <button onclick="examContainer.style.display='none'" style="padding:8px 15px;border:none;border-radius:6px;background:#22c55e;color:#fff">Volver</button>
-                </div>
-            `;
-        }
-
-        // Admin functions
-        function showModal() { modal.style.display = 'flex'; }
-        function closeModal() { modal.style.display = 'none'; document.getElementById('pass').value = ''; }
-        function checkPass() {
-            if (document.getElementById('pass').value === 'carbón') {
-                adminPanel.style.display = 'block';
-                modal.style.display = 'none';
-            } else {
-                alert('Contraseña incorrecta');
-            }
-        }
-        function pause() {
-            isPaused = true;
-            pausedScreen.style.display = 'flex';
-            clearInterval(timer);
-        }
-        function resume() {
-            isPaused = false;
-            pausedScreen.style.display = 'none';
-            startTimer();
-        }
-
-        // Inicializar
-        startTimer();
-        document.getElementById('lock').addEventListener('click', showModal);
-    </script>
-</body>
-</html>
+    <!-- Botones de control superiores -->
+    <div class="header-controls">
+        <button class="control-btn" onclick="location.reload()" title="Actualizar sitio">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M21.5 18a6 6 0 0 0-6-6 6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6zM2.5 6a6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1
