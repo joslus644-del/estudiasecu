@@ -100,7 +100,6 @@
 </head>
 <body>
 
-    <!-- Botones Superiores: Actualizar (🔄) y Candado de Admin (🔒) -->
     <div class="top-buttons">
         <button class="btn-action" onclick="reloadSite()" title="Actualizar Sitio Web">
             <svg viewBox="0 0 24 24">
@@ -138,7 +137,7 @@
     <div class="container">
         <header>
             <h1>EstudiaSecu</h1>
-            <p>Plataforma Escolar Interactiva para Exámenes</p>
+            <p>Plataforma Escolar Interactiva para Secundaria Técnica</p>
         </header>
 
         <div class="admin-panel" id="admin-panel">
@@ -168,9 +167,9 @@
             <div class="group-select">
                 <label for="grade-select">Grado Escolar:</label>
                 <select id="grade-select" onchange="updateSubjectsAndContent()">
-                    <option value="1" selected>1º de Secundaria</option>
-                    <option value="2">2º de Secundaria</option>
-                    <option value="3">3º de Secundaria</option>
+                    <option value="1" selected>1º de Secundaria Técnica</option>
+                    <option value="2">2º de Secundaria Técnica</option>
+                    <option value="3">3º de Secundaria Técnica</option>
                 </select>
             </div>
             <div class="group-select">
@@ -273,44 +272,180 @@
 
         const summariesData = {
             1: {
-                biologia: { 1: [{ topic: "La Célula y Biodiversidad", text: "Estudio celular, organelos y cadenas tróficas." }] },
-                formacion: { 1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, adolescencia y autonomía." }] },
-                integracion: { 1: [{ topic: "Trabajo Transversal", text: "Resolución comunitaria y pensamiento crítico." }] },
-                educacion_fisica: { 1: [{ topic: "Corporeidad y Motricidad", text: "Capacidades perceptivo-motrices." }] },
-                espanol: { 1: [{ topic: "Comprensión y Textos", text: "Textos informativos y narración." }] },
-                artes: { 1: [{ topic: "Lenguaje Artístico", text: "Círculo cromático y elementos visuales." }] },
-                geografia: { 1: [{ topic: "Espacio Geográfico", text: "Coordenadas y regiones naturales." }] },
-                historia: { 1: [{ topic: "Primeras Civilizaciones", text: "Prehistoria y civilizaciones agrícolas." }] },
-                tutoria: { 1: [{ topic: "Autoconocimiento", text: "Regulación emocional y proyecto de vida." }] },
-                ingles: { 1: [{ topic: "Basic English I", text: "Verb to be y expresiones cotidianas." }] },
-                matematicas: { 1: [{ topic: "Álgebra y Aritmética I", text: "Números enteros y ecuaciones." }] },
-                tecnologia: { 1: [{ topic: "Técnica y Tecnología I", text: "La técnica en la vida cotidiana." }] }
+                biologia: {
+                    1: [{ topic: "La Célula y Biodiversidad", text: "Células procariotas y eucariotas, organelos básicos, biodiversidad y relaciones tróficas." }],
+                    2: [{ topic: "Nutrición, Respiración y Ecosistemas", text: "Fotosíntesis, respiración celular, cadenas alimentarias y equilibrio ecológico." }],
+                    3: [{ topic: "Reproducción, Evolución y Conservación", text: "Reproducción, selección natural, especies endémicas y áreas naturales protegidas." }]
+                },
+                formacion: {
+                    1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, cambios en la adolescencia y autonomía moral." }],
+                    2: [{ topic: "Igualdad e Inclusión", text: "Perspectiva de género, prevención de la discriminación y cuidado integral." }],
+                    3: [{ topic: "Normas, Democracia y Paz", text: "Reglas y leyes, participación democrática, justicia y resolución pacífica." }]
+                },
+                integracion: {
+                    1: [{ topic: "Lectura de la Realidad", text: "Detección de necesidades en el taller, escuela o comunidad para trabajo transversal." }],
+                    2: [{ topic: "Análisis Interdisciplinario", text: "Vinculación de saberes científicos, técnicos y sociales para analizar causas y efectos." }],
+                    3: [{ topic: "Propuesta Comunitaria", text: "Diseño de acciones con participación escolar y evaluación formativa." }]
+                },
+                educacion_fisica: {
+                    1: [{ topic: "Corporeidad y Motricidad", text: "Esquema corporal, capacidades perceptivo-motrices y juego limpio." }],
+                    2: [{ topic: "Coordinación y Estrategia", text: "Equilibrio, coordinación motriz y cooperación en juegos." }],
+                    3: [{ topic: "Vida Saludable y Recreación", text: "Condición física general, hábitos activos y trabajo en equipo." }]
+                },
+                espanol: {
+                    1: [{ topic: "Comprensión y Narración", text: "Textos informativos, fuentes confiables, estructura narrativa y ortografía." }],
+                    2: [{ topic: "Textos Expositivos y Nexos", text: "Fichas de trabajo, paráfrasis, conectores lógicos y signos de puntuación." }],
+                    3: [{ topic: "Argumentación y Expresión", text: "Textos argumentativos, debate, reseñas y revisión de borradores." }]
+                },
+                artes: {
+                    1: [{ topic: "Elementos del Lenguaje Visual", text: "Punto, línea, plano, color y exploración sensorial." }],
+                    2: [{ topic: "Composición y Expresión", text: "Equilibrio, ritmo, luz y sombra, y creación visual o escénica sencilla." }],
+                    3: [{ topic: "Patrimonio y Montaje", text: "Apreciación estética, patrimonio cultural local y montaje artístico." }]
+                },
+                geografia: {
+                    1: [{ topic: "Espacio Geográfico y Coordenadas", text: "Latitud, longitud, mapas, escalas y placas tectónicas." }],
+                    2: [{ topic: "Climas, Relieve y Aguas", text: "Regiones naturales, dinámica terrestre y prevención de riesgos." }],
+                    3: [{ topic: "Población y Sustentabilidad", text: "Dinámica poblacional, migración, diversidad cultural y sustentabilidad." }]
+                },
+                historia: {
+                    1: [{ topic: "Prehistoria y Primeras Civilizaciones", text: "Hominización, uso del fuego, agricultura y civilizaciones fluviales." }],
+                    2: [{ topic: "Antigüedad Clásica", text: "Grecia y Roma, organización social, leyes y legado cultural." }],
+                    3: [{ topic: "Edad Media y Transición", text: "Feudalismo, intercambio comercial, Renacimiento y transición histórica." }]
+                },
+                tutoria: {
+                    1: [{ topic: "Autoconocimiento y Convivencia", text: "Reconocimiento de emociones, empatía y convivencia escolar." }],
+                    2: [{ topic: "Autorregulación y Diálogo", text: "Manejo de emociones, comunicación asertiva y solución de conflictos." }],
+                    3: [{ topic: "Proyecto de Vida Inicial", text: "Toma de decisiones responsables y metas académicas a corto plazo." }]
+                },
+                ingles: {
+                    1: [{ topic: "Basic Introductions & Verb To Be", text: "Greetings, personal pronouns, verb to be and everyday vocabulary." }],
+                    2: [{ topic: "Simple Present & Routines", text: "Daily routines, time expressions, likes and dislikes." }],
+                    3: [{ topic: "Places, Directions & Imperatives", text: "Descriptions, prepositions of place and basic instructions." }]
+                },
+                matematicas: {
+                    1: [{ topic: "Enteros y Ecuaciones", text: "Números enteros, recta numérica, jerarquía de operaciones y ecuaciones lineales." }],
+                    2: [{ topic: "Proporcionalidad y Figuras", text: "Fracciones, decimales, porcentajes, perímetros y áreas." }],
+                    3: [{ topic: "Ángulos, Volumen y Datos", text: "Ángulos, polígonos, volumen de prismas, gráficas y probabilidad." }]
+                },
+                tecnologia: {
+                    1: [{ topic: "Técnica y Sistemas en el Taller", text: "La técnica en la vida diaria, herramientas, máquinas y sistemas técnicos." }],
+                    2: [{ topic: "Procesos y Seguridad en el Taller", text: "Procesos artesanales e industriales, normas de seguridad y uso de materiales." }],
+                    3: [{ topic: "Impacto Ambiental Técnico", text: "Efectos ambientales de los procesos técnicos, reciclaje y sustentabilidad." }]
+                }
             },
             2: {
-                fisica: { 1: [{ topic: "Fenómenos Físicos y Movimiento", text: "Cinemática, leyes de Newton y fuerza." }] },
-                formacion: { 1: [{ topic: "Ciudadanía y Leyes II", text: "Democracia, leyes y justicia social." }] },
-                integracion: { 1: [{ topic: "Proyectos Comunitarios II", text: "Aplicación científica y social." }] },
-                educacion_fisica: { 1: [{ topic: "Desempeño Motor II", text: "Deporte educativo y salud corporal." }] },
-                espanol: { 1: [{ topic: "Literatura y Textos II", text: "Novela y redacción avanzada." }] },
-                artes: { 1: [{ topic: "Apreciación Estética II", text: "Historia del arte y técnicas plásticas." }] },
-                historia: { 1: [{ topic: "Historia de México", text: "Culturas mesoamericanas e independencia." }] },
-                tutoria: { 1: [{ topic: "Proyecto de Vida II", text: "Toma de decisiones y asertividad." }] },
-                ingles: { 1: [{ topic: "Intermediate English II", text: "Past simple y modal verbs." }] },
-                matematicas: { 1: [{ topic: "Álgebra y Geometría II", text: "Sistemas de ecuaciones y Pitágoras." }] },
-                tecnologia: { 1: [{ topic: "Diseño y Procesos II", text: "Innovación técnica y cambio técnico." }] }
+                fisica: {
+                    1: [{ topic: "Movimiento y Gráficas", text: "Trayectoria, desplazamiento, rapidez, velocidad, aceleración y gráficas." }],
+                    2: [{ topic: "Fuerzas y Leyes de Newton", text: "Interacción entre cuerpos, fuerza, fricción y leyes de Newton." }],
+                    3: [{ topic: "Energía, Calor y Ondas", text: "Energía mecánica, trabajo, conservación de energía, calor y ondas." }]
+                },
+                formacion: {
+                    1: [{ topic: "Justicia, Legalidad y Gobierno", text: "Estado de derecho, división de poderes y funciones del gobierno." }],
+                    2: [{ topic: "Participación Democrática", text: "Voto, consulta, rendición de cuentas y transparencia." }],
+                    3: [{ topic: "Interculturalidad y Paz", text: "Inclusión, derechos de pueblos originarios y solución no violenta." }]
+                },
+                integracion: {
+                    1: [{ topic: "Problemáticas Locales", text: "Investigación de retos del entorno con enfoque interdisciplinario." }],
+                    2: [{ topic: "Contraste de Evidencias", text: "Trabajo colaborativo, contraste de fuentes y argumentación con evidencias." }],
+                    3: [{ topic: "Implementación y Difusión", text: "Ejecución de proyectos escolares y comunicación comunitaria." }]
+                },
+                educacion_fisica: {
+                    1: [{ topic: "Capacidades Condicionales", text: "Fuerza, resistencia, velocidad, flexibilidad y deporte escolar." }],
+                    2: [{ topic: "Táctica y Estrategia", text: "Deportes colectivos e individuales y prevención de lesiones." }],
+                    3: [{ topic: "Autoevaluación y Salud", text: "Estilo de vida saludable y organización de actividades físicas." }]
+                },
+                espanol: {
+                    1: [{ topic: "Narrativa Literaria", text: "Cuento y novela, recursos narrativos, personajes, tiempo y espacio." }],
+                    2: [{ topic: "Textos Académicos", text: "Artículos de divulgación, citas, referencias y organización de ideas." }],
+                    3: [{ topic: "Opinión y Medios", text: "Textos de opinión, editoriales, análisis de medios y postura crítica." }]
+                },
+                artes: {
+                    1: [{ topic: "Géneros y Técnicas", text: "Expresión visual o escénica, técnicas y narrativa artística." }],
+                    2: [{ topic: "Contexto e Interpretación", text: "Contexto histórico y social de las obras, interpretación y experimentación." }],
+                    3: [{ topic: "Montaje y Crítica", text: "Curaduría, puesta en escena o exposición y reflexión artística." }]
+                },
+                historia: {
+                    1: [{ topic: "Mesoamérica y Virreinato", text: "Culturas mesoamericanas, contacto inicial, Conquista y Virreinato." }],
+                    2: [{ topic: "Vida Novohispana e Independencia", text: "Sociedad y economía novohispana, reformas borbónicas e Independencia." }],
+                    3: [{ topic: "México Independiente al Siglo XX", text: "Intervenciones, Reforma, Porfiriato, Revolución e instituciones." }]
+                },
+                tutoria: {
+                    1: [{ topic: "Identidad y Entorno", text: "Identidad juvenil, influencia de pares y redes sociales, y decisiones." }],
+                    2: [{ topic: "Prevención y Autocuidado", text: "Prevención de conductas de riesgo, autocuidado y redes de apoyo." }],
+                    3: [{ topic: "Metas y Bienestar", text: "Metas a mediano plazo, manejo del estrés y habilidades socioemocionales." }]
+                },
+                ingles: {
+                    1: [{ topic: "Simple Past & Narratives", text: "Regular and irregular verbs, past events and anecdotes." }],
+                    2: [{ topic: "Past Continuous & Biographies", text: "Ongoing past actions, contrasts and biographical stories." }],
+                    3: [{ topic: "Future, Comparatives & Superlatives", text: "Plans, predictions, comparing people, objects and places." }]
+                },
+                matematicas: {
+                    1: [{ topic: "Álgebra y Sistemas Lineales", text: "Multiplicación y división con signo, potencias, raíces y sistemas lineales." }],
+                    2: [{ topic: "Sucesiones y Pitágoras", text: "Sucesiones, expresiones algebraicas, ángulos y teorema de Pitágoras." }],
+                    3: [{ topic: "Círculos, Volumen y Probabilidad", text: "Área del círculo, volumen de cilindros y prismas, proporcionalidad y azar." }]
+                },
+                tecnologia: {
+                    1: [{ topic: "Cambio Técnico e Innovación", text: "Necesidades sociales, innovación técnica y análisis de objetos del taller." }],
+                    2: [{ topic: "Diseño y Procesos Técnicos", text: "Bocetos técnicos, planeación de procesos y selección de materiales." }],
+                    3: [{ topic: "Evaluación de Sistemas Técnicos", text: "Eficiencia de procesos, evaluación interna/externa y mejora técnica." }]
+                }
             },
             3: {
-                quimica: { 1: [{ topic: "Materia y Estructura Atómica", text: "Átomos, tabla periódica y reacciones químicas." }] },
-                formacion: { 1: [{ topic: "Ética Global y Derechos III", text: "Ciudadanía global y participación democrática." }] },
-                integracion: { 1: [{ topic: "Investigación y Desarrollo III", text: "Proyectos de impacto científico." }] },
-                educacion_fisica: { 1: [{ topic: "Acondicionamiento Físico III", text: "Capacidades condicionales." }] },
-                espanol: { 1: [{ topic: "Análisis Literario y Ensayos III", text: "Poesía contemporánea y argumentación." }] },
-                artes: { 1: [{ topic: "Proyectos Artísticos III", text: "Manifestaciones artísticas contemporáneas." }] },
-                historia: { 1: [{ topic: "Historia Universal Moderna", text: "Revoluciones industriales y siglo XX." }] },
-                tutoria: { 1: [{ topic: "Orientación Vocacional III", text: "Elección de bachillerato y metas." }] },
-                ingles: { 1: [{ topic: "Advanced English III", text: "Passive voice y conditionals." }] },
-                matematicas: { 1: [{ topic: "Trigonometría y Funciones III", text: "Funciones cuadráticas y estadística." }] },
-                tecnologia: { 1: [{ topic: "Innovación y Sustentabilidad III", text: "Desarrollo sustentable." }] }
+                quimica: {
+                    1: [{ topic: "Materia, Mezclas y Átomo", text: "Propiedades físicas y químicas, mezclas, separación y estructura atómica." }],
+                    2: [{ topic: "Tabla Periódica y Enlaces", text: "Tabla periódica, electrones de valencia, enlace químico, mol y balanceo." }],
+                    3: [{ topic: "Reacciones, pH y Química Actual", text: "Reacciones químicas, ácidos y bases, pH, combustión y salud/ambiente." }]
+                },
+                formacion: {
+                    1: [{ topic: "Ciudadanía Global y Soberanía", text: "Soberanía nacional, derecho internacional y defensa de derechos humanos." }],
+                    2: [{ topic: "Justicia Social y Ética", text: "Justicia social, desigualdad, movimientos sociales y ética ambiental." }],
+                    3: [{ topic: "Participación y Paz Global", text: "Compromiso cívico juvenil, paz y derechos en el mundo contemporáneo." }]
+                },
+                integracion: {
+                    1: [{ topic: "Problemas Complejos", text: "Abordaje de retos sociales y ambientales desde múltiples disciplinas." }],
+                    2: [{ topic: "Investigación Aplicada", text: "Gestión de proyectos de investigación aplicada y validación de propuestas." }],
+                    3: [{ topic: "Proyecto Integrador Final", text: "Presentación final del proyecto integrador y reflexión del aprendizaje." }]
+                },
+                educacion_fisica: {
+                    1: [{ topic: "Acondicionamiento Personal", text: "Diseño de rutinas físicas, autorregulación del esfuerzo y bienestar integral." }],
+                    2: [{ topic: "Liderazgo e Inclusión", text: "Liderazgo deportivo, inclusión en actividad física y hábitos saludables." }],
+                    3: [{ topic: "Plan de Vida Activa", text: "Proyecto personal de actividad física y salud a largo plazo." }]
+                },
+                espanol: {
+                    1: [{ topic: "El Ensayo", text: "Ensayo literario y académico, tesis, argumentos, contraargumentos y coherencia." }],
+                    2: [{ topic: "Análisis Literario", text: "Poesía, cuento y drama, figuras retóricas y comentario crítico." }],
+                    3: [{ topic: "Monografía y Exposición", text: "Monografía, ponencia o presentación oral argumentada y síntesis de fuentes." }]
+                },
+                artes: {
+                    1: [{ topic: "Arte Contemporáneo", text: "Vanguardias y arte contemporáneo, formatos actuales y discurso artístico." }],
+                    2: [{ topic: "Producción Escénica o Visual", text: "Producción artística integral, dirección, recursos técnicos e intención estética." }],
+                    3: [{ topic: "Muestra y Cierre Creativo", text: "Muestra o presentación final de obra, retroalimentación y cierre creativo." }]
+                },
+                historia: {
+                    1: [{ topic: "Revoluciones e Imperialismo", text: "Revoluciones burguesas, Revolución Industrial, imperialismo y siglo XIX." }],
+                    2: [{ topic: "Guerras Mundiales y Entreguerras", text: "Primera Guerra Mundial, entreguerras, crisis, totalitarismos y Segunda Guerra." }],
+                    3: [{ topic: "Guerra Fría y Mundo Actual", text: "Guerra Fría, descolonización, globalización y retos contemporáneos." }]
+                },
+                tutoria: {
+                    1: [{ topic: "Orientación Vocacional", text: "Exploración de intereses, aptitudes y opciones de educación media superior." }],
+                    2: [{ topic: "Decisiones y Resiliencia", text: "Elección de bachillerato, manejo de expectativas y resiliencia." }],
+                    3: [{ topic: "Transición al Bachillerato", text: "Plan de transición a media superior, metas de vida y cierre socioemocional." }]
+                },
+                ingles: {
+                    1: [{ topic: "Passive Voice & Processes", text: "Describing processes, inventions, news and formal reports." }],
+                    2: [{ topic: "Conditionals & Advice", text: "Hypothetical situations, problem solving and giving advice." }],
+                    3: [{ topic: "Reported Speech & Fluency", text: "Reporting what others say, connectors and oral communication." }]
+                },
+                matematicas: {
+                    1: [{ topic: "Cuadráticas y Semejanza", text: "Ecuaciones cuadráticas, factorización, congruencia y semejanza de triángulos." }],
+                    2: [{ topic: "Funciones y Trigonometría", text: "Funciones lineales y cuadráticas, razones trigonométricas y triángulos." }],
+                    3: [{ topic: "Estadística, Azar y Repaso", text: "Geometría analítica/secciones, dispersión, probabilidad compuesta y síntesis." }]
+                },
+                tecnologia: {
+                    1: [{ topic: "Sistemas y Control Técnico", text: "Sistemas tecnológicos complejos, control/automatización y diagnóstico técnico." }],
+                    2: [{ topic: "Sustentabilidad y Energía", text: "Desarrollo sustentable, ciclo de vida de productos, energías limpias y ética." }],
+                    3: [{ topic: "Proyecto Técnico y Evaluación", text: "Ejecución y evaluación integral del proyecto técnico e innovación responsable." }]
+                }
             }
         };
 
@@ -328,7 +463,7 @@
                     { id: "tutoria", name: "Tutoría I" },
                     { id: "ingles", name: "Inglés I" },
                     { id: "matematicas", name: "Matemáticas I" },
-                    { id: "tecnologia", name: "Tecnología I" }
+                    { id: "tecnologia", name: "Tecnología I (Taller)" }
                 ];
             } else if (grade === "2") {
                 return [
@@ -342,7 +477,7 @@
                     { id: "tutoria", name: "Tutoría II" },
                     { id: "ingles", name: "Inglés II" },
                     { id: "matematicas", name: "Matemáticas II" },
-                    { id: "tecnologia", name: "Tecnología II" }
+                    { id: "tecnologia", name: "Tecnología II (Taller)" }
                 ];
             } else {
                 return [
@@ -356,7 +491,7 @@
                     { id: "tutoria", name: "Tutoría III" },
                     { id: "ingles", name: "Inglés III" },
                     { id: "matematicas", name: "Matemáticas III" },
-                    { id: "tecnologia", name: "Tecnología III" }
+                    { id: "tecnologia", name: "Tecnología III (Taller)" }
                 ];
             }
         }
@@ -376,15 +511,18 @@
         }
 
         function getFullBank(grade, subject, term) {
+            const items = summariesData[grade]?.[subject]?.[term] || [];
+            const baseTopic = items[0]?.topic || "Contenidos del trimestre";
+            const baseText = items[0]?.text || "Temas principales del periodo escolar en secundaria técnica.";
             let pool = [];
             for (let i = 1; i <= 50; i++) {
                 pool.push({
                     id: i,
-                    expertNote: `Evaluación Académica Oficial — Grado ${grade}º (${subject.toUpperCase()} - Trimestre ${term})`,
-                    question: `Pregunta ${i}: Reactivo oficial basado en los Puntos Clave de la materia ${subject.toUpperCase()} para el grado ${grade}º.`,
-                    options: [`Opción Correcta A para la pregunta ${i}`, `Opción incorrecta B`, `Opción incorrecta C`, `Opción incorrecta D`],
+                    expertNote: `Evaluación Secundaria Técnica — Grado ${grade}º (${subject.toUpperCase()} - Trimestre ${term})`,
+                    question: `Pregunta ${i} (${baseTopic}): Reactivo basado en los puntos clave de ${grade}º grado, ${term}er trimestre.`,
+                    options: [`Opción Correcta A — ${baseTopic}`, `Opción incorrecta B`, `Opción incorrecta C`, `Opción incorrecta D`],
                     correct: 0,
-                    explanation: `💡 Explicación paso a paso: Este concepto forma parte fundamental del programa oficial de ${grade}º de secundaria.`
+                    explanation: `💡 Explicación: ${baseText}`
                 });
             }
             return pool;
@@ -400,7 +538,7 @@
             const container = document.getElementById('study-content');
             container.innerHTML = '';
             let items = summariesData[grade]?.[subjectId]?.[term] || [
-                { topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas oficiales clave evaluados en este periodo para asegurar el éxito escolar en ${grade}º de secundaria.` }
+                { topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas clave evaluados en secundaria técnica durante el ${term}er trimestre de ${grade}º grado.` }
             ];
             items.forEach(item => {
                 container.innerHTML += `<div class="summary-card"><h3>📌 ${item.topic}</h3><p>${item.text}</p></div>`;
