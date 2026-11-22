@@ -7,111 +7,86 @@
     <style>
         :root {
             --primary: #6366f1;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --selected-blue: #2563eb;
+            --card: #1e293b;
+            --dark: #0f172a;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --ok: #22c55e;
+            --bad: #ef4444;
+            --sel: #2563eb;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text-color); padding: 20px; min-height: 100vh; position: relative; }
-        
-        .top-buttons { position: absolute; top: 20px; right: 25px; z-index: 100; display: flex; gap: 12px; align-items: center; }
-        .btn-action { background: #1e293b; border: 2px solid #334155; cursor: pointer; padding: 8px; border-radius: 10px; display: flex; align-items: center; justify-content: center; opacity: 0.8; transition: all 0.2s; }
-        .btn-action svg { width: 22px; height: 22px; stroke: #ffffff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: var(--text); padding: 20px; min-height: 100vh; position: relative; }
+        .top-buttons { position: absolute; top: 20px; right: 25px; z-index: 100; display: flex; gap: 12px; }
+        .btn-action { background: var(--card); border: 2px solid #334155; cursor: pointer; padding: 8px; border-radius: 10px; display: flex; opacity: 0.85; transition: 0.2s; }
+        .btn-action svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .btn-action:hover { opacity: 1; transform: scale(1.08); border-color: var(--primary); background: #334155; }
-
-        header { text-align: center; margin-bottom: 25px; margin-top: 15px; }
+        header { text-align: center; margin: 15px 0 25px; }
         header h1 { background: linear-gradient(90deg, #818cf8, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.8rem; margin-bottom: 8px; font-weight: 800; }
-        header p { color: var(--text-muted); font-size: 1.1rem; }
-        
-        .timer-card { background: var(--card-bg); border: 2px solid var(--primary); padding: 12px 20px; border-radius: 12px; text-align: center; max-width: 350px; margin: 0 auto 20px auto; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); display: flex; justify-content: space-between; align-items: center; }
+        header p { color: var(--muted); font-size: 1.1rem; }
+        .timer-card { background: var(--card); border: 2px solid var(--primary); padding: 12px 20px; border-radius: 12px; max-width: 350px; margin: 0 auto 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); display: flex; justify-content: space-between; align-items: center; }
         .timer-card span { font-size: 1.1rem; color: #cbd5e1; font-weight: bold; }
         #time-display { font-size: 1.3rem; color: #38bdf8; font-family: monospace; font-weight: bold; }
-        
         .container { max-width: 950px; margin: 0 auto; }
-
         .admin-panel { background: #111827; border: 2px dashed #818cf8; padding: 20px; border-radius: 16px; margin-bottom: 25px; display: none; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .admin-btns { display: flex; gap: 10px; }
-        .btn-resume { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-pause { background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
+        .btn-resume { background: #3b82f6; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-pause { background: #8b5cf6; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .visits-table-container { max-height: 180px; overflow-y: auto; border-radius: 8px; border: 1px solid #374151; }
         table.visits-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
         table.visits-table th { background: #1f2937; color: #9ca3af; padding: 8px 12px; position: sticky; top: 0; }
         table.visits-table td { padding: 8px 12px; border-bottom: 1px solid #374151; color: #e5e7eb; }
-
-        #paused-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; text-align: center; padding: 20px; }
-        .bunny-box { background: #1e293b; padding: 30px; border-radius: 20px; border: 2px solid #818cf8; max-width: 400px; }
-        .bunny-emoji { font-size: 4.5rem; animation: bounceBunny 1.2s infinite ease-in-out; display: inline-block; margin-bottom: 15px; }
-        @keyframes bounceBunny { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .bunny-box h2 { color: #818cf8; font-size: 1.6rem; margin-bottom: 10px; }
-        .bunny-box p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.4; }
-
-        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; border: 2px solid #6366f1; max-width: 450px; text-align: center; }
-        .modal-content h3 { color: #818cf8; font-size: 1.5rem; margin-bottom: 15px; }
-        .modal-content p { color: #cbd5e1; font-size: 1rem; margin-bottom: 25px; }
+        #paused-screen, #timer-modal { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; padding: 20px; text-align: center; }
+        #paused-screen { background: var(--dark); flex-direction: column; z-index: 3000; }
+        #timer-modal { background: rgba(15, 23, 42, 0.9); z-index: 2000; }
+        .bunny-box, .modal-content { background: var(--card); padding: 30px; border-radius: 20px; border: 2px solid #818cf8; max-width: 420px; }
+        .bunny-emoji { font-size: 4.5rem; animation: bounce 1.2s infinite ease-in-out; display: inline-block; margin-bottom: 15px; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .bunny-box h2, .modal-content h3 { color: #818cf8; font-size: 1.5rem; margin-bottom: 12px; }
+        .bunny-box p, .modal-content p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.45; }
+        .modal-content p { margin-bottom: 22px; }
         .modal-btns { display: flex; gap: 15px; justify-content: center; }
         .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .modal-btn.primary { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; }
-        .modal-btn.secondary { background: #334155; color: #f8fafc; }
-
-        .selector-card { background: var(--card-bg); padding: 25px; border-radius: 16px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .modal-btn.primary { background: linear-gradient(135deg, #6366f1, #ec4899); color: #fff; }
+        .modal-btn.secondary { background: #334155; color: var(--text); }
+        .selector-card { background: var(--card); padding: 25px; border-radius: 16px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .group-select { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 220px; }
         label { font-weight: bold; color: #cbd5e1; font-size: 0.95rem; }
-        select { padding: 12px; background: #0f172a; color: #f8fafc; border: 2px solid #334155; border-radius: 10px; font-size: 1rem; outline: none; }
+        select { padding: 12px; background: var(--dark); color: var(--text); border: 2px solid #334155; border-radius: 10px; font-size: 1rem; outline: none; }
         select:focus { border-color: var(--primary); }
-
         .nav-tabs { display: flex; gap: 15px; margin-bottom: 25px; border-bottom: 2px solid #334155; }
-        .tab-btn { padding: 12px 25px; border: none; background: none; font-size: 1.1rem; font-weight: bold; color: var(--text-muted); cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s; }
+        .tab-btn { padding: 12px 25px; border: none; background: none; font-size: 1.1rem; font-weight: bold; color: var(--muted); cursor: pointer; border-bottom: 4px solid transparent; transition: 0.25s; }
         .tab-btn.active { color: #818cf8; border-bottom-color: #818cf8; }
-
-        .content-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .content-section { display: none; background: var(--card); padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .content-section.active { display: block; }
-
-        .summary-card { background: #0f172a; border-left: 6px solid var(--primary); padding: 18px; margin-bottom: 15px; border-radius: 0 10px 10px 0; }
+        .summary-card { background: var(--dark); border-left: 6px solid var(--primary); padding: 18px; margin-bottom: 15px; border-radius: 0 10px 10px 0; }
         .summary-card h3 { margin-bottom: 6px; color: #818cf8; font-size: 1.15rem; }
         .summary-card p { font-size: 1rem; line-height: 1.5; color: #cbd5e1; }
-
         .quiz-info { background: rgba(99, 102, 241, 0.15); color: #c7d2fe; padding: 15px; border-radius: 10px; margin-bottom: 25px; font-size: 0.95rem; border: 1px solid rgba(99, 102, 241, 0.3); }
-        .question-block { margin-bottom: 25px; padding: 20px; border-radius: 12px; border: 2px solid #334155; background: #0f172a; transition: all 0.3s ease; }
-        .question-block.correct-answer { border-color: var(--success); background: rgba(34, 197, 94, 0.12); }
-        .question-block.wrong-answer { border-color: var(--danger); background: rgba(239, 68, 68, 0.12); }
+        .question-block { margin-bottom: 25px; padding: 20px; border-radius: 12px; border: 2px solid #334155; background: var(--dark); transition: 0.3s; }
+        .question-block.correct-answer { border-color: var(--ok); background: rgba(34, 197, 94, 0.12); }
+        .question-block.wrong-answer { border-color: var(--bad); background: rgba(239, 68, 68, 0.12); }
         .question-title { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; color: #f1f5f9; line-height: 1.5; }
         .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        
-        .option-label { display: flex; align-items: center; gap: 12px; background: #1e293b; padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; color: #e2e8f0; transition: all 0.2s; }
+        .option-label { display: flex; align-items: center; gap: 12px; background: var(--card); padding: 12px 15px; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.95rem; color: #e2e8f0; transition: 0.2s; }
         .option-label:hover { background: #334155; border-color: #64748b; }
-        .option-label.selected-option { background: rgba(37, 99, 235, 0.2); border-color: var(--selected-blue); color: #93c5fd; }
-
+        .option-label.selected-option { background: rgba(37, 99, 235, 0.2); border-color: var(--sel); color: #93c5fd; }
         .explanation { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
         .question-block.correct-answer .explanation { display: block; background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
         .question-block.wrong-answer .explanation { display: block; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
-
-        .submit-btn { background: linear-gradient(135deg, #6366f1, #ec4899); color: white; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+        .submit-btn { background: linear-gradient(135deg, #6366f1, #ec4899); color: #fff; padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
         .submit-btn:hover { opacity: 0.9; }
-
         #score-result { margin-top: 25px; padding: 25px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 1.1rem; display: none; }
     </style>
 </head>
 <body>
-
     <div class="top-buttons">
-        <button class="btn-action" onclick="reloadSite()" title="Actualizar Sitio Web">
-            <svg viewBox="0 0 24 24">
-                <polyline points="23 4 23 10 17 10"></polyline>
-                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-            </svg>
+        <button class="btn-action" onclick="location.reload()" title="Actualizar Sitio Web">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
         </button>
         <button class="btn-action" onclick="loginAdmin()" title="Acceso Administrador">
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         </button>
     </div>
 
@@ -150,9 +125,7 @@
             </div>
             <div class="visits-table-container">
                 <table class="visits-table">
-                    <thead>
-                        <tr><th>#</th><th>Dispositivo / Acceso</th><th>Fecha y Hora</th></tr>
-                    </thead>
+                    <thead><tr><th>#</th><th>Dispositivo / Acceso</th><th>Fecha y Hora</th></tr></thead>
                     <tbody id="visits-table-body"></tbody>
                 </table>
             </div>
@@ -210,10 +183,6 @@
     <script>
         const ADMIN_PASSWORD = "carbón";
 
-        function reloadSite() {
-            location.reload();
-        }
-
         function loginAdmin() {
             const pass = prompt("Contraseña de administrador:");
             if (pass === ADMIN_PASSWORD) {
@@ -226,17 +195,11 @@
             }
         }
 
-        function checkAdminSession() {
-            if (localStorage.getItem('estudiasecu_is_admin') === 'true') {
-                document.getElementById('admin-panel').style.display = 'block';
-            }
-        }
-
         function checkPlatformStatus() {
-            const status = localStorage.getItem('estudiasecu_status') || 'active';
-            const pausedScreen = document.getElementById('paused-screen');
+            const paused = (localStorage.getItem('estudiasecu_status') || 'active') === 'paused';
             const isAdmin = localStorage.getItem('estudiasecu_is_admin') === 'true';
-            pausedScreen.style.display = (status === 'paused' && !isAdmin) ? 'flex' : 'none';
+            if (isAdmin) document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('paused-screen').style.display = (paused && !isAdmin) ? 'flex' : 'none';
         }
 
         function setPlatformStatus(status) {
@@ -244,419 +207,361 @@
             checkPlatformStatus();
         }
 
-        function registerVisit() {
-            if (localStorage.getItem('estudiasecu_is_admin') === 'true') return;
-            let visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
-            visits.push({
-                device: navigator.userAgent.includes("Mobile") ? "Móvil / Tablet" : "Computadora (Desktop)",
-                time: new Date().toLocaleString()
-            });
-            if (visits.length > 50) visits.shift();
-            localStorage.setItem('estudiasecu_visits', JSON.stringify(visits));
-            renderVisitsTable();
-        }
-
         function renderVisitsTable() {
             const visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
             const tbody = document.getElementById('visits-table-body');
-            tbody.innerHTML = visits.length === 0 ? `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas.</td></tr>` : '';
-            visits.reverse().forEach((v, idx) => {
-                tbody.innerHTML += `<tr><td>${visits.length - idx}</td><td>${v.device}</td><td>${v.time}</td></tr>`;
-            });
+            if (!visits.length) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#9ca3af;">No hay visitas registradas.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = [...visits].reverse().map((v, idx) =>
+                `<tr><td>${visits.length - idx}</td><td>${v.device}</td><td>${v.time}</td></tr>`
+            ).join('');
         }
 
-        checkAdminSession();
+        if (localStorage.getItem('estudiasecu_is_admin') !== 'true') {
+            const visits = JSON.parse(localStorage.getItem('estudiasecu_visits') || '[]');
+            visits.push({
+                device: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Móvil / Tablet" : "Computadora (Desktop)",
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('estudiasecu_visits', JSON.stringify(visits.slice(-50)));
+        }
         checkPlatformStatus();
-        registerVisit();
         renderVisitsTable();
 
-        const summariesData = {
+        const SUBJECTS_BY_GRADE = {
+            1: [
+                ["biologia", "Biología (Ciencias I)"],
+                ["formacion", "Formación Cívica y Ética I"],
+                ["integracion", "Integración Curricular I"],
+                ["educacion_fisica", "Educación Física I"],
+                ["espanol", "Español I"],
+                ["artes", "Artes I"],
+                ["geografia", "Geografía"],
+                ["historia", "Historia I"],
+                ["tutoria", "Tutoría I"],
+                ["ingles", "Inglés I"],
+                ["matematicas", "Matemáticas I"],
+                ["tecnologia", "Tecnología I (Taller)"]
+            ],
+            2: [
+                ["fisica", "Física (Ciencias II)"],
+                ["formacion", "Formación Cívica y Ética II"],
+                ["integracion", "Integración Curricular II"],
+                ["educacion_fisica", "Educación Física II"],
+                ["espanol", "Español II"],
+                ["artes", "Artes II"],
+                ["historia", "Historia de México"],
+                ["tutoria", "Tutoría II"],
+                ["ingles", "Inglés II"],
+                ["matematicas", "Matemáticas II"],
+                ["tecnologia", "Tecnología II (Taller)"]
+            ],
+            3: [
+                ["quimica", "Química (Ciencias III)"],
+                ["formacion", "Formación Cívica y Ética III"],
+                ["integracion", "Integración Curricular III"],
+                ["educacion_fisica", "Educación Física III"],
+                ["espanol", "Español III"],
+                ["artes", "Artes III"],
+                ["historia", "Historia Universal"],
+                ["tutoria", "Tutoría III"],
+                ["ingles", "Inglés III"],
+                ["matematicas", "Matemáticas III"],
+                ["tecnologia", "Tecnología III (Taller)"]
+            ]
+        };
+
+        const TOPICS = {
             1: {
-                biologia: {
-                    1: [{ topic: "La Célula y Biodiversidad", text: "Células procariotas y eucariotas, organelos básicos, biodiversidad y relaciones tróficas." }],
-                    2: [{ topic: "Nutrición, Respiración y Ecosistemas", text: "Fotosíntesis, respiración celular, cadenas alimentarias y equilibrio ecológico." }],
-                    3: [{ topic: "Reproducción, Evolución y Conservación", text: "Reproducción, selección natural, especies endémicas y áreas naturales protegidas." }]
-                },
-                formacion: {
-                    1: [{ topic: "Dignidad y Derechos Humanos", text: "Principios éticos, cambios en la adolescencia y autonomía moral." }],
-                    2: [{ topic: "Igualdad e Inclusión", text: "Perspectiva de género, prevención de la discriminación y cuidado integral." }],
-                    3: [{ topic: "Normas, Democracia y Paz", text: "Reglas y leyes, participación democrática, justicia y resolución pacífica." }]
-                },
-                integracion: {
-                    1: [{ topic: "Lectura de la Realidad", text: "Detección de necesidades en el taller, escuela o comunidad para trabajo transversal." }],
-                    2: [{ topic: "Análisis Interdisciplinario", text: "Vinculación de saberes científicos, técnicos y sociales para analizar causas y efectos." }],
-                    3: [{ topic: "Propuesta Comunitaria", text: "Diseño de acciones con participación escolar y evaluación formativa." }]
-                },
-                educacion_fisica: {
-                    1: [{ topic: "Corporeidad y Motricidad", text: "Esquema corporal, capacidades perceptivo-motrices y juego limpio." }],
-                    2: [{ topic: "Coordinación y Estrategia", text: "Equilibrio, coordinación motriz y cooperación en juegos." }],
-                    3: [{ topic: "Vida Saludable y Recreación", text: "Condición física general, hábitos activos y trabajo en equipo." }]
-                },
-                espanol: {
-                    1: [{ topic: "Comprensión y Narración", text: "Textos informativos, fuentes confiables, estructura narrativa y ortografía." }],
-                    2: [{ topic: "Textos Expositivos y Nexos", text: "Fichas de trabajo, paráfrasis, conectores lógicos y signos de puntuación." }],
-                    3: [{ topic: "Argumentación y Expresión", text: "Textos argumentativos, debate, reseñas y revisión de borradores." }]
-                },
-                artes: {
-                    1: [{ topic: "Elementos del Lenguaje Visual", text: "Punto, línea, plano, color y exploración sensorial." }],
-                    2: [{ topic: "Composición y Expresión", text: "Equilibrio, ritmo, luz y sombra, y creación visual o escénica sencilla." }],
-                    3: [{ topic: "Patrimonio y Montaje", text: "Apreciación estética, patrimonio cultural local y montaje artístico." }]
-                },
-                geografia: {
-                    1: [{ topic: "Espacio Geográfico y Coordenadas", text: "Latitud, longitud, mapas, escalas y placas tectónicas." }],
-                    2: [{ topic: "Climas, Relieve y Aguas", text: "Regiones naturales, dinámica terrestre y prevención de riesgos." }],
-                    3: [{ topic: "Población y Sustentabilidad", text: "Dinámica poblacional, migración, diversidad cultural y sustentabilidad." }]
-                },
-                historia: {
-                    1: [{ topic: "Prehistoria y Primeras Civilizaciones", text: "Hominización, uso del fuego, agricultura y civilizaciones fluviales." }],
-                    2: [{ topic: "Antigüedad Clásica", text: "Grecia y Roma, organización social, leyes y legado cultural." }],
-                    3: [{ topic: "Edad Media y Transición", text: "Feudalismo, intercambio comercial, Renacimiento y transición histórica." }]
-                },
-                tutoria: {
-                    1: [{ topic: "Autoconocimiento y Convivencia", text: "Reconocimiento de emociones, empatía y convivencia escolar." }],
-                    2: [{ topic: "Autorregulación y Diálogo", text: "Manejo de emociones, comunicación asertiva y solución de conflictos." }],
-                    3: [{ topic: "Proyecto de Vida Inicial", text: "Toma de decisiones responsables y metas académicas a corto plazo." }]
-                },
-                ingles: {
-                    1: [{ topic: "Basic Introductions & Verb To Be", text: "Greetings, personal pronouns, verb to be and everyday vocabulary." }],
-                    2: [{ topic: "Simple Present & Routines", text: "Daily routines, time expressions, likes and dislikes." }],
-                    3: [{ topic: "Places, Directions & Imperatives", text: "Descriptions, prepositions of place and basic instructions." }]
-                },
-                matematicas: {
-                    1: [{ topic: "Números Enteros y Ecuaciones", text: "Números enteros, recta numérica, jerarquía de operaciones y ecuaciones lineales." }],
-                    2: [{ topic: "Proporcionalidad y Figuras", text: "Fracciones, decimales, porcentajes, perímetros y áreas." }],
-                    3: [{ topic: "Ángulos, Volumen y Datos", text: "Ángulos, polígonos, volumen de prismas, gráficas y probabilidad." }]
-                },
-                tecnologia: {
-                    1: [{ topic: "Técnica y Sistemas en el Taller", text: "La técnica en la vida diaria, herramientas, máquinas y sistemas técnicos." }],
-                    2: [{ topic: "Procesos y Seguridad en el Taller", text: "Procesos artesanales e industriales, normas de seguridad y uso de materiales." }],
-                    3: [{ topic: "Impacto Ambiental Técnico", text: "Efectos ambientales de los procesos técnicos, reciclaje y sustentabilidad." }]
-                }
+                biologia: [
+                    ["La Célula y Biodiversidad", "Células procariotas y eucariotas, organelos básicos, biodiversidad y relaciones tróficas."],
+                    ["Nutrición, Respiración y Ecosistemas", "Fotosíntesis, respiración celular, cadenas alimentarias y equilibrio ecológico."],
+                    ["Reproducción, Evolución y Conservación", "Reproducción, selección natural, especies endémicas y áreas naturales protegidas."]
+                ],
+                formacion: [
+                    ["Dignidad y Derechos Humanos", "Principios éticos, cambios en la adolescencia y autonomía moral."],
+                    ["Igualdad e Inclusión", "Perspectiva de género, prevención de la discriminación y cuidado integral."],
+                    ["Normas, Democracia y Paz", "Reglas y leyes, participación democrática, justicia y resolución pacífica."]
+                ],
+                integracion: [
+                    ["Lectura de la Realidad", "Detección de necesidades en el taller, escuela o comunidad para trabajo transversal."],
+                    ["Análisis Interdisciplinario", "Vinculación de saberes científicos, técnicos y sociales para analizar causas y efectos."],
+                    ["Propuesta Comunitaria", "Diseño de acciones con participación escolar y evaluación formativa."]
+                ],
+                educacion_fisica: [
+                    ["Corporeidad y Motricidad", "Esquema corporal, capacidades perceptivo-motrices y juego limpio."],
+                    ["Coordinación y Estrategia", "Equilibrio, coordinación motriz y cooperación en juegos."],
+                    ["Vida Saludable y Recreación", "Condición física general, hábitos activos y trabajo en equipo."]
+                ],
+                espanol: [
+                    ["Comprensión y Narración", "Textos informativos, fuentes confiables, estructura narrativa y ortografía."],
+                    ["Textos Expositivos y Nexos", "Fichas de trabajo, paráfrasis, conectores lógicos y signos de puntuación."],
+                    ["Argumentación y Expresión", "Textos argumentativos, debate, reseñas y revisión de borradores."]
+                ],
+                artes: [
+                    ["Elementos del Lenguaje Visual", "Punto, línea, plano, color y exploración sensorial."],
+                    ["Composición y Expresión", "Equilibrio, ritmo, luz y sombra, y creación visual o escénica sencilla."],
+                    ["Patrimonio y Montaje", "Apreciación estética, patrimonio cultural local y montaje artístico."]
+                ],
+                geografia: [
+                    ["Espacio Geográfico y Coordenadas", "Latitud, longitud, mapas, escalas y placas tectónicas."],
+                    ["Climas, Relieve y Aguas", "Regiones naturales, dinámica terrestre y prevención de riesgos."],
+                    ["Población y Sustentabilidad", "Dinámica poblacional, migración, diversidad cultural y sustentabilidad."]
+                ],
+                historia: [
+                    ["Prehistoria y Primeras Civilizaciones", "Hominización, uso del fuego, agricultura y civilizaciones fluviales."],
+                    ["Antigüedad Clásica", "Grecia y Roma, organización social, leyes y legado cultural."],
+                    ["Edad Media y Transición", "Feudalismo, intercambio comercial, Renacimiento y transición histórica."]
+                ],
+                tutoria: [
+                    ["Autoconocimiento y Convivencia", "Reconocimiento de emociones, empatía y convivencia escolar."],
+                    ["Autorregulación y Diálogo", "Manejo de emociones, comunicación asertiva y solución de conflictos."],
+                    ["Proyecto de Vida Inicial", "Toma de decisiones responsables y metas académicas a corto plazo."]
+                ],
+                ingles: [
+                    ["Basic Introductions & Verb To Be", "Greetings, personal pronouns, verb to be and everyday vocabulary."],
+                    ["Simple Present & Routines", "Daily routines, time expressions, likes and dislikes."],
+                    ["Places, Directions & Imperatives", "Descriptions, prepositions of place and basic instructions."]
+                ],
+                matematicas: [
+                    ["Números Enteros y Ecuaciones", "Números enteros, recta numérica, jerarquía de operaciones y ecuaciones lineales."],
+                    ["Proporcionalidad y Figuras", "Fracciones, decimales, porcentajes, perímetros y áreas."],
+                    ["Ángulos, Volumen y Datos", "Ángulos, polígonos, volumen de prismas, gráficas y probabilidad."]
+                ],
+                tecnologia: [
+                    ["Técnica y Sistemas en el Taller", "La técnica en la vida diaria, herramientas, máquinas y sistemas técnicos."],
+                    ["Procesos y Seguridad en el Taller", "Procesos artesanales e industriales, normas de seguridad y uso de materiales."],
+                    ["Impacto Ambiental Técnico", "Efectos ambientales de los procesos técnicos, reciclaje y sustentabilidad."]
+                ]
             },
             2: {
-                fisica: {
-                    1: [{ topic: "Movimiento y Gráficas", text: "Trayectoria, desplazamiento, rapidez, velocidad, aceleración y gráficas." }],
-                    2: [{ topic: "Fuerzas y Leyes de Newton", text: "Interacción entre cuerpos, fuerza, fricción y leyes de Newton." }],
-                    3: [{ topic: "Energía, Calor y Ondas", text: "Energía mecánica, trabajo, conservación de energía, calor y ondas." }]
-                },
-                formacion: {
-                    1: [{ topic: "Justicia, Legalidad y Gobierno", text: "Estado de derecho, división de poderes y funciones del gobierno." }],
-                    2: [{ topic: "Participación Democrática", text: "Voto, consulta, rendición de cuentas y transparencia." }],
-                    3: [{ topic: "Interculturalidad y Paz", text: "Inclusión, derechos de pueblos originarios y solución no violenta." }]
-                },
-                integracion: {
-                    1: [{ topic: "Problemáticas Locales", text: "Investigación de retos del entorno con enfoque interdisciplinario." }],
-                    2: [{ topic: "Contraste de Evidencias", text: "Trabajo colaborativo, contraste de fuentes y argumentación con evidencias." }],
-                    3: [{ topic: "Implementación y Difusión", text: "Ejecución de proyectos escolares y comunicación comunitaria." }]
-                },
-                educacion_fisica: {
-                    1: [{ topic: "Capacidades Condicionales", text: "Fuerza, resistencia, velocidad, flexibilidad y deporte escolar." }],
-                    2: [{ topic: "Táctica y Estrategia", text: "Deportes colectivos e individuales y prevención de lesiones." }],
-                    3: [{ topic: "Autoevaluación y Salud", text: "Estilo de vida saludable y organización de actividades físicas." }]
-                },
-                espanol: {
-                    1: [{ topic: "Narrativa Literaria", text: "Cuento y novela, recursos narrativos, personajes, tiempo y espacio." }],
-                    2: [{ topic: "Textos Académicos", text: "Artículos de divulgación, citas, referencias y organización de ideas." }],
-                    3: [{ topic: "Opinión y Medios", text: "Textos de opinión, editoriales, análisis de medios y postura crítica." }]
-                },
-                artes: {
-                    1: [{ topic: "Géneros y Técnicas", text: "Expresión visual o escénica, técnicas y narrativa artística." }],
-                    2: [{ topic: "Contexto e Interpretación", text: "Contexto histórico y social de las obras, interpretación y experimentación." }],
-                    3: [{ topic: "Montaje y Crítica", text: "Curaduría, puesta en escena o exposición y reflexión artística." }]
-                },
-                historia: {
-                    1: [{ topic: "Mesoamérica y Virreinato", text: "Culturas mesoamericanas, contacto inicial, Conquista y Virreinato." }],
-                    2: [{ topic: "Vida Novohispana e Independencia", text: "Sociedad y economía novohispana, reformas borbónicas e Independencia." }],
-                    3: [{ topic: "México Independiente al Siglo XX", text: "Intervenciones, Reforma, Porfiriato, Revolución e instituciones." }]
-                },
-                tutoria: {
-                    1: [{ topic: "Identidad y Entorno", text: "Identidad juvenil, influencia de pares y redes sociales, y decisiones." }],
-                    2: [{ topic: "Prevención y Autocuidado", text: "Prevención de conductas de riesgo, autocuidado y redes de apoyo." }],
-                    3: [{ topic: "Metas y Bienestar", text: "Metas a mediano plazo, manejo del estrés y habilidades socioemocionales." }]
-                },
-                ingles: {
-                    1: [{ topic: "Simple Past & Narratives", text: "Regular and irregular verbs, past events and anecdotes." }],
-                    2: [{ topic: "Past Continuous & Biographies", text: "Ongoing past actions, contrasts and biographical stories." }],
-                    3: [{ topic: "Future, Comparatives & Superlatives", text: "Plans, predictions, comparing people, objects and places." }]
-                },
-                matematicas: {
-                    1: [{ topic: "Álgebra", text: "Multiplicación y división con enteros y fracciones, leyes de exponentes, potencias y expresiones algebraicas." }],
-                    2: [{ topic: "Ecuaciones, Sucesiones y Geometría", text: "Sistemas de ecuaciones lineales, sucesiones numéricas, expresiones equivalentes, ángulos y teorema de Pitágoras." }],
-                    3: [{ topic: "Medida, Proporcionalidad y Azar", text: "Área de círculos y sectores, volumen de cilindros y prismas, proporcionalidad inversa y probabilidad frecuencial." }]
-                },
-                tecnologia: {
-                    1: [{ topic: "Cambio Técnico e Innovación", text: "Necesidades sociales, innovación técnica y análisis funcional de objetos del taller." }],
-                    2: [{ topic: "Diseño y Procesos Técnicos", text: "Bocetos técnicos, planeación de procesos y selección de insumos." }],
-                    3: [{ topic: "Evaluación de Sistemas Técnicos", text: "Eficiencia de procesos, evaluación interna/externa y mejora técnica." }]
-                }
+                fisica: [
+                    ["Movimiento y Gráficas", "Trayectoria, desplazamiento, rapidez, velocidad, aceleración y gráficas."],
+                    ["Fuerzas y Leyes de Newton", "Interacción entre cuerpos, fuerza, fricción y leyes de Newton."],
+                    ["Energía, Calor y Ondas", "Energía mecánica, trabajo, conservación de energía, calor y ondas."]
+                ],
+                formacion: [
+                    ["Justicia, Legalidad y Gobierno", "Estado de derecho, división de poderes y funciones del gobierno."],
+                    ["Participación Democrática", "Voto, consulta, rendición de cuentas y transparencia."],
+                    ["Interculturalidad y Paz", "Inclusión, derechos de pueblos originarios y solución no violenta."]
+                ],
+                integracion: [
+                    ["Problemáticas Locales", "Investigación de retos del entorno con enfoque interdisciplinario."],
+                    ["Contraste de Evidencias", "Trabajo colaborativo, contraste de fuentes y argumentación con evidencias."],
+                    ["Implementación y Difusión", "Ejecución de proyectos escolares y comunicación comunitaria."]
+                ],
+                educacion_fisica: [
+                    ["Capacidades Condicionales", "Fuerza, resistencia, velocidad, flexibilidad y deporte escolar."],
+                    ["Táctica y Estrategia", "Deportes colectivos e individuales y prevención de lesiones."],
+                    ["Autoevaluación y Salud", "Estilo de vida saludable y organización de actividades físicas."]
+                ],
+                espanol: [
+                    ["Narrativa Literaria", "Cuento y novela, recursos narrativos, personajes, tiempo y espacio."],
+                    ["Textos Académicos", "Artículos de divulgación, citas, referencias y organización de ideas."],
+                    ["Opinión y Medios", "Textos de opinión, editoriales, análisis de medios y postura crítica."]
+                ],
+                artes: [
+                    ["Géneros y Técnicas", "Expresión visual o escénica, técnicas y narrativa artística."],
+                    ["Contexto e Interpretación", "Contexto histórico y social de las obras, interpretación y experimentación."],
+                    ["Montaje y Crítica", "Curaduría, puesta en escena o exposición y reflexión artística."]
+                ],
+                historia: [
+                    ["Mesoamérica y Virreinato", "Culturas mesoamericanas, contacto inicial, Conquista y Virreinato."],
+                    ["Vida Novohispana e Independencia", "Sociedad y economía novohispana, reformas borbónicas e Independencia."],
+                    ["México Independiente al Siglo XX", "Intervenciones, Reforma, Porfiriato, Revolución e instituciones."]
+                ],
+                tutoria: [
+                    ["Identidad y Entorno", "Identidad juvenil, influencia de pares y redes sociales, y decisiones."],
+                    ["Prevención y Autocuidado", "Prevención de conductas de riesgo, autocuidado y redes de apoyo."],
+                    ["Metas y Bienestar", "Metas a mediano plazo, manejo del estrés y habilidades socioemocionales."]
+                ],
+                ingles: [
+                    ["Simple Past & Narratives", "Regular and irregular verbs, past events and anecdotes."],
+                    ["Past Continuous & Biographies", "Ongoing past actions, contrasts and biographical stories."],
+                    ["Future, Comparatives & Superlatives", "Plans, predictions, comparing people, objects and places."]
+                ],
+                matematicas: [
+                    ["Álgebra", "Multiplicación y división con enteros y fracciones, leyes de exponentes, potencias y expresiones algebraicas."],
+                    ["Ecuaciones, Sucesiones y Geometría", "Sistemas de ecuaciones lineales, sucesiones numéricas, expresiones equivalentes, ángulos y teorema de Pitágoras."],
+                    ["Medida, Proporcionalidad y Azar", "Área de círculos y sectores, volumen de cilindros y prismas, proporcionalidad inversa y probabilidad frecuencial."]
+                ],
+                tecnologia: [
+                    ["Cambio Técnico e Innovación", "Necesidades sociales, innovación técnica y análisis funcional de objetos del taller."],
+                    ["Diseño y Procesos Técnicos", "Bocetos técnicos, planeación de procesos y selección de insumos."],
+                    ["Evaluación de Sistemas Técnicos", "Eficiencia de procesos, evaluación interna/externa y mejora técnica."]
+                ]
             },
             3: {
-                quimica: {
-                    1: [{ topic: "Materia, Mezclas y Átomo", text: "Propiedades físicas y químicas, mezclas, separación y estructura atómica." }],
-                    2: [{ topic: "Tabla Periódica y Enlaces", text: "Tabla periódica, electrones de valencia, enlace químico, mol y balanceo." }],
-                    3: [{ topic: "Reacciones, pH y Química Actual", text: "Reacciones químicas, ácidos y bases, pH, combustión y salud/ambiente." }]
-                },
-                formacion: {
-                    1: [{ topic: "Ciudadanía Global y Soberanía", text: "Soberanía nacional, derecho internacional y defensa de derechos humanos." }],
-                    2: [{ topic: "Justicia Social y Ética", text: "Justicia social, desigualdad, movimientos sociales y ética ambiental." }],
-                    3: [{ topic: "Participación y Paz Global", text: "Compromiso cívico juvenil, paz y derechos en el mundo contemporáneo." }]
-                },
-                integracion: {
-                    1: [{ topic: "Problemas Complejos", text: "Abordaje de retos sociales y ambientales desde múltiples disciplinas." }],
-                    2: [{ topic: "Investigación Aplicada", text: "Gestión de proyectos de investigación aplicada y validación de propuestas." }],
-                    3: [{ topic: "Proyecto Integrador Final", text: "Presentación final del proyecto integrador y reflexión del aprendizaje." }]
-                },
-                educacion_fisica: {
-                    1: [{ topic: "Acondicionamiento Personal", text: "Diseño de rutinas físicas, autorregulación del esfuerzo y bienestar integral." }],
-                    2: [{ topic: "Liderazgo e Inclusión", text: "Liderazgo deportivo, inclusión en actividad física y hábitos saludables." }],
-                    3: [{ topic: "Plan de Vida Activa", text: "Proyecto personal de actividad física y salud a largo plazo." }]
-                },
-                espanol: {
-                    1: [{ topic: "El Ensayo", text: "Ensayo literario y académico, tesis, argumentos, contraargumentos y coherencia." }],
-                    2: [{ topic: "Análisis Literario", text: "Poesía, cuento y drama, figuras retóricas y comentario crítico." }],
-                    3: [{ topic: "Monografía y Exposición", text: "Monografía, ponencia o presentación oral argumentada y síntesis de fuentes." }]
-                },
-                artes: {
-                    1: [{ topic: "Arte Contemporáneo", text: "Vanguardias y arte contemporáneo, formatos actuales y discurso artístico." }],
-                    2: [{ topic: "Producción Escénica o Visual", text: "Producción artística integral, dirección, recursos técnicos e intención estética." }],
-                    3: [{ topic: "Muestra y Cierre Creativo", text: "Muestra o presentación final de obra, retroalimentación y cierre creativo." }]
-                },
-                historia: {
-                    1: [{ topic: "Revoluciones e Imperialismo", text: "Revoluciones burguesas, Revolución Industrial, imperialismo y siglo XIX." }],
-                    2: [{ topic: "Guerras Mundiales y Entreguerras", text: "Primera Guerra Mundial, entreguerras, crisis, totalitarismos y Segunda Guerra." }],
-                    3: [{ topic: "Guerra Fría y Mundo Actual", text: "Guerra Fría, descolonización, globalización y retos contemporáneos." }]
-                },
-                tutoria: {
-                    1: [{ topic: "Orientación Vocacional", text: "Exploración de intereses, aptitudes y opciones de educación media superior." }],
-                    2: [{ topic: "Decisiones y Resiliencia", text: "Elección de bachillerato, manejo de expectativas y resiliencia." }],
-                    3: [{ topic: "Transición al Bachillerato", text: "Plan de transición a media superior, metas de vida y cierre socioemocional." }]
-                },
-                ingles: {
-                    1: [{ topic: "Passive Voice & Processes", text: "Describing processes, inventions, news and formal reports." }],
-                    2: [{ topic: "Conditionals & Advice", text: "Hypothetical situations, problem solving and giving advice." }],
-                    3: [{ topic: "Reported Speech & Fluency", text: "Reporting what others say, connectors and oral communication." }]
-                },
-                matematicas: {
-                    1: [{ topic: "Cuadráticas y Semejanza", text: "Ecuaciones cuadráticas, factorización, congruencia y semejanza de triángulos." }],
-                    2: [{ topic: "Funciones y Trigonometría", text: "Funciones lineales y cuadráticas, razones trigonométricas y triángulos." }],
-                    3: [{ topic: "Estadística, Azar y Repaso", text: "Geometría analítica/secciones, dispersión, probabilidad compuesta y síntesis." }]
-                },
-                tecnologia: {
-                    1: [{ topic: "Sistemas y Control Técnico", text: "Sistemas tecnológicos complejos, control/automatización y diagnóstico técnico." }],
-                    2: [{ topic: "Sustentabilidad y Energía", text: "Desarrollo sustentable, ciclo de vida de productos, energías limpias y ética." }],
-                    3: [{ topic: "Proyecto Técnico y Evaluación", text: "Ejecución y evaluación integral del proyecto técnico e innovación responsable." }]
-                }
+                quimica: [
+                    ["Materia, Mezclas y Átomo", "Propiedades físicas y químicas, mezclas, separación y estructura atómica."],
+                    ["Tabla Periódica y Enlaces", "Tabla periódica, electrones de valencia, enlace químico, mol y balanceo."],
+                    ["Reacciones, pH y Química Actual", "Reacciones químicas, ácidos y bases, pH, combustión y salud/ambiente."]
+                ],
+                formacion: [
+                    ["Ciudadanía Global y Soberanía", "Soberanía nacional, derecho internacional y defensa de derechos humanos."],
+                    ["Justicia Social y Ética", "Justicia social, desigualdad, movimientos sociales y ética ambiental."],
+                    ["Participación y Paz Global", "Compromiso cívico juvenil, paz y derechos en el mundo contemporáneo."]
+                ],
+                integracion: [
+                    ["Problemas Complejos", "Abordaje de retos sociales y ambientales desde múltiples disciplinas."],
+                    ["Investigación Aplicada", "Gestión de proyectos de investigación aplicada y validación de propuestas."],
+                    ["Proyecto Integrador Final", "Presentación final del proyecto integrador y reflexión del aprendizaje."]
+                ],
+                educacion_fisica: [
+                    ["Acondicionamiento Personal", "Diseño de rutinas físicas, autorregulación del esfuerzo y bienestar integral."],
+                    ["Liderazgo e Inclusión", "Liderazgo deportivo, inclusión en actividad física y hábitos saludables."],
+                    ["Plan de Vida Activa", "Proyecto personal de actividad física y salud a largo plazo."]
+                ],
+                espanol: [
+                    ["El Ensayo", "Ensayo literario y académico, tesis, argumentos, contraargumentos y coherencia."],
+                    ["Análisis Literario", "Poesía, cuento y drama, figuras retóricas y comentario crítico."],
+                    ["Monografía y Exposición", "Monografía, ponencia o presentación oral argumentada y síntesis de fuentes."]
+                ],
+                artes: [
+                    ["Arte Contemporáneo", "Vanguardias y arte contemporáneo, formatos actuales y discurso artístico."],
+                    ["Producción Escénica o Visual", "Producción artística integral, dirección, recursos técnicos e intención estética."],
+                    ["Muestra y Cierre Creativo", "Muestra o presentación final de obra, retroalimentación y cierre creativo."]
+                ],
+                historia: [
+                    ["Revoluciones e Imperialismo", "Revoluciones burguesas, Revolución Industrial, imperialismo y siglo XIX."],
+                    ["Guerras Mundiales y Entreguerras", "Primera Guerra Mundial, entreguerras, crisis, totalitarismos y Segunda Guerra."],
+                    ["Guerra Fría y Mundo Actual", "Guerra Fría, descolonización, globalización y retos contemporáneos."]
+                ],
+                tutoria: [
+                    ["Orientación Vocacional", "Exploración de intereses, aptitudes y opciones de educación media superior."],
+                    ["Decisiones y Resiliencia", "Elección de bachillerato, manejo de expectativas y resiliencia."],
+                    ["Transición al Bachillerato", "Plan de transición a media superior, metas de vida y cierre socioemocional."]
+                ],
+                ingles: [
+                    ["Passive Voice & Processes", "Describing processes, inventions, news and formal reports."],
+                    ["Conditionals & Advice", "Hypothetical situations, problem solving and giving advice."],
+                    ["Reported Speech & Fluency", "Reporting what others say, connectors and oral communication."]
+                ],
+                matematicas: [
+                    ["Cuadráticas y Semejanza", "Ecuaciones cuadráticas, factorización, congruencia y semejanza de triángulos."],
+                    ["Funciones y Trigonometría", "Funciones lineales y cuadráticas, razones trigonométricas y triángulos."],
+                    ["Estadística, Azar y Repaso", "Geometría analítica/secciones, dispersión, probabilidad compuesta y síntesis."]
+                ],
+                tecnologia: [
+                    ["Sistemas y Control Técnico", "Sistemas tecnológicos complejos, control/automatización y diagnóstico técnico."],
+                    ["Sustentabilidad y Energía", "Desarrollo sustentable, ciclo de vida de productos, energías limpias y ética."],
+                    ["Proyecto Técnico y Evaluación", "Ejecución y evaluación integral del proyecto técnico e innovación responsable."]
+                ]
             }
         };
 
-        function getSubjectsByGrade(grade) {
-            if (grade === "1") {
-                return [
-                    { id: "biologia", name: "Biología (Ciencias I)" },
-                    { id: "formacion", name: "Formación Cívica y Ética I" },
-                    { id: "integracion", name: "Integración Curricular I" },
-                    { id: "educacion_fisica", name: "Educación Física I" },
-                    { id: "espanol", name: "Español I" },
-                    { id: "artes", name: "Artes I" },
-                    { id: "geografia", name: "Geografía" },
-                    { id: "historia", name: "Historia I" },
-                    { id: "tutoria", name: "Tutoría I" },
-                    { id: "ingles", name: "Inglés I" },
-                    { id: "matematicas", name: "Matemáticas I" },
-                    { id: "tecnologia", name: "Tecnología I (Taller)" }
-                ];
-            } else if (grade === "2") {
-                return [
-                    { id: "fisica", name: "Física (Ciencias II)" },
-                    { id: "formacion", name: "Formación Cívica y Ética II" },
-                    { id: "integracion", name: "Integración Curricular II" },
-                    { id: "educacion_fisica", name: "Educación Física II" },
-                    { id: "espanol", name: "Español II" },
-                    { id: "artes", name: "Artes II" },
-                    { id: "historia", name: "Historia de México" },
-                    { id: "tutoria", name: "Tutoría II" },
-                    { id: "ingles", name: "Inglés II" },
-                    { id: "matematicas", name: "Matemáticas II" },
-                    { id: "tecnologia", name: "Tecnología II (Taller)" }
-                ];
-            } else {
-                return [
-                    { id: "quimica", name: "Química (Ciencias III)" },
-                    { id: "formacion", name: "Formación Cívica y Ética III" },
-                    { id: "integracion", name: "Integración Curricular III" },
-                    { id: "educacion_fisica", name: "Educación Física III" },
-                    { id: "espanol", name: "Español III" },
-                    { id: "artes", name: "Artes III" },
-                    { id: "historia", name: "Historia Universal" },
-                    { id: "tutoria", name: "Tutoría III" },
-                    { id: "ingles", name: "Inglés III" },
-                    { id: "matematicas", name: "Matemáticas III" },
-                    { id: "tecnologia", name: "Tecnología III (Taller)" }
-                ];
-            }
+        function getCurrentTopic(grade, subject, term) {
+            const [topic, text] = TOPICS[grade]?.[subject]?.[term - 1] || [
+                `Fundamentos del ${term}º Trimestre`,
+                `Temas clave de secundaria técnica para ${grade}º grado.`
+            ];
+            return { topic, text };
         }
 
         function updateSubjectsAndContent() {
             const grade = document.getElementById('grade-select').value;
-            const subjectSelect = document.getElementById('subject-select');
-            const subjects = getSubjectsByGrade(grade);
-            subjectSelect.innerHTML = '';
-            subjects.forEach(sub => {
-                const opt = document.createElement('option');
-                opt.value = sub.id;
-                opt.textContent = sub.name;
-                subjectSelect.appendChild(opt);
-            });
+            const sel = document.getElementById('subject-select');
+            sel.innerHTML = SUBJECTS_BY_GRADE[grade]
+                .map(([id, name]) => `<option value="${id}">${name}</option>`)
+                .join('');
             renderAll();
         }
 
-        function buildQuestionForSubject(grade, subject, term, i, baseTopic, baseText) {
+        function makeQuestion(grade, subject, term, i, baseTopic, baseText) {
             if (subject === "matematicas") {
                 const factor = 4 + (i % 6);
-                const valA = 8 * factor;
-                const valB = 4 * factor;
-                const valC = 2 * factor;
-                const valD = 6 * factor;
-                const correctIdx = i % 4;
-                const poolVals = [valA, valB, valC, valD];
-                const orderedVals = [
-                    poolVals[(4 - correctIdx) % 4],
-                    poolVals[(5 - correctIdx) % 4],
-                    poolVals[(6 - correctIdx) % 4],
-                    poolVals[(7 - correctIdx) % 4]
-                ];
-                const targetVal = orderedVals[correctIdx];
-                const coef = 2;
-                const rhs = coef * targetVal;
+                const pool = [8 * factor, 4 * factor, 2 * factor, 6 * factor];
+                const correct = i % 4;
+                const opts = [0, 1, 2, 3].map(idx => pool[(4 - correct + idx) % 4]);
+                const val = opts[correct];
+                const rhs = 2 * val;
                 return {
-                    id: i,
                     expertNote: `Evaluación Secundaria Técnica — ${grade}º Grado (MATEMÁTICAS - ${term}er Trimestre)`,
-                    question: `Pregunta ${i}: ¿Cómo se saca la x en la operación ${coef}x = ${rhs}? (Base para tu libreta: pasa el ${coef} dividiendo al otro lado -> x = ${rhs} / ${coef}; anota el procedimiento paso a paso en tu libreta).`,
-                    options: [
-                        `a) ${orderedVals[0]}`,
-                        `b) ${orderedVals[1]}`,
-                        `c) ${orderedVals[2]}`,
-                        `d) ${orderedVals[3]}`
-                    ],
-                    correct: correctIdx,
-                    explanation: `Procedimiento para tu libreta: ${coef}x = ${rhs}  =>  x = ${rhs} / ${coef}  =>  x = ${targetVal}. Tema: ${baseTopic} (${baseText}).`
+                    question: `Pregunta ${i}: ¿Cómo se saca la x en la operación 2x = ${rhs}? (Base para tu libreta: pasa el 2 dividiendo al otro lado -> x = ${rhs} / 2; anota el procedimiento paso a paso en tu libreta).`,
+                    options: [`a) ${opts[0]}`, `b) ${opts[1]}`, `c) ${opts[2]}`, `d) ${opts[3]}`],
+                    correct,
+                    explanation: `Procedimiento para tu libreta: 2x = ${rhs}  =>  x = ${rhs} / 2  =>  x = ${val}. Tema: ${baseTopic} (${baseText}).`
                 };
             }
 
-            const variant = i % 4;
+            const v = i % 4;
             const prompts = [
                 `Pregunta ${i} (${baseTopic}): ¿Cómo se aplica este contenido en tu libreta para ${grade}º de secundaria técnica (${term}er trimestre)? (Base para tu libreta: anota "${baseTopic}" y resume ${baseText}).`,
-                `Pregunta ${i} (${baseTopic}): Escribe en tu libreta la idea central de "${baseTopic}" y elige el inciso que corresponde:`,
                 `Pregunta ${i} (${baseTopic}): En una actividad de clase del ${term}er trimestre (${grade}º grado), ¿qué inciso identifica mejor este tema?`,
-                `Pregunta ${i} (${baseTopic}): Revisa tus notas sobre "${baseTopic}" y selecciona la opción adecuada:`
+                `Pregunta ${i} (${baseTopic}): Revisa tus notas sobre "${baseTopic}" y selecciona la opción adecuada:`,
+                `Pregunta ${i} (${baseTopic}): Relaciona "${baseTopic}" con lo visto en el ${term}er trimestre de ${grade}º grado y elige el inciso correcto:`
             ];
-
-            const optionSets = [
-                [
-                    `a) Relacionar ${baseTopic} con los procesos vistos en clase`,
-                    `b) Resolverlo sin tomar en cuenta el contexto del tema`,
-                    `c) Aplicar una regla ajena al contenido del trimestre`,
-                    `d) Omitir la relación entre teoría y práctica`
-                ],
-                [
-                    `a) Confundir el concepto con un tema de otro bloque`,
-                    `b) Identificar con claridad el principio central de ${baseTopic}`,
-                    `c) Ignorar los datos principales del planteamiento`,
-                    `d) Usar una definición sin relación con la asignatura`
-                ],
-                [
-                    `a) Aplicar un procedimiento contrario al indicado`,
-                    `b) Mezclar términos sin relación con el tema`,
-                    `c) Reconocer cómo se aplica ${baseTopic} en la actividad`,
-                    `d) Dejar la operación sin resolver ni analizar`
-                ],
-                [
-                    `a) Elegir un dato al azar sin revisar el enunciado`,
-                    `b) Aplicar una fórmula incorrecta para el caso`,
-                    `c) Sustituir el tema por uno distinto`,
-                    `d) Fundamentar la respuesta con base en ${baseTopic}`
-                ]
+            const sets = [
+                [`a) Relacionar ${baseTopic} con los procesos vistos en clase`, `b) Resolverlo sin tomar en cuenta el contexto del tema`, `c) Aplicar una regla ajena al contenido del trimestre`, `d) Omitir la relación entre teoría y práctica`],
+                [`a) Confundir el concepto con un tema de otro bloque`, `b) Identificar con claridad el principio central de ${baseTopic}`, `c) Ignorar los datos principales del planteamiento`, `d) Usar una definición sin relación con la asignatura`],
+                [`a) Aplicar un procedimiento contrario al indicado`, `b) Mezclar términos sin relación con el tema`, `c) Reconocer cómo se aplica ${baseTopic} en la actividad`, `d) Dejar la operación sin resolver ni analizar`],
+                [`a) Elegir un dato al azar sin revisar el enunciado`, `b) Aplicar una fórmula incorrecta para el caso`, `c) Sustituir el tema por uno distinto`, `d) Fundamentar la respuesta con base en ${baseTopic}`]
             ];
-
-            const selectedSet = optionSets[variant];
-            const correctMap = [0, 1, 2, 3];
             return {
-                id: i,
                 expertNote: `Evaluación Secundaria Técnica — ${grade}º Grado (${subject.toUpperCase()} - ${term}er Trimestre)`,
-                question: prompts[variant],
-                options: selectedSet,
-                correct: correctMap[variant],
+                question: prompts[v],
+                options: sets[v],
+                correct: v,
                 explanation: `Base para tu libreta (${baseTopic}): ${baseText}`
             };
         }
 
         function getFullBank(grade, subject, term) {
-            const items = summariesData[grade]?.[subject]?.[term] || [];
-            const baseTopic = items[0]?.topic || "Contenidos del trimestre";
-            const baseText = items[0]?.text || "Temas principales del periodo escolar en secundaria técnica.";
-            let pool = [];
-            for (let i = 1; i <= 50; i++) {
-                pool.push(buildQuestionForSubject(grade, subject, term, i, baseTopic, baseText));
-            }
-            return pool;
+            const { topic, text } = getCurrentTopic(grade, subject, term);
+            return Array.from({ length: 50 }, (_, idx) => makeQuestion(grade, subject, term, idx + 1, topic, text));
         }
 
-        function renderStudyContent() {
+        function renderAll() {
             const grade = document.getElementById('grade-select').value;
-            const subjectSelect = document.getElementById('subject-select');
-            const subjectId = subjectSelect.value;
-            const subjectName = subjectSelect.options[subjectSelect.selectedIndex]?.text || subjectId;
+            const subjectSel = document.getElementById('subject-select');
+            const subject = subjectSel.value;
+            const subjectName = subjectSel.options[subjectSel.selectedIndex]?.text || subject;
             const term = document.getElementById('term-select').value;
+            const { topic, text } = getCurrentTopic(grade, subject, term);
+
             document.getElementById('study-title').innerText = `Puntos Clave Académicos: ${subjectName} (${grade}º Grado - ${term}º Trimestre)`;
-            const container = document.getElementById('study-content');
-            container.innerHTML = '';
-            let items = summariesData[grade]?.[subjectId]?.[term] || [
-                { topic: `Fundamentos del ${term}º Trimestre (${subjectName})`, text: `Temas clave evaluados en secundaria técnica durante el ${term}er trimestre de ${grade}º grado.` }
-            ];
-            items.forEach(item => {
-                container.innerHTML += `<div class="summary-card"><h3>📌 ${item.topic}</h3><p>${item.text}</p></div>`;
-            });
-        }
+            document.getElementById('study-content').innerHTML = `<div class="summary-card"><h3>📌 ${topic}</h3><p>${text}</p></div>`;
 
-        function renderQuiz() {
-            const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
-            const term = document.getElementById('term-select').value;
-            const questions = getFullBank(grade, subjectId, term);
+            const questions = getFullBank(grade, subject, term);
             document.getElementById('quiz-info').innerHTML = `✨ <strong>${questions[0].expertNote}</strong><br>Al seleccionar un inciso, se bloqueará la pregunta y se mostrará la base de procedimiento para tu libreta.`;
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = '';
-            
-            questions.forEach((q, index) => {
-                let optsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    optsHtml += `<li><label class="option-label" id="label-${index}-${optIdx}"><input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})"> ${opt}</label></li>`;
-                });
-                container.innerHTML += `<div class="question-block" id="block-${index}"><p class="question-title">${q.question}</p><ul class="options-list">${optsHtml}</ul><div class="explanation" id="exp-${index}">${q.explanation}</div></div>`;
-            });
+            document.getElementById('quiz-container').innerHTML = questions.map((q, index) => `
+                <div class="question-block" id="block-${index}">
+                    <p class="question-title">${q.question}</p>
+                    <ul class="options-list">
+                        ${q.options.map((opt, optIdx) => `
+                            <li><label class="option-label" id="label-${index}-${optIdx}">
+                                <input type="radio" name="q${index}" value="${optIdx}" onchange="handleAnswer(${index}, ${q.correct})"> ${opt}
+                            </label></li>
+                        `).join('')}
+                    </ul>
+                    <div class="explanation" id="exp-${index}">${q.explanation}</div>
+                </div>
+            `).join('');
+            document.getElementById('score-result').style.display = 'none';
         }
 
         function handleAnswer(index, correctIndex) {
             const block = document.getElementById(`block-${index}`);
             if (block.classList.contains('correct-answer') || block.classList.contains('wrong-answer')) return;
-            const radios = document.querySelectorAll(`input[name="q${index}"]`);
             const checked = document.querySelector(`input[name="q${index}"]:checked`);
             if (!checked) return;
-            const userChoice = parseInt(checked.value);
-
-            radios.forEach((r, rIdx) => {
+            const choice = parseInt(checked.value, 10);
+            document.querySelectorAll(`input[name="q${index}"]`).forEach((r, rIdx) => {
                 r.disabled = true;
                 if (r.checked) document.getElementById(`label-${index}-${rIdx}`).classList.add('selected-option');
             });
-            block.classList.add(userChoice === correctIndex ? 'correct-answer' : 'wrong-answer');
+            block.classList.add(choice === correctIndex ? 'correct-answer' : 'wrong-answer');
         }
 
         let totalSeconds = 35 * 60;
         const timerInterval = setInterval(() => {
             if (totalSeconds > 0) {
                 totalSeconds--;
-                let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
-                document.getElementById('time-display').innerText = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+                const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+                const s = String(totalSeconds % 60).padStart(2, '0');
+                document.getElementById('time-display').innerText = `${m}:${s}`;
             } else {
                 clearInterval(timerInterval);
                 document.getElementById('timer-modal').style.display = 'flex';
@@ -675,42 +580,31 @@
 
         function evaluateQuiz() {
             const grade = document.getElementById('grade-select').value;
-            const subjectId = document.getElementById('subject-select').value;
+            const subject = document.getElementById('subject-select').value;
             const term = document.getElementById('term-select').value;
-            const questions = getFullBank(grade, subjectId, term);
+            const questions = getFullBank(grade, subject, term);
             let score = 0;
-            questions.forEach((q, index) => {
+            questions.forEach((q, idx) => {
                 const checked = document.querySelector(`input[name="q${index}"]:checked`);
-                if (checked && parseInt(checked.value) === q.correct) score++;
+                if (checked && parseInt(checked.value, 10) === q.correct) score++;
             });
+            const pct = (score / 50) * 100;
+            const ok = pct >= 60;
             const resDiv = document.getElementById('score-result');
             resDiv.style.display = 'block';
-            let pct = (score / 50) * 100;
-            if (pct >= 60) {
-                resDiv.style.background = 'rgba(34, 197, 94, 0.2)'; resDiv.style.color = '#86efac'; resDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-                resDiv.innerText = `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%).`;
-            } else {
-                resDiv.style.background = 'rgba(239, 68, 68, 0.2)'; resDiv.style.color = '#fca5a5'; resDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-                resDiv.innerText = `📚 Obtuviste ${score} de 50 aciertos (${pct}%). ¡Repasa los Puntos Clave!`;
-            }
-        }
-
-        function renderAll() {
-            renderStudyContent();
-            renderQuiz();
-            document.getElementById('score-result').style.display = 'none';
+            resDiv.style.background = ok ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)';
+            resDiv.style.color = ok ? '#86efac' : '#fca5a5';
+            resDiv.style.border = ok ? '1px solid rgba(34, 197, 94, 0.4)' : '1px solid rgba(239, 68, 68, 0.4)';
+            resDiv.innerText = ok
+                ? `🎉 ¡Excelente trabajo! Obtuviste ${score} de 50 aciertos (${pct}%).`
+                : `📚 Obtuviste ${score} de 50 aciertos (${pct}%). ¡Repasa los Puntos Clave!`;
         }
 
         function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            if (tab === 'study') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('study-section').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('quiz-section').classList.add('active');
-            }
+            const isStudy = tab === 'study';
+            document.querySelectorAll('.tab-btn').forEach((b, idx) => b.classList.toggle('active', isStudy ? idx === 0 : idx === 1));
+            document.getElementById('study-section').classList.toggle('active', isStudy);
+            document.getElementById('quiz-section').classList.toggle('active', !isStudy);
         }
 
         updateSubjectsAndContent();
